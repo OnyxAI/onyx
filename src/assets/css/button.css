@@ -1,0 +1,274 @@
+button {
+    border: none;
+    outline: none;
+}
+
+.btn-floating.tiny-button {
+  width: 10px;
+  height: 10px;
+}
+
+.sub-circle {
+    z-index: 0;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: 0.3s;
+    transform: scale(0.5);
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.sub-circle label {
+    display: block;
+    color: white;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    transition: 200ms;
+}
+
+.sub-circle label:hover {
+    cursor: pointer;
+    background-color: #2d41b3;
+}
+
+.sub-circle-manage {
+    z-index: 0;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: 0.3s;
+    transform: scale(0.5);
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.sub-circle-manage label {
+    background-color: rgba(18, 133, 52, 0.658);
+    display: block;
+    color: white;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    transition: 200ms;
+}
+
+.sub-circle-manage label:hover {
+    cursor: pointer;
+    background-color: rgba(24, 178, 70, 0.658);
+}
+
+.sub-circle-remove {
+    z-index: 0;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    overflow: hidden;
+    border-radius: 50%;
+    transition: 0.3s;
+    transform: scale(0.5);
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.sub-circle-remove label {
+    background-color: rgba(187, 0, 0, 0.658);
+    display: block;
+    color: white;
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    transition: 200ms;
+}
+
+.sub-circle-remove label:hover {
+    cursor: pointer;
+    background-color: rgba(24, 178, 70, 0.658);
+}
+
+.subs {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    z-index: 0;
+    margin: 0 auto;
+}
+
+
+.nav-button{
+  color: white;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.button-top1 {
+  top: 95px;
+  left: 5%;
+}
+
+.button-top2 {
+  top: 95px;
+  left: 20%;
+}
+
+.button-top3 {
+  top: 95px;
+  left: 35%;
+}
+
+.button-top4 {
+  top: 95px;
+  right: 35%;
+}
+
+.button-top5 {
+  top: 95px;
+  right: 20%;
+}
+
+.button-top6 {
+  top: 95px;
+  right: 5%;
+}
+
+.subs1 {
+  top: 105px;
+  left: calc(5% - 12.5px);
+  position: fixed;
+}
+.subs2 {
+  top: 105px;
+  left: calc(20% - 12.5px);
+  position: fixed;
+}
+.subs3 {
+  top: 105px;
+  left: calc(35% - 12.5px);
+  position: fixed;
+}
+.subs4 {
+  top: 105px;
+  right: calc(35% + 27.5px);
+  position: fixed;
+}
+.subs5 {
+  top: 105px;
+  right: calc(20% + 27.5px);
+  position: fixed;
+}
+.subs6 {
+  top: 105px;
+  right: calc(5% + 27.5px);
+  position: fixed;
+}
+
+.avatar-button {
+  position: fixed;
+  bottom: 70px;
+  right: 5%;
+}
+
+.hidden-sub-trigger {
+    display: none;
+}
+
+.hidden-sub-trigger:checked ~ label {
+    background-color: #c00000;
+}
+
+.hidden-trigger_top {
+    display: none;
+}
+
+  .hidden-trigger_top:checked ~ .subs .button-nav-1 {
+    transform: translate(80px, 0px) scale(1);
+    opacity: 1;
+    transition: 0.3s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-2 {
+    transform: translate(60px, 60px) scale(1);
+    opacity: 1;
+    transition: 0.4s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-3 {
+    transform: translate(-60px, 60px) scale(1);
+    opacity: 1;
+    transition: 0.6s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-4 {
+    transform: translate(-80px, 0px) scale(1);
+    opacity: 1;
+    transition: 0.7s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-5 {
+    transform: translate(-60px, -60px) scale(1);
+    opacity: 1;
+    transition: 0.8s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-6 {
+    transform: translate(0px, -80px) scale(1);
+    opacity: 1;
+    transition: 0.9s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-7 {
+    transform: translate(60px, -60px) scale(1);
+    opacity: 1;
+    transition: 1s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-manage {
+    transform: translate(5px, 80px) scale(1);
+    opacity: 1;
+    transition: 0.5s;
+  }
+
+
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-1 {
+    transform: translate(75px, -5px) scale(1);
+    opacity: 1;
+    transition: 0.3s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-2 {
+    transform: translate(55px, 55px) scale(1);
+    opacity: 1;
+    transition: 0.4s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-3 {
+    transform: translate(-65px, 55px) scale(1);
+    opacity: 1;
+    transition: 0.6s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-4 {
+    transform: translate(-85px, -5px) scale(1);
+    opacity: 1;
+    transition: 0.7s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-5 {
+    transform: translate(-65px, -65px) scale(1);
+    opacity: 1;
+    transition: 0.8s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-6 {
+    transform: translate(-5px, -85px) scale(1);
+    opacity: 1;
+    transition: 0.9s;
+  }
+  .hidden-trigger_top:checked ~ .subs .button-nav-remove-7 {
+    transform: translate(55px, -65px) scale(1);
+    opacity: 1;
+    transition: 1s;
+  }
+
+

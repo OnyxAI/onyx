@@ -1,0 +1,14 @@
+[
+  {
+    "url": "/",
+    "name": "Home",
+    "raw": "home",
+    "icon": "fa fa-home"
+  },
+  {
+    "url": "/manage",
+    "name": "Manage",
+    "raw": "manage",
+    "icon": "fa fa-cogs"
+  }
+]

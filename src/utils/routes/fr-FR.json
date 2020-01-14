@@ -1,0 +1,14 @@
+[
+  {
+    "url": "/",
+    "name": "Accueil",
+    "raw": "accueil",
+    "icon": "fa fa-home"
+  },
+  {
+    "url": "/manage",
+    "name": "Mon Compte",
+    "raw": "compte",
+    "icon": "fa fa-cogs"
+  }
+]

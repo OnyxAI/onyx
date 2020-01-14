@@ -1,0 +1,27 @@
+# Flask
+
+flask
+flask-restful
+flask_script
+flask-cors
+
+# Database
+
+flask_migrate
+flask_sqlalchemy
+psycopg2
+
+# User Login
+
+passlib
+flask_jwt_extended
+
+# Sockets
+
+flask_socketio
+
+# Tests
+
+pytest
+webtest
+factory-boy==2.8.1
