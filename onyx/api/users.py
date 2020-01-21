@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, make_response
 from flask_jwt_extended import jwt_required, jwt_refresh_token_required, create_access_token, create_refresh_token, get_jwt_identity, get_raw_jwt
 from flask_restful import Resource, reqparse
 from flask_restful.utils import cors
@@ -63,11 +63,11 @@ class Login(Resource):
                     
                     return jsonify(status="success", access_token=access_token, refresh_token=refresh_token)
                 else:
-                    return jsonify(status="error", message="Password or Email is wrong.")
+                    return jsonify(status="error", message="onyx.auth.login_error")
             else:
-                return jsonify(status="error", message="Password or Email is wrong.")
+                return jsonify(status="error", message="onyx.auth.login_error")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="onyx.global.error"), 500
 
         
 
@@ -90,15 +90,19 @@ class Register(Resource):
             language = args['language']
             firstname = args['firstname']
             lastname = args['lastname']
+            
 
-            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language)
-
-            db.session.add(user)
-            db.session.commit()
+            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, account_type=0)
+            
+            try:
+                db.session.add(user)
+                db.session.commit()
+            except Exception as e:
+                return jsonify(status="error", message="onyx.auth.register_error")
 
             return jsonify(status="success")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return make_response(jsonify(status="error", message="onyx.auth.register_error"), 500)
 
 class Color(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
@@ -259,9 +263,9 @@ class LogoutAccess(Resource):
             revoked_token = RevokedToken(jti = jti)
             revoked_token.add()
 
-            return jsonify(status="success", message="Access token has been revoked")
+            return jsonify(status="success", message="onyx.auth.logout_success")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="onyx.global.error")
 
 class LogoutRefresh(Resource):
     @jwt_refresh_token_required
@@ -274,7 +278,7 @@ class LogoutRefresh(Resource):
 
             return jsonify(status="success", message="Refresh token has been revoked")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="{}".format(e))
 
 class TokenValid(Resource):
     @jwt_required
@@ -284,7 +288,7 @@ class TokenValid(Resource):
 
             return jsonify(status="success", user=user)
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="{}".format(e))
 
 class RefreshUser(Resource):
     @jwt_required

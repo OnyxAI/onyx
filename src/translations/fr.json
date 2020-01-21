@@ -1,1 +1,25 @@
-{}
+{
+  "onyx.auth.email": "Email",
+  "onyx.auth.english": "Anglais",
+  "onyx.auth.firstname": "Prénom",
+  "onyx.auth.forgot": "Mot de passe oublié ?",
+  "onyx.auth.french": "Francais",
+  "onyx.auth.language": "Langue",
+  "onyx.auth.lastname": "Nom",
+  "onyx.auth.login": "Login",
+  "onyx.auth.login_error": "Mot de passe ou email incorrect",
+  "onyx.auth.login_header": "Login",
+  "onyx.auth.login_success": "Vous êtes connecté !",
+  "onyx.auth.logout_success": "Vous êtes déconnecté !",
+  "onyx.auth.password": "Mot de passe",
+  "onyx.auth.password_mismatch": "Mots de passes non égaux",
+  "onyx.auth.register_error": "Utilisateur déjà inscrit",
+  "onyx.auth.register_header": "S'inscrire",
+  "onyx.auth.register_success": "Vous êtes inscrit !",
+  "onyx.auth.remember": "Se souvenir",
+  "onyx.auth.username": "Username",
+  "onyx.auth.verif_password": "Mot de Passe",
+  "onyx.global.error": "Une erreur est survenue",
+  "onyx.global.send": "Envoyer",
+  "onyx.global.submit": "Envoyer"
+}

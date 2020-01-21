@@ -22,7 +22,7 @@ import 'sanitize.css/sanitize.css';
 import { Context } from 'utils/getContext';
 
 // Import Sockyx
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 // Import root app
 import App from 'containers/App';
@@ -40,12 +40,12 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-import { API_URL } from './utils/constants';
+// import { API_URL } from './global/constants';
 
 require('assets/js/uikit-icons'); // eslint-disable-line global-require
 require('assets/js/uikit'); // eslint-disable-line global-require
 
-const sockyx = io(API_URL);
+// const sockyx = io(API_URL);
 
 // Create redux store with history
 const initialState = {};
@@ -58,7 +58,7 @@ const render = messages => {
     <Provider store={store} context={Context}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App sockyx={sockyx} />
+          <App />
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

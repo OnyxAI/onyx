@@ -10,7 +10,6 @@ import { DEFAULT_LOCALE } from '../../i18n';
 
 export const initialState = {
   locale: DEFAULT_LOCALE,
-  id: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
