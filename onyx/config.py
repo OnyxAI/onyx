@@ -4,7 +4,7 @@ class Config(object):
     ONYX_PATH = os.path.dirname(os.path.realpath(__file__))
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
-    PROPAGATE_EXCEPTIONS = True
+    PROPAGATE_EXCEPTIONS = False
     JWT_SECRET_KEY = 'change me please'
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']

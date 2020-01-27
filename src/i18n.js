@@ -45,7 +45,10 @@ const translationMessages = {
   fr: formatTranslationMessages('fr', frTranslationMessages),
 };
 
-const getMessage = (locale, id) => translationMessages[locale][id];
+const getMessage = (locale, id) => {
+  const currentLocale = locale === undefined ? 'en' : locale;
+  return translationMessages[currentLocale][id];
+};
 
 exports.getMessage = getMessage;
 exports.appLocales = appLocales;

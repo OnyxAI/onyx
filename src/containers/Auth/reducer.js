@@ -20,10 +20,8 @@ export const initialState = {
   username: '',
   firstname: '',
   lastname: '',
-  language: '',
+  language: 'en-US',
   isRegistered: false,
-  access_token: '',
-  refresh_token: '',
   errorText: '',
 };
 

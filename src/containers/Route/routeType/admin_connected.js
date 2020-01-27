@@ -47,7 +47,7 @@ export default function AdminConnected({
           </div>
         )
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/hello" />
       )}
     </div>
   );

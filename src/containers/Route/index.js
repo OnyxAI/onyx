@@ -86,7 +86,7 @@ export function OnyxRoute({
 OnyxRoute.propTypes = {
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
-  currentUser: PropTypes.array,
+  currentUser: PropTypes.object,
   container: PropTypes.func,
   routeType: PropTypes.string,
   containerType: PropTypes.string,

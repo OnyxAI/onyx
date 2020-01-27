@@ -11,3 +11,4 @@ const makeSelectAuth = () =>
   );
 
 export default makeSelectAuth;
+export { selectAuthDomain };

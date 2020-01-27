@@ -13,7 +13,7 @@ const defaultOptions = {
   duration: 5000,
 };
 
-function createToast(options) {
+export function createToast(options) {
   return {
     ...defaultOptions,
     ...options,

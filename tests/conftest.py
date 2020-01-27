@@ -49,6 +49,8 @@ def connected_admin_app(app):
 
     yield test_app
 
+    _db.drop_all()
+
 @pytest.yield_fixture(scope='function')
 def connected_app(app):
     """A Webtest app with connected user."""
@@ -64,6 +66,7 @@ def connected_app(app):
     test_app.authorization = ('Bearer', access_token)
 
     yield test_app
+
 
 @pytest.yield_fixture(scope='function')
 def connected_app_refresh(app):
@@ -81,6 +84,7 @@ def connected_app_refresh(app):
 
     yield test_app
 
+    _db.drop_all()
 
 
 @pytest.yield_fixture(scope='function')
@@ -92,8 +96,6 @@ def db(app):
 
     yield _db
 
-    # Explicitly close DB connection
-    _db.session.close()
     _db.drop_all()
 
 @pytest.yield_fixture(scope='function')
@@ -105,8 +107,6 @@ def user_test_a(db):
 
     yield user
 
-    # Explicitly close DB connection
-    db.session.close()
     db.drop_all()
 
 @pytest.yield_fixture(scope='function')
@@ -118,6 +118,4 @@ def user_test(db):
 
     yield user
 
-    # Explicitly close DB connection
-    db.session.close()
     db.drop_all()

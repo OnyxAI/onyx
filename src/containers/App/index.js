@@ -13,11 +13,10 @@ import { Switch } from 'react-router-dom';
 import GlobalStyle from 'global-styles';
 import Toasts from '../Global/Toasts';
 
-import Main from '../Main';
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
-import Home from '../Home';
-import NotFound from '../NotFound';
+import Main from '../Main/Loadable';
+import { Login, Register } from '../Auth/Loadable';
+import Home from '../Home/Loadable';
+import NotFound from '../NotFound/Loadable';
 import CustomRoute from '../Route';
 
 export default function App() {

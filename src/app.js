@@ -1,15 +1,15 @@
 // Needed for redux-saga es6 generator support
 import '@babel/polyfill';
 
-// Import Custom
-import 'assets/css/custom.css';
-import 'assets/css/button.css';
-
 // Import UI KIT
 import 'assets/css/uikit.css';
 
 // Import Materialize CSS
 import 'assets/css/materialize.css';
+
+// Import Custom
+import 'assets/css/custom.css';
+import 'assets/css/button.css';
 
 // Import all the third party stuff
 import React from 'react';

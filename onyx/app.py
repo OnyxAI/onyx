@@ -36,9 +36,11 @@ def register_extensions(app):
 
     @jwt.token_in_blacklist_loader
     def check_if_token_in_blacklist(decrypted_token):
+        print('toto')
         jti = decrypted_token['jti']
 
         return RevokedToken.is_jti_blacklisted(jti)
+
 
     @app.errorhandler(404) 
     def not_found(e): 

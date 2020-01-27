@@ -20,4 +20,8 @@ export default defineMessages({
     id: `${scope}.error`,
     defaultMessage: 'An error has occured',
   },
+  home: {
+    id: `${scope}.home`,
+    defaultMessage: 'Home',
+  },
 });

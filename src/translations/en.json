@@ -4,6 +4,7 @@
   "onyx.auth.firstname": "Firstname",
   "onyx.auth.forgot": "Forgot Password ?",
   "onyx.auth.french": "French",
+  "onyx.auth.hello_header": "Hello",
   "onyx.auth.language": "Language",
   "onyx.auth.lastname": "Lastname",
   "onyx.auth.login": "Login",
@@ -19,7 +20,9 @@
   "onyx.auth.remember": "Remember me",
   "onyx.auth.username": "Username",
   "onyx.auth.verif_password": "Password Again",
+  "onyx.error.not_found_message": "Looks like the page you were looking for is no longer here.",
   "onyx.global.error": "An error has occured",
+  "onyx.global.home": "Home",
   "onyx.global.send": "Send",
   "onyx.global.submit": "Submit"
 }

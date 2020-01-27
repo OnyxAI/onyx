@@ -49,7 +49,7 @@ export default function UserConnected({
           </div>
         </div>
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/hello" />
       )}
     </div>
   );

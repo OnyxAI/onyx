@@ -4,11 +4,12 @@ from flask_restful import Resource, reqparse
 from flask_restful.utils import cors
 
 from onyx.extensions import db
+from onyx.decorators import login_required
 from onyx.models import User, RevokedToken, Nav as NavModel, to_dict
 from passlib.hash import sha256_crypt
 
 class GetAll(Resource):
-    @jwt_required
+    @login_required
     def get(self):
         try:
             return jsonify([to_dict(user) for user in User.query.all()])
@@ -19,7 +20,7 @@ class Get(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('id')
 
-    @jwt_required
+    @login_required
     def get(self):
         try:
             user = get_jwt_identity()
@@ -28,7 +29,7 @@ class Get(Resource):
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
 
-    @jwt_required
+    @login_required
     def post(self):
         try:
             args = self.parser.parse_args()
@@ -90,7 +91,6 @@ class Register(Resource):
             language = args['language']
             firstname = args['firstname']
             lastname = args['lastname']
-            
 
             user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, account_type=0)
             
@@ -108,7 +108,7 @@ class Color(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('color', required=True)
 
-    @jwt_required
+    @login_required
     def post(self):
         try:
             user = get_jwt_identity()
@@ -136,7 +136,7 @@ class Nav(Resource):
     parser.add_argument('url')
     parser.add_argument('icon')
 
-    @jwt_required
+    @login_required
     def get(self):
         try:
             user = get_jwt_identity()
@@ -164,7 +164,7 @@ class Nav(Resource):
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
 
-    @jwt_required
+    @login_required
     def post(self):
         try:
             args = self.parser.parse_args()
@@ -186,7 +186,7 @@ class Nav(Resource):
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
 
-    @jwt_required
+    @login_required
     def put(self):
         try:
             args = self.parser.parse_args()
@@ -220,7 +220,7 @@ class Manage(Resource):
     parser.add_argument('firstname')
     parser.add_argument('lastname')
 
-    @jwt_required
+    @login_required
     def post(self):
         try:
             args = self.parser.parse_args()
@@ -255,7 +255,7 @@ class Manage(Resource):
             return jsonify(status="error", message="{}".format(e)), 500
 
 class LogoutAccess(Resource):
-    @jwt_required
+    @login_required
     def get(self):
         try:
             jti = get_raw_jwt()['jti']
@@ -276,22 +276,23 @@ class LogoutRefresh(Resource):
             revoked_token = RevokedToken(jti = jti)
             revoked_token.add()
 
-            return jsonify(status="success", message="Refresh token has been revoked")
+            return jsonify(status="success", message="onyx.auth.logout_success")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e))
+            return jsonify(status="error", message="onyx.global.error")
 
 class TokenValid(Resource):
-    @jwt_required
+    @login_required
     def get(self):
         try:
             user = get_jwt_identity()
 
             return jsonify(status="success", user=user)
-        except Exception as e:
+        except IndexError as e:
+            print(e)
             return jsonify(status="error", message="{}".format(e))
 
 class RefreshUser(Resource):
-    @jwt_required
+    @login_required
     def get(self):
         try:
             user = get_jwt_identity()

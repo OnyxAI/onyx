@@ -56,7 +56,6 @@ const currentUserReducer = (state = initialState, action) =>
         draft.isAuthenticated = true;
         draft.isAuthenticating = false;
         draft.errorText = '';
-        draft.user = action.user;
         break;
       case REFRESH_TOKEN_ERROR:
         draft.isAuthenticated = false;
@@ -83,7 +82,6 @@ const currentUserReducer = (state = initialState, action) =>
         break;
       case REGISTER_USER_SUCCESS:
         draft.errorText = '';
-        draft.isRegistered = true;
         break;
       case REGISTER_USER_ERROR:
         draft.errorText = action.error;

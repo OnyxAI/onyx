@@ -11,3 +11,4 @@ const makeSelectCurrentUser = () =>
   );
 
 export default makeSelectCurrentUser;
+export { selectCurrentUserDomain };
