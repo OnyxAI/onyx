@@ -77,7 +77,7 @@ class Test_UserApi:
         assert response.json["status"] == "success"
 
     def test_refresh(self, connected_app_refresh, user_test):
-        response = connected_app_refresh.get('/users/refresh')
+        response = connected_app_refresh.get('/users/refresh_token')
         
         assert response.status_code == 200
         assert response.content_type == 'application/json'

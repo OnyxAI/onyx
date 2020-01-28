@@ -1,5 +1,5 @@
 from . import api
-from onyx.api.users import GetAll, Get, Nav, Color, Login, Register, Manage, LogoutAccess, LogoutRefresh, TokenValid, Refresh, RefreshUser
+from onyx.api.users import GetAll, Get, Nav, Color, Login, Register, Manage, LogoutAccess, LogoutRefresh, TokenValid, Refresh
 
 api.add_resource(GetAll, '/users')
 api.add_resource(Get, '/users/get')
@@ -10,7 +10,6 @@ api.add_resource(Manage, '/users/manage')
 api.add_resource(LogoutAccess, '/users/logout_access')
 api.add_resource(LogoutRefresh, '/users/logout_refresh')
 api.add_resource(TokenValid, '/users/token_valid')
-api.add_resource(RefreshUser, '/users/refresh')
 api.add_resource(Refresh, '/users/refresh_token')
 
 api.add_resource(Nav, '/users/nav')

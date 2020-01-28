@@ -11,7 +11,7 @@ start_client:
 	yarn start
 
 test:
-	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes
+	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes; yarn test
 
 debug:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000

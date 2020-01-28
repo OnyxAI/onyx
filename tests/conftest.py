@@ -73,7 +73,7 @@ def connected_app_refresh(app):
     """A Webtest app with connected user using refresh token."""
     test_app = TestApp(app)
 
-    user = User(username='User', email='user@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User", lastname="Name", language="en-US")
+    user = User(username='User_refresh', email='user_refresh@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User_refresh", lastname="Name", language="en-US")
     _db.session.add(user)
     _db.session.commit()
 

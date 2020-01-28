@@ -24,6 +24,7 @@ module.exports = {
   },
   setupFilesAfterEnv: [
     '<rootDir>/scripts/testing/test-bundler.js',
+    '<rootDir>/jest.setup.js',
     'react-testing-library/cleanup-after-each',
   ],
   setupFiles: ['raf/polyfill'],

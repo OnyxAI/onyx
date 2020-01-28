@@ -291,8 +291,8 @@ class TokenValid(Resource):
             print(e)
             return jsonify(status="error", message="{}".format(e))
 
-class RefreshUser(Resource):
-    @login_required
+class Refresh(Resource):
+    @jwt_refresh_token_required
     def get(self):
         try:
             user = get_jwt_identity()
@@ -302,15 +302,5 @@ class RefreshUser(Resource):
             new_user = User.query.filter_by(id=id).first()
 
             return jsonify(status="success", access_token=create_access_token(identity=to_dict(new_user)))
-        except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
-
-class Refresh(Resource):
-    @jwt_refresh_token_required
-    def get(self):
-        try:
-            user = get_jwt_identity()
-
-            return jsonify(status="success", access_token=create_access_token(identity=user))
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500

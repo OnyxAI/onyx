@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "10"
+  - "9"
+  - "7"
+python:
+  - "3.7"
+  - "3.6"
+install:
+  - make
+  - yarn install
+script:
+  - make test
