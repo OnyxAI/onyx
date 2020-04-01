@@ -12,8 +12,8 @@ venv
 onyx/db
 !onyx/db/.gitkeep
 
-neuronss
-!neuronss/.gitkeep
+neurons
+!neurons/.gitkeep
 neuron_list.json
 
 # Don't check auto-generated stuff into git

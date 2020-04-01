@@ -19,7 +19,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-// import allNeurons from 'neuronList';
 import Loader from 'components/Loader';
 
 import { makeSelectNeurons } from './selectors';
@@ -50,7 +49,7 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
     if (neurons.neurons.length) {
       const all_neurons = neurons.neurons.map(neuron => {
         const waitForChunk = () => {
-          return import(/* webpackIgnore: true */ `@neurons/${neuron.raw_name}/dist/index.js`)
+          return import(/* webpackIgnore: true */`@neurons/${neuron.raw_name}/dist/index.js`)
             .then(module => module);
         }
 
