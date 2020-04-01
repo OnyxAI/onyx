@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wifi Setup</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/javascript" src="js/Config.js"></script>
+    <script type="application/javascript" src="js/WS.js"></script>
+    <script type="application/javascript" src="js/main.js"></script>
+</head>
+<body>
+
+<div id="home" class="panel hide">
+    <div class="title">Hello I'm Onyx</div>
+    <div class="body">
+        <span>This process is for connecting me to the internet through your wifi.</span>
+        <img src="img/connect.png"/>
+        <a id="connectBtn" class="button">LET'S CONNECT</a>
+    </div>
+</div>
+
+<div id="list-panel" class="panel hide">
+    <div class="title">CHOOSE YOUR USUAL WIFI</div>
+    <ul id="list" class="body"></ul>
+</div>
+
+<div id="loading" class="panel">
+    <div class="title">LOADING</div>
+    <div class="body">
+        <div class="loader"></div>
+    </div>
+</div>
+
+<div id="connecting" class="panel hide">
+    <div class="title">CONNECTING</div>
+    <div class="body">
+        <div class="loader"></div>
+    </div>
+</div>
+
+<div id="success" class="panel hide">
+    <div class="title">CONNECTED</div>
+    <div class="body">
+        <span>I'm connected to the internet now.</span>
+        <small>For more informations go to <a href="https://onyxlabs.fr">https://onyxlabs.fr</a>.</small>
+    </div>
+</div>
+
+<p class="centered">
+    <a class="button" id="cancelBtn">CANCEL SETUP</a>
+</p>
+
+</body>
+</html>

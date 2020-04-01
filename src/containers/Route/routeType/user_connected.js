@@ -10,11 +10,13 @@ import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
 import Loader from 'components/Loader';
+import Nav from 'containers/Nav/Loadable';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from '../saga';
 
 export default function UserConnected({
+  sockyx,
   verifyTokenFunc,
   logoutUserFunc,
   isAuthenticated,
@@ -37,14 +39,16 @@ export default function UserConnected({
         <Loader />
       ) : isAuthenticated ? (
         <div>
-          <div className="container main-container">
-            <button type="button" onClick={() => logoutUserFunc()}>
-              LOGOUT
-            </button>
+          {rest.nav && (
+            <Nav sockyx={sockyx} user={user} logoutUserFunc={logoutUserFunc} />
+          )}
+          <div className="main-container container">
             <Route
               {...rest}
               path={path}
-              render={props => <Container user={user} {...props} />}
+              render={props => (
+                <Container sockyx={sockyx} user={user} {...props} />
+              )}
             />
           </div>
         </div>

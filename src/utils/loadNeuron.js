@@ -12,12 +12,12 @@ export default ({
   reducers,
   sagas,
 }) => WrappedComponent => {
-  class PluginInjector extends React.Component {
+  class NeuronInjector extends React.Component {
     static WrappedComponent = WrappedComponent;
 
     static contextType = ReactReduxContext;
 
-    static displayName = `plugin(${WrappedComponent.displayName ||
+    static displayName = `neuron(${WrappedComponent.displayName ||
       WrappedComponent.name ||
       'Component'})`;
 
@@ -50,10 +50,10 @@ export default ({
     mapDispatchToProps,
   );
 
-  const Plugin = compose(
+  const Neuron = compose(
     withConnect,
     memo,
-  )(PluginInjector);
+  )(NeuronInjector);
 
-  return hoistNonReactStatics(Plugin, WrappedComponent);
+  return hoistNonReactStatics(Neuron, WrappedComponent);
 };

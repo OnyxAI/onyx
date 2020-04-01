@@ -6,7 +6,7 @@
     "icon": "fa fa-home"
   },
   {
-    "url": "/manage",
+    "url": "/user/manage",
     "name": "Mon Compte",
     "raw": "compte",
     "icon": "fa fa-cogs"

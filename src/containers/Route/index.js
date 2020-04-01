@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
+import injectNeuron from 'utils/loadNeuron';
 
 import makeSelectCurrentUser from './selectors';
 
@@ -24,6 +25,7 @@ import { verifyToken, logoutUser } from './actions';
 import saga from './saga';
 
 export function OnyxRoute({
+  sockyx,
   verifyTokenFunc,
   logoutUserFunc,
   currentUser,
@@ -36,8 +38,31 @@ export function OnyxRoute({
 
   switch (routeType) {
     case 'user_connected':
+      if (containerType === 'neuron') {
+        const Neuron = injectNeuron({
+          mapDispatchToProps: container.mapDispatchToProps,
+          mapStateToProps: container.mapStateToProps,
+          reducers: container.reducers,
+          sagas: container.sagas,
+        })(container.component);
+
+        return (
+          <UserConnected
+            sockyx={sockyx}
+            container={Neuron}
+            containerType={containerType}
+            verifyTokenFunc={verifyTokenFunc}
+            user={currentUser.user}
+            logoutUserFunc={logoutUserFunc}
+            isAuthenticated={currentUser.isAuthenticated}
+            isAuthenticating={currentUser.isAuthenticating}
+            {...rest}
+          />
+        );
+      }
       return (
         <UserConnected
+          sockyx={sockyx}
           container={container}
           containerType={containerType}
           verifyTokenFunc={verifyTokenFunc}
@@ -48,9 +73,11 @@ export function OnyxRoute({
           {...rest}
         />
       );
+
     case 'admin_connected':
       return (
         <AdminConnected
+          sockyx={sockyx}
           container={container}
           containerType={containerType}
           verifyTokenFunc={verifyTokenFunc}
@@ -64,6 +91,7 @@ export function OnyxRoute({
     case 'not_connected':
       return (
         <NotConnected
+          sockyx={sockyx}
           container={container}
           containerType={containerType}
           verifyTokenFunc={verifyTokenFunc}
@@ -74,11 +102,21 @@ export function OnyxRoute({
       );
     case 'normal':
       return (
-        <Normal container={container} containerType={containerType} {...rest} />
+        <Normal
+          sockyx={sockyx}
+          container={container}
+          containerType={containerType}
+          {...rest}
+        />
       );
     default:
       return (
-        <Normal container={container} containerType={containerType} {...rest} />
+        <Normal
+          sockyx={sockyx}
+          container={container}
+          containerType={containerType}
+          {...rest}
+        />
       );
   }
 }

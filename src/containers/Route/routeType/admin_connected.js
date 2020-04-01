@@ -10,12 +10,15 @@ import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
 import Loader from 'components/Loader';
+import Nav from 'containers/Nav/Loadable';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from '../saga';
 
 export default function AdminConnected({
+  sockyx,
   verifyTokenFunc,
+  logoutUserFunc,
   isAuthenticated,
   isAuthenticating,
   user,
@@ -37,11 +40,20 @@ export default function AdminConnected({
       ) : isAuthenticated ? (
         user.account_type === 1 && (
           <div>
+            {rest.nav && (
+              <Nav
+                sockyx={sockyx}
+                user={user}
+                logoutUserFunc={logoutUserFunc}
+              />
+            )}
             <div className="container main-container">
               <Route
                 {...rest}
                 path={path}
-                render={props => <Container user={user} {...props} />}
+                render={props => (
+                  <Container sockyx={sockyx} user={user} {...props} />
+                )}
               />
             </div>
           </div>
@@ -55,6 +67,7 @@ export default function AdminConnected({
 
 AdminConnected.propTypes = {
   verifyTokenFunc: PropTypes.func,
+  logoutUserFunc: PropTypes.func,
   path: PropTypes.string,
   container: PropTypes.func,
   isAuthenticated: PropTypes.bool,

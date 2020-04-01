@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl';
 import configureStore from 'configureStore';
 import history from 'utils/history';
 
-import { verifyToken, logoutUser } from '../actions';
+import { verifyToken } from '../actions';
 
 import Normal from '../routeType/normal';
 import UserConnected from '../routeType/user_connected';
@@ -90,12 +90,6 @@ describe('<Register />', () => {
     );
 
     expect(container.root.findByType(UserConnected).props.path).toBe('/test');
-
-    renderer.act(() => {
-      container.root.findByType('button').props.onClick();
-    });
-
-    expect(store.dispatch).toHaveBeenCalledWith(logoutUser());
 
     container.update();
 

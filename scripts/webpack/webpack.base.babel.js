@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
 
 module.exports = options => ({
   mode: options.mode,
@@ -53,7 +54,7 @@ module.exports = options => ({
         ],
       },
       {
-        test: /\.(eot|otf|ttf|woff|woff2)$/,
+        test: /\.(eot|otf|ttf|woff|woff2|mp3)$/,
         use: 'file-loader',
       },
       {
@@ -126,13 +127,12 @@ module.exports = options => ({
       NODE_ENV: 'development',
     }),
   ]),
+  externals: options.externals,
   resolve: {
-    modules: ['node_modules', 'src', 'plugins'],
+    modules: ['node_modules', 'src'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
-    alias: {
-      onyx: path.resolve(process.cwd(), './src'),
-    },
+    alias: options.alias,
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window

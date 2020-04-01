@@ -11,6 +11,10 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   CHANGE_INPUT,
+  UPDATE_USER,
+  MANAGE_USER_SUCCESS,
+  MANAGE_USER_ERROR,
+  MANAGE_USER,
 } from './constants';
 
 export const initialState = {
@@ -20,8 +24,7 @@ export const initialState = {
   username: '',
   firstname: '',
   lastname: '',
-  language: 'en-US',
-  isRegistered: false,
+  language: '',
   errorText: '',
 };
 
@@ -46,7 +49,6 @@ const authReducer = (state = initialState, action) =>
         break;
       case REGISTER_USER_SUCCESS:
         draft.errorText = '';
-        draft.isRegistered = true;
         draft.username = '';
         draft.language = '';
         draft.firstname = '';
@@ -58,6 +60,24 @@ const authReducer = (state = initialState, action) =>
         draft.errorText = action.error;
         draft.password = '';
         draft.verifPassword = '';
+        break;
+      case UPDATE_USER:
+        draft.username = action.user.username;
+        draft.email = action.user.email;
+        draft.firstname = action.user.firstname;
+        draft.lastname = action.user.lastname;
+        draft.language = action.user.language;
+        break;
+      case MANAGE_USER:
+        draft.errorText = '';
+        break;
+      case MANAGE_USER_SUCCESS:
+        draft.errorText = '';
+        draft.verifPassword = '';
+        break;
+      case MANAGE_USER_ERROR:
+        draft.verifPassword = '';
+        draft.errorText = action.error;
         break;
       default:
         break;

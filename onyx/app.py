@@ -2,10 +2,14 @@ from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
-from onyx.core import api, sockyx
+from onyx.core import api
 from onyx.extensions import db
-from onyx.config import DevConfig
+from onyx.app_config import DevConfig
 from onyx.models import RevokedToken
+
+from onyx.api.neurons import Neurons
+
+neurons = Neurons()
 
 def create_app(config=DevConfig):
     app = Flask(__name__, template_folder='../dist')
@@ -17,12 +21,13 @@ def create_app(config=DevConfig):
 
     with app.app_context():
         db.create_all()
+
+    neurons.createNeuronFile(config.NEURON_FOLDER)
     
     return app
 
 def register_extensions(app):
     api.init_app(app)
-    sockyx.init_app(app, cors_allowed_origins="*")
     db.init_app(app)
     jwt = JWTManager(app)
 
@@ -36,11 +41,9 @@ def register_extensions(app):
 
     @jwt.token_in_blacklist_loader
     def check_if_token_in_blacklist(decrypted_token):
-        print('toto')
         jti = decrypted_token['jti']
 
         return RevokedToken.is_jti_blacklisted(jti)
-
 
     @app.errorhandler(404) 
     def not_found(e): 

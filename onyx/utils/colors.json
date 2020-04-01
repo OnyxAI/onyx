@@ -1,0 +1,74 @@
+{
+  "amber": {
+    "primary_color": "#ffb300",
+    "secondary_color": "#004cff"
+  },
+  "base": {
+    "primary_color": "#00897b",
+    "secondary_color": "#89000e"
+  },
+  "blue": {
+    "primary_color": "#1e88e5",
+    "secondary_color": "#e57b1e"
+  },
+  "brown": {
+    "primary_color": "#6d4c41",
+    "secondary_color": "#41626d"
+  },
+  "cyan": {
+    "primary_color": "#00acc1",
+    "secondary_color": "#c11500"
+  },
+  "deep-orange": {
+    "primary_color": "#f4511e",
+    "secondary_color": "#1ec1f4"
+  },
+  "deep-purple": {
+    "primary_color": "#5e35b1",
+    "secondary_color": "#88b135"
+  },
+  "green": {
+    "primary_color": "#43a047",
+    "secondary_color": "#a0439c"
+  },
+  "indigo": {
+    "primary_color": "#3949ab",
+    "secondary_color": "#ab9b39"
+  },
+  "light-blue": {
+    "primary_color": "#039be5",
+    "secondary_color": "#e54d03"
+  },
+  "light-green": {
+    "primary_color": "#7cb342",
+    "secondary_color": "#7942b3"
+  },
+  "lime": {
+    "primary_color": "#c0ca33",
+    "secondary_color": "#3d33ca"
+  },
+  "orange": {
+    "primary_color": "#fb8c00",
+    "secondary_color": "#006ffb"
+  },
+  "pink": {
+    "primary_color": "#d81b60",
+    "secondary_color": "#1bd893"
+  },
+  "purple": {
+    "primary_color": "#8e24aa",
+    "secondary_color": "#40aa24"
+  },
+  "red": {
+    "primary_color": "#e53935",
+    "secondary_color": "#35e1e5"
+  },
+  "teal": {
+    "primary_color": "#00897b",
+    "secondary_color": "#89000e"
+  },
+  "yellow": {
+    "primary_color": "#fdd835",
+    "secondary_color": "#355afd"
+  }
+}

@@ -6,8 +6,11 @@ import {
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  MANAGE_USER,
+  MANAGE_USER_ERROR,
+  MANAGE_USER_SUCCESS,
 } from '../constants';
-import { changeInput } from '../actions';
+import { changeInput, updateUser } from '../actions';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('authReducer', () => {
@@ -20,8 +23,7 @@ describe('authReducer', () => {
       username: '',
       firstname: '',
       lastname: '',
-      language: 'en-US',
-      isRegistered: false,
+      language: '',
       errorText: '',
     };
   });
@@ -41,6 +43,26 @@ describe('authReducer', () => {
     expect(authReducer(state, changeInput(input, fixture))).toEqual(
       expectedResult,
     );
+  });
+
+  it('should handle the updateUser action correctly', () => {
+    const user = {
+      username: 'test',
+      email: 'hello@test.fr',
+      lastname: 'Test',
+      firstname: 'Test',
+      language: 'en-US',
+    };
+
+    const expectedResult = produce(state, draft => {
+      draft.username = user.username;
+      draft.email = user.email;
+      draft.firstname = user.firstname;
+      draft.lastname = user.lastname;
+      draft.language = user.language;
+    });
+
+    expect(authReducer(state, updateUser(user))).toEqual(expectedResult);
   });
 
   it('should handle the loginUserSuccess action correctly', () => {
@@ -84,10 +106,21 @@ describe('authReducer', () => {
     expect(authReducer(state, action)).toEqual(expectedResult);
   });
 
+  it('should handle the manageUser action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.errorText = '';
+    });
+
+    const action = {
+      type: MANAGE_USER,
+    };
+
+    expect(authReducer(state, action)).toEqual(expectedResult);
+  });
+
   it('should handle the registerUserSuccess action correctly', () => {
     const expectedResult = produce(state, draft => {
       draft.errorText = '';
-      draft.isRegistered = true;
       draft.username = '';
       draft.language = '';
       draft.firstname = '';
@@ -112,6 +145,33 @@ describe('authReducer', () => {
 
     const action = {
       type: REGISTER_USER_ERROR,
+      error: 'An error has occured',
+    };
+
+    expect(authReducer(state, action)).toEqual(expectedResult);
+  });
+
+  it('should handle the manageUserSuccess action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.errorText = '';
+      draft.verifPassword = '';
+    });
+
+    const action = {
+      type: MANAGE_USER_SUCCESS,
+    };
+
+    expect(authReducer(state, action)).toEqual(expectedResult);
+  });
+
+  it('should handle the manageUserError action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.errorText = 'An error has occured';
+      draft.verifPassword = '';
+    });
+
+    const action = {
+      type: MANAGE_USER_ERROR,
       error: 'An error has occured',
     };
 

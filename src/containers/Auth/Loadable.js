@@ -8,5 +8,6 @@ import loadable from 'utils/loadable';
 
 const Login = loadable(() => import('./Login'));
 const Register = loadable(() => import('./Register'));
+const Manage = loadable(() => import('./Manage'));
 
-export { Login, Register };
+export { Login, Register, Manage };

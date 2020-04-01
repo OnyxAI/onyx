@@ -7,6 +7,10 @@ import {
   REGISTER_USER,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  MANAGE_USER,
+  MANAGE_USER_ERROR,
+  MANAGE_USER_SUCCESS,
+  UPDATE_USER,
   CHANGE_INPUT,
 } from './constants';
 
@@ -89,5 +93,56 @@ export function registerUserError(error) {
       error,
     });
     dispatch(Toast.error({ text: getMessage(locale, error) }));
+  };
+}
+
+/**
+ * Manage User Actions
+ */
+export function manageUser() {
+  return {
+    type: MANAGE_USER,
+  };
+}
+
+export function manageUserSuccess(accessToken, refreshToken) {
+  localStorage.setItem('access_token', accessToken);
+  localStorage.setItem('refresh_token', refreshToken);
+
+  return (dispatch, getState) => {
+    const { locale } = getState().language;
+
+    dispatch({
+      type: MANAGE_USER_SUCCESS,
+    });
+    dispatch(push('/'));
+    dispatch(
+      Toast.success({
+        text: getMessage(locale, 'onyx.auth.manage_success'),
+      }),
+    );
+  };
+}
+
+export function manageUserError(error) {
+  return (dispatch, getState) => {
+    const { locale } = getState().language;
+
+    dispatch({
+      type: MANAGE_USER_ERROR,
+      error,
+    });
+    dispatch(
+      Toast.error({
+        text: getMessage(locale, error),
+      }),
+    );
+  };
+}
+
+export function updateUser(user) {
+  return {
+    type: UPDATE_USER,
+    user,
   };
 }

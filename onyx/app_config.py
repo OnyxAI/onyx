@@ -1,7 +1,9 @@
 import os
 
 class Config(object):
+    BASE_PATH = os.getcwd()
     ONYX_PATH = os.path.dirname(os.path.realpath(__file__))
+    NEURON_FOLDER = BASE_PATH + '/neurons'
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
     PROPAGATE_EXCEPTIONS = False

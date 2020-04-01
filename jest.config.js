@@ -16,6 +16,7 @@ module.exports = {
       lines: 90,
     },
   },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
     '.*\\.(css|less|styl|scss|sass)$': '<rootDir>/scripts/mocks/cssModule.js',
@@ -27,6 +28,9 @@ module.exports = {
     '<rootDir>/jest.setup.js',
     'react-testing-library/cleanup-after-each',
   ],
+  transform: {
+    '^.+\\.[t|j]sx?$': 'babel-jest',
+  },
   setupFiles: ['raf/polyfill'],
   testRegex: 'tests/.*\\.test\\.js$',
   snapshotSerializers: [],

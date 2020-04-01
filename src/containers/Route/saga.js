@@ -40,12 +40,12 @@ export function* loadVerifyToken() {
 
 // Refresh User
 export function* loadRefreshUser() {
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('refresh_token');
 
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/users/refresh`,
+      url: `${API_URL}/users/refresh_token`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {

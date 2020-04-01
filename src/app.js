@@ -8,6 +8,7 @@ import 'assets/css/uikit.css';
 import 'assets/css/materialize.css';
 
 // Import Custom
+import 'assets/css/colors.css';
 import 'assets/css/custom.css';
 import 'assets/css/button.css';
 
@@ -22,7 +23,6 @@ import 'sanitize.css/sanitize.css';
 import { Context } from 'utils/getContext';
 
 // Import Sockyx
-// import io from 'socket.io-client';
 
 // Import root app
 import App from 'containers/App';
@@ -35,30 +35,29 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./assets/img/favicon.ico';
 /* eslint-enable import/no-unresolved, import/extensions */
 
+import { WS_URL } from 'global/constants';
+
 import configureStore from './configureStore';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-// import { API_URL } from './global/constants';
-
 require('assets/js/uikit-icons'); // eslint-disable-line global-require
 require('assets/js/uikit'); // eslint-disable-line global-require
-
-// const sockyx = io(API_URL);
 
 // Create redux store with history
 const initialState = {};
 export const store = configureStore(initialState, history);
 
 const MOUNT_NODE = document.getElementById('app');
+export const sockyx = new WebSocket(WS_URL);
 
 const render = messages => {
   ReactDOM.render(
     <Provider store={store} context={Context}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <App sockyx={sockyx} />
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

@@ -8,7 +8,9 @@ from onyx.decorators import login_required
 from onyx.models import User, RevokedToken, Nav as NavModel, to_dict
 from passlib.hash import sha256_crypt
 
-class GetAll(Resource):
+import json
+
+class GetAllUser(Resource):
     @login_required
     def get(self):
         try:
@@ -16,7 +18,7 @@ class GetAll(Resource):
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
 
-class Get(Resource):
+class GetUser(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('id')
 
@@ -141,17 +143,20 @@ class Nav(Resource):
         try:
             user = get_jwt_identity()
 
+
             nav = []
 
-            for i in range(1, 6):
-                for k in range(1, 8):
-                    nav.append({
-                        'buttonNumber': str(i),
-                        'position': str(k), 
-                        'url': "",
-                        'color': "#c53838",
-                        'icon': "fa fa-plus"
-                    })
+            with open('onyx/utils/colors.json') as json_file:
+                colors = json.load(json_file)
+                for i in range(1, 6):
+                    for k in range(1, 8):
+                        nav.append({
+                            'buttonNumber': str(i),
+                            'position': str(k), 
+                            'url': "",
+                            'color': colors[user['color']]['secondary_color'],
+                            'icon': "fa fa-plus"
+                        })
 
             nav_all = [to_dict(nav) for nav in NavModel.query.filter_by(user=user['id']).limit(50)]
 
@@ -162,7 +167,7 @@ class Nav(Resource):
 
             return jsonify(status="success", nav=nav)
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="{}".format(e))
 
     @login_required
     def post(self):
@@ -250,9 +255,9 @@ class Manage(Resource):
                     
                 return jsonify(status="success", access_token=access_token, refresh_token=refresh_token)
             else:
-                return jsonify(status="error", message="Password Mismatch")
+                return jsonify(status="error", message="onyx.auth.password_mismatch")
         except Exception as e:
-            return jsonify(status="error", message="{}".format(e)), 500
+            return jsonify(status="error", message="onyx.global.error")
 
 class LogoutAccess(Resource):
     @login_required

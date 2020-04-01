@@ -6,6 +6,7 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+var ExternalsPlugin = require('webpack-externals-plugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -142,6 +143,11 @@ module.exports = require('./webpack.base.babel')({
       hashDigestLength: 20,
     }),
   ],
+  externals: /^(@neurons|neurons)$/i,
+  alias: {
+    onyx: path.resolve(process.cwd(), './src'),
+    '@neurons$': path.resolve(process.cwd(), './neurons'),
+  },
 
   performance: {
     assetFilter: assetFilename =>

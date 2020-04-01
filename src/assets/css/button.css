@@ -177,7 +177,7 @@ button {
 
 .avatar-button {
   position: fixed;
-  bottom: 70px;
+  bottom: 150px;
   right: 5%;
 }
 
@@ -228,10 +228,17 @@ button {
     opacity: 1;
     transition: 1s;
   }
+
+  .hidden-trigger_top:checked ~ .subs .button-nav-8 {
+    transform: translate(0px, 80px) scale(1);
+    opacity: 1;
+    transition: 0.5s;
+  }
+
   .hidden-trigger_top:checked ~ .subs .button-nav-manage {
     transform: translate(5px, 80px) scale(1);
     opacity: 1;
-    transition: 0.5s;
+    transition: 1s;
   }
 
 

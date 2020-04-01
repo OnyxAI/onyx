@@ -8,10 +8,14 @@ import { takeLatest, call } from 'redux-saga/effects';
 import { API_URL } from 'global/constants';
 import request from 'utils/request';
 
-import { LOGIN_USER, REGISTER_USER } from '../constants';
+import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from '../constants';
 import * as AuthAction from '../actions';
 
-import authSaga, { loadLoginUser, loadRegisterUser } from '../saga';
+import authSaga, {
+  loadLoginUser,
+  loadRegisterUser,
+  loadManageUser,
+} from '../saga';
 
 const email = 'test@test.fr';
 const password = '123456';
@@ -34,6 +38,16 @@ const registerState = {
 const loginState = {
   email,
   password,
+};
+
+const manageState = {
+  email,
+  password,
+  verifPassword,
+  username,
+  firstname,
+  lastname,
+  language,
 };
 
 /* eslint-disable redux-saga/yield-effects */
@@ -208,6 +222,102 @@ describe('registerSaga Saga', () => {
     const takeLatestDescriptor = registerSagaFunc.next().value;
     expect(takeLatestDescriptor).toEqual(
       takeLatest(REGISTER_USER, loadRegisterUser),
+    );
+  });
+});
+
+/* eslint-disable redux-saga/yield-effects */
+describe('manageUser Saga', () => {
+  let manageUserGenerator;
+
+  beforeEach(() => {
+    manageUserGenerator = loadManageUser();
+  });
+
+  it('should call the api to manage', () => {
+    localStorage.setItem('access_token', 'my_token');
+
+    manageUserGenerator.next();
+    const callDescriptor = manageUserGenerator.next(manageState).value;
+
+    expect(callDescriptor).toEqual(
+      call(request, {
+        method: 'POST',
+        url: `${API_URL}/users/manage`,
+        headers: { Authorization: `Bearer my_token` },
+        data: {
+          email,
+          password,
+          username,
+          language,
+          firstname,
+          lastname,
+          verifPassword,
+        },
+      }),
+    );
+  });
+
+  it('should call api success for manage User', async () => {
+    const spy = jest.spyOn(AuthAction, 'manageUserSuccess');
+    const result = {
+      status: 'success',
+      access_token: 'my_token',
+      refresh_token: 'my_token',
+    };
+
+    manageUserGenerator.next();
+    manageUserGenerator.next({});
+    manageUserGenerator.next(result);
+
+    expect(spy).toHaveBeenCalledWith('my_token', 'my_token');
+  });
+
+  it('should call api with error for manage user', () => {
+    const spy = jest.spyOn(AuthAction, 'manageUserError');
+
+    const result = {
+      status: 'error',
+      message: 'An error has occured',
+    };
+
+    manageUserGenerator.next();
+    manageUserGenerator.next({});
+    manageUserGenerator.next(result);
+
+    expect(spy).toHaveBeenCalledWith('An error has occured');
+  });
+
+  it('should dispatch an error if it requests doesnt work for manage user', () => {
+    const spy = jest.spyOn(AuthAction, 'manageUserError');
+    manageUserGenerator.next();
+    manageUserGenerator.next({});
+    manageUserGenerator.next();
+
+    expect(spy).toHaveBeenCalledWith('An error has occured');
+  });
+
+  it('should dispatch and error if an error is raised', () => {
+    const spy = jest.spyOn(AuthAction, 'manageUserError');
+    const response = new Error('Some error');
+
+    manageUserGenerator.next();
+    manageUserGenerator.next({});
+    manageUserGenerator.throw(response);
+
+    expect(spy).toHaveBeenCalledWith('Error: Some error');
+  });
+});
+
+describe('manageSaga Saga', () => {
+  const manageSagaFunc = authSaga();
+
+  it('should start task to watch for MANAGE_USER action', () => {
+    manageSagaFunc.next();
+    manageSagaFunc.next();
+    const takeLatestDescriptor = manageSagaFunc.next().value;
+    expect(takeLatestDescriptor).toEqual(
+      takeLatest(MANAGE_USER, loadManageUser),
     );
   });
 });

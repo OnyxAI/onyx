@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scope}.register_header`,
     defaultMessage: 'Register',
   },
+  manage_header: {
+    id: `${scope}.manage_header`,
+    defaultMessage: 'Manage',
+  },
   email: {
     id: `${scope}.email`,
     defaultMessage: 'Email',
@@ -88,5 +92,9 @@ export default defineMessages({
   login_error: {
     id: `${scope}.login_error`,
     defaultMessage: 'Password or Email is wrong',
+  },
+  manage_success: {
+    id: `${scope}.manage_success`,
+    defaultMessage: 'Change with Success !',
   },
 });

@@ -1,5 +1,5 @@
 /**
- * Test loading Plugin
+ * Test loading Neuron
  */
 
 // import { memoryHistory } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { put } from 'redux-saga/effects';
 
 // import configureStore from '../../configureStore';
 import injectReducer from '../injectReducer';
-import loadPlugin from '../loadPlugin';
+import loadNeuron from '../loadNeuron';
 // Fixtures
 const Component = () => null;
 
@@ -37,16 +37,16 @@ function mapStateToProps(state) {
   return state;
 }
 
-describe('loadPlugin Container', () => {
+describe('loadNeuron Container', () => {
   // let store;
-  let PluginComponent;
+  let NeuronComponent;
 
   beforeEach(() => {
     // store = configureStore({}, memoryHistory);
 
     const ReducerComponent = injectReducer({ key: 'test', reducer })(Component);
 
-    PluginComponent = loadPlugin({
+    NeuronComponent = loadNeuron({
       mapDispatchToProps,
       mapStateToProps,
       reducers,
@@ -55,9 +55,9 @@ describe('loadPlugin Container', () => {
   });
 
   it('should set a correct display name', () => {
-    expect(PluginComponent.displayName).toBe('Connect(Component)');
+    expect(NeuronComponent.displayName).toBe('Connect(Component)');
     expect(
-      loadPlugin({
+      loadNeuron({
         mapDispatchToProps,
         mapStateToProps,
         reducers,

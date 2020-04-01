@@ -7,6 +7,7 @@ import { connectRouter } from 'connected-react-router';
 import history from './utils/history';
 import languageProviderReducer from './containers/LanguageProvider/reducer';
 import currentUserReducer from './containers/Route/reducer';
+import neuronsReducer from './containers/Neurons/reducer';
 import globalReducer from './global/reducer';
 
 /**
@@ -17,6 +18,7 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     router: connectRouter(history),
     global: globalReducer,
+    neurons: neuronsReducer,
     currentUser: currentUserReducer,
     ...injectedReducers,
   });

@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 import { Route } from 'react-router-dom';
 export default function Normal({
+  sockyx,
   containerType,
   container: Container,
   ...rest

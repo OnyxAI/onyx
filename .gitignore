@@ -12,8 +12,9 @@ venv
 onyx/db
 !onyx/db/.gitkeep
 
-plugins
-!plugins/.gitkeep
+neuronss
+!neuronss/.gitkeep
+neuron_list.json
 
 # Don't check auto-generated stuff into git
 coverage

@@ -100,13 +100,13 @@ describe('Auth Saga', () => {
   });
 
   it('should call the api to refresh token', () => {
-    localStorage.setItem('access_token', 'my_token');
+    localStorage.setItem('refresh_token', 'my_token');
     const callDescriptor = refreshTokenGenerator.next().value;
 
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/users/refresh`,
+        url: `${API_URL}/users/refresh_token`,
         headers: { Authorization: `Bearer my_token` },
       }),
     );

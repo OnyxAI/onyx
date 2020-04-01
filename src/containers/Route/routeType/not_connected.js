@@ -15,6 +15,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from '../saga';
 
 export default function NotConnected({
+  sockyx,
   verifyTokenFunc,
   isAuthenticated,
   isAuthenticating,
@@ -38,7 +39,7 @@ export default function NotConnected({
           <Route
             {...rest}
             path={path}
-            render={props => <Container {...props} />}
+            render={props => <Container sockyx={sockyx} {...props} />}
           />
         </div>
       ) : (

@@ -8,6 +8,9 @@ import {
   REGISTER_USER,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  MANAGE_USER,
+  MANAGE_USER_SUCCESS,
+  MANAGE_USER_ERROR,
   CHANGE_INPUT,
 } from '../constants';
 
@@ -18,6 +21,9 @@ import {
   registerUser,
   registerUserError,
   registerUserSuccess,
+  manageUser,
+  manageUserError,
+  manageUserSuccess,
   changeInput,
 } from '../actions';
 
@@ -32,7 +38,6 @@ const store = mockStore({
   firstname: '',
   lastname: '',
   language: 'en',
-  isRegistered: false,
   errorText: '',
 });
 
@@ -133,6 +138,47 @@ describe('Login Actions', () => {
       };
 
       store.dispatch(registerUserError(error));
+
+      expect(store.getActions()[0]).toEqual(expectedResult);
+      expect(store.getActions()[1].type).toEqual('onyx/global/ADD_TOAST');
+    });
+  });
+
+  describe('manageUser', () => {
+    it('should return the correct type manageUser', () => {
+      const expectedResult = {
+        type: MANAGE_USER,
+      };
+
+      expect(manageUser()).toEqual(expectedResult);
+    });
+  });
+
+  describe('manageUserSuccess', () => {
+    it('should return the correct type and the passed manageUserSuccess', () => {
+      const expectedResult = {
+        type: MANAGE_USER_SUCCESS,
+      };
+
+      store.dispatch(manageUserSuccess());
+
+      expect(store.getActions()[0]).toEqual(expectedResult);
+      expect(store.getActions()[1].type).toEqual(
+        '@@router/CALL_HISTORY_METHOD',
+      );
+      expect(store.getActions()[2].type).toEqual('onyx/global/ADD_TOAST');
+    });
+  });
+
+  describe('manageUserError', () => {
+    it('should return the correct type and the passed error', () => {
+      const error = 'An error has occured';
+      const expectedResult = {
+        type: MANAGE_USER_ERROR,
+        error,
+      };
+
+      store.dispatch(manageUserError(error));
 
       expect(store.getActions()[0]).toEqual(expectedResult);
       expect(store.getActions()[1].type).toEqual('onyx/global/ADD_TOAST');

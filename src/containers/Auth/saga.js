@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { API_URL } from 'global/constants';
-import { LOGIN_USER, REGISTER_USER } from './constants';
+import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from './constants';
 import makeSelectAuth from './selectors';
 
 import {
@@ -9,6 +9,8 @@ import {
   loginUserSuccess,
   registerUserError,
   registerUserSuccess,
+  manageUserSuccess,
+  manageUserError,
 } from './actions';
 
 // Login User
@@ -69,8 +71,41 @@ export function* loadRegisterUser() {
   }
 }
 
+// Manage User
+export function* loadManageUser() {
+  const token = localStorage.getItem('access_token');
+  const manage = yield select(makeSelectAuth());
+
+  try {
+    const result = yield call(request, {
+      method: 'POST',
+      url: `${API_URL}/users/manage`,
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        email: manage.email,
+        password: manage.password,
+        username: manage.username,
+        language: manage.language,
+        firstname: manage.firstname,
+        lastname: manage.lastname,
+        verifPassword: manage.verifPassword,
+      },
+    });
+    if (result && result.status === 'success') {
+      yield put(manageUserSuccess(result.access_token, result.refresh_token));
+    } else if (result && result.status === 'error') {
+      yield put(manageUserError(result.message));
+    } else {
+      yield put(manageUserError('onyx.global.error'));
+    }
+  } catch (error) {
+    yield put(manageUserError(error.toString()));
+  }
+}
+
 // Individual exports for testing
 export default function* authSaga() {
   yield takeLatest(LOGIN_USER, loadLoginUser);
   yield takeLatest(REGISTER_USER, loadRegisterUser);
+  yield takeLatest(MANAGE_USER, loadManageUser);
 }
