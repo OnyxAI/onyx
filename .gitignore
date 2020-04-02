@@ -12,8 +12,10 @@ venv
 onyx/db
 !onyx/db/.gitkeep
 
+onyx/config/onyx.cfg
+
 neurons
-!neurons/.gitkeep
+!neurons/__init__.py
 neuron_list.json
 
 # Don't check auto-generated stuff into git

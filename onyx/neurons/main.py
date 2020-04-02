@@ -7,7 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/3.0/fr/
 You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
-import os, sys, time
+import os, sys, time, json
 from os.path import join
 from threading import Timer
 from onyx.sockyx.client.ws import WebsocketClient
@@ -15,6 +15,7 @@ from onyx.sockyx.message import Message
 from onyx.neurons.core import NEURONS_DIR, MainModule, load_neuron, create_neuron_descriptor
 from onyx.utils.log import getLogger
 from onyx.utils import connected
+from onyx.neurons.brain import brain
 
 logger = getLogger('Neuron')
 
@@ -79,8 +80,6 @@ def _watch_neurons():
                 # checking if neuron was modified
                 elif neuron.get("instance") and modified > last_modified_neuron:
                     # checking if neuron should be reloaded
-                    if not neuron["instance"].reload_neuron:
-                        continue
                     logger.debug("Reloading Neuron: " + neuron_folder)
                     # removing listeners and stopping threads
                     neuron["instance"].shutdown()
@@ -90,13 +89,34 @@ def _watch_neurons():
         # get the last modified neuron
         modified_dates = []
         for i in loaded_neurons.values():
-            modified_dates.append(i.get("last_modified"))
+            if i.get("last_modified"):
+                modified_dates.append(i.get("last_modified"))
 
         if len(modified_dates) > 0:
             last_modified_neuron = max(modified_dates)
 
         # Pause briefly before beginning next scan
         time.sleep(2)
+
+def _talk(event):
+    message = event.data['utterance']
+    token = event.data['token']
+
+    # Training brain
+    brain.train()
+
+    # Asking Brain for an answer
+    answer = brain.calc_intent(message)
+
+    response = {
+        'name': answer.name,
+        'sent': answer.sent,
+        'matches': answer.matches,
+        'conf': answer.conf,
+        'token': token
+    }
+
+    ws.emit(Message('neuron:' + answer.name, response))
 
 def main():
     global ws
@@ -110,6 +130,7 @@ def main():
     ws.on('message', _log)
 
     ws.on('open', _load_neurons)
+    ws.on('onyx_recognizer:utterance', _talk)
     ws.run_forever()
 
 

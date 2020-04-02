@@ -14,7 +14,7 @@ export default function Chat({ sockyx, user }) {
         const addingMessage = {
           author: 'them',
           type: 'text',
-          data: { text: message.data },
+          data: { text: message.data.utterance },
         };
         addMessage([...messageList, addingMessage]);
       }
@@ -26,7 +26,10 @@ export default function Chat({ sockyx, user }) {
 
     const onyxMessage = {
       type: 'onyx_recognizer:utterance',
-      data: { utterances: [message] },
+      data: {
+        utterance: message.data.text,
+        token: localStorage.getItem('access_token'),
+      },
     };
     sockyx.send(JSON.stringify(onyxMessage));
   }

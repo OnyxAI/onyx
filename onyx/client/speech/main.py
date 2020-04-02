@@ -26,9 +26,26 @@ from onyx.sockyx.message import Message
 
 stt = STTFactory.create()
 tts = TTSFactory.create()
+token = config.get('Base', 'api_token')
 
 LOG = getLogger('SpeechClient')
 import speech_recognition as sr
+
+
+def handle_speak(event):
+    utterance = event.data.get('utterance')
+    tts.execute(utterance)
+
+
+def connect():
+    ws.run_forever()
+
+ws = WebsocketClient()
+ws.on('speak', handle_speak)
+
+event_thread = Thread(target=connect)
+event_thread.setDaemon(True)
+event_thread.start()
 
 class Detector:
 
@@ -84,7 +101,8 @@ class Detector:
 				def onConnected(event=None):
 					print ("Sending message...")
 					payload = {
-					        'utterances': [result]
+					        'utterance': result,
+							'token': token
 					}
 					ws.emit(Message('onyx_recognizer:utterance', payload))
 					ws.emit(Message('onyx_detect_finish'))
@@ -128,5 +146,5 @@ class Detector:
 
 
 if __name__ == "__main__":
-    detector = Detector()
-    detector.start()
+	detector = Detector()
+	detector.start()

@@ -1,6 +1,7 @@
 # basics
 
 psutil
+moment
 
 # Flask
 
@@ -39,3 +40,7 @@ gtts
 pytest
 webtest
 factory-boy==2.8.1
+
+# NLU
+
+padatious

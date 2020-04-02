@@ -51,7 +51,7 @@ module.exports = require('./webpack.base.babel')({
   },
   externals: {},
   alias: {
-    onyx: path.resolve(process.cwd(), './src'),
+    '@onyx': path.resolve(process.cwd(), './src'),
     '@neurons': path.resolve(process.cwd(), './neurons'),
   },
 });

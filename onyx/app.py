@@ -6,7 +6,6 @@ from onyx.core import api
 from onyx.extensions import db
 from onyx.app_config import DevConfig
 from onyx.models import RevokedToken
-
 from onyx.api.neurons import Neurons
 
 neurons = Neurons()
@@ -18,12 +17,10 @@ def create_app(config=DevConfig):
     app.config.from_object(config)
 
     register_extensions(app)
-
+    
     with app.app_context():
         db.create_all()
 
-    neurons.createNeuronFile(config.NEURON_FOLDER)
-    
     return app
 
 def register_extensions(app):

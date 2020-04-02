@@ -14,7 +14,7 @@ logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 logger = logging.getLogger("ONYX")
 logger.setLevel(logging.DEBUG)
 
-logging.getLogger('werkzeug').setLevel(logging.ERROR)
+#logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 def getLogger(name="ONYX"):
     return logging.getLogger(name)

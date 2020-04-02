@@ -104,7 +104,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      onyx: path.resolve('../../app'),
+      "@onyx": path.resolve('../../src'),
       react: path.resolve(__dirname, '../../node_modules/react/'),
       "react-redux": path.resolve(__dirname, '../../node_modules/react-redux/'),
       "react-router-dom": path.resolve(__dirname, '../../node_modules/react-router-dom/'),

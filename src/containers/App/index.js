@@ -49,7 +49,7 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
     if (neurons.neurons.length) {
       const all_neurons = neurons.neurons.map(neuron => {
         const waitForChunk = () => {
-          return import(/* webpackIgnore: true */`@neurons/${neuron.raw_name}/dist/index.js`)
+          return import(`@neurons/${neuron.raw_name}/index.js`)
             .then(module => module);
         }
 
