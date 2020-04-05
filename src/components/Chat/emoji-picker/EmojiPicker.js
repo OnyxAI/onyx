@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import PropTypes from 'prop-types';
 import EmojiConvertor from 'emoji-js';
 import emojiData from './emojiData.json';
 
@@ -18,7 +21,7 @@ const EmojiPicker = ({ onEmojiPicked, filter }) => (
               {category.name}
             </div>
           )}
-          {filteredEmojis.map(({ char, name }) => (
+          {filteredEmojis.map(({ char }) => (
             <span
               key={char}
               className="sc-emoji-picker--emoji"
@@ -32,5 +35,10 @@ const EmojiPicker = ({ onEmojiPicked, filter }) => (
     })}
   </div>
 );
+
+EmojiPicker.propTypes = {
+  onEmojiPicked: PropTypes.func,
+  filter: PropTypes.string,
+};
 
 export default EmojiPicker;

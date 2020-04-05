@@ -60,10 +60,11 @@ export default function UserConnected({
 }
 
 UserConnected.propTypes = {
+  sockyx: PropTypes.array,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   path: PropTypes.string,
-  container: PropTypes.func,
+  container: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   containerType: PropTypes.string,

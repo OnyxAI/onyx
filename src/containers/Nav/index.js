@@ -303,6 +303,7 @@ export function Nav({
 }
 
 Nav.propTypes = {
+  sockyx: PropTypes.array,
   user: PropTypes.object,
   logoutUserFunc: PropTypes.func,
   getNavFunc: PropTypes.func,

@@ -1,10 +1,10 @@
-import { addToast, removeToast } from '../actions';
+import Toast, { addToast, removeToast } from '../actions';
 
 import { ADD_TOAST, REMOVE_TOAST } from '../constants';
 
 describe('Global actions', () => {
-  describe('Add toast Action', () => {
-    it('should dispatch adding toast', () => {
+  describe('Toasts action', () => {
+    it('should dispatch adding info toast', () => {
       const expected = {
         type: ADD_TOAST,
         payload: {
@@ -13,7 +13,19 @@ describe('Global actions', () => {
           duration: 5000,
         },
       };
-      expect(addToast({})).toEqual(expected);
+      expect(Toast.info({})).toEqual(expected);
+    });
+
+    it('should dispatch adding toast', () => {
+      const expected = {
+        type: ADD_TOAST,
+        payload: {
+          id: 1,
+          color: '#ffffff',
+          duration: 5000,
+        },
+      };
+      expect(addToast({ color: '#ffffff' })).toEqual(expected);
     });
 
     it('should dispatch removing toast', () => {

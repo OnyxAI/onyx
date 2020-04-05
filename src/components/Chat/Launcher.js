@@ -3,20 +3,23 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-this-in-sfc */
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import launcherIcon from 'assets/img/chat/logo-no-bg.svg';
-import incomingMessageSound from 'assets/img/chat/sounds/notification.mp3';
+// import incomingMessageSound from 'assets/img/chat/sounds/notification.mp3';
 import launcherIconActive from 'assets/img/chat/close-icon.png';
 
 import ChatWindow from './ChatWindow';
 
+/**
+export function playIncomingMessageSound() {
+  const audio = new Audio(incomingMessageSound);
+  audio.play();
+}
+*/
+
 function Launcher(props) {
   const [isOpen, setIsOpen] = useState(false);
-
-  if (props.isOpen) {
-    setIsOpen(props.isOpen);
-  }
 
   const classList = [
     'sc-launcher darken-1',
@@ -24,30 +27,22 @@ function Launcher(props) {
     props.color,
   ];
 
-  function playIncomingMessageSound() {
-    const audio = new Audio(incomingMessageSound);
-    audio.play();
-  }
-
   function handleClick() {
-    if (props.handleClick !== undefined) {
-      props.handleClick();
-    } else {
-      setIsOpen(!isOpen);
-    }
+    setIsOpen(!isOpen);
   }
 
+  /** Play a sound 
   useEffect(() => {
     if (props.mute) {
       return;
     }
     const nextMessage = props.messageList[props.messageList.length - 1];
     const isIncoming = (nextMessage || {}).author === 'them';
-    const isNew = props.messageList.length > props.messageList.length;
-    if (isIncoming && isNew) {
+    if (isIncoming) {
       playIncomingMessageSound();
     }
-  }, [props]);
+  }, [props.messageList.length]);
+  */
 
   return (
     <div id="sc-launcher">
@@ -70,7 +65,7 @@ function Launcher(props) {
   );
 }
 
-const MessageCount = props => {
+export const MessageCount = props => {
   if (props.count === 0 || props.isOpen === true) {
     return null;
   }
@@ -80,7 +75,7 @@ const MessageCount = props => {
 MessageCount.propTypes = {
   count: PropTypes.number,
   isOpen: PropTypes.bool,
-}
+};
 
 Launcher.propTypes = {
   color: PropTypes.string,
@@ -88,10 +83,7 @@ Launcher.propTypes = {
   agentProfile: PropTypes.object,
   onFilesSelected: PropTypes.array,
   newMessagesCount: PropTypes.number,
-  isOpen: PropTypes.bool,
-  handleClick: PropTypes.func,
   messageList: PropTypes.arrayOf(PropTypes.object),
-  mute: PropTypes.bool,
   showEmoji: PropTypes.bool,
 };
 

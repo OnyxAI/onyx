@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Launcher from './Launcher';
 
 import 'assets/css/chat/index';
 
-export default function Chat({ sockyx, user }) {
+function Chat({ sockyx, user }) {
   const [messageList, addMessage] = useState([]);
 
   useEffect(() => {
@@ -40,7 +41,6 @@ export default function Chat({ sockyx, user }) {
         agentProfile={{
           teamName: 'Onyx',
         }}
-        mute
         color={user.color}
         onMessageWasSent={onMessageWasSent}
         messageList={messageList}
@@ -49,3 +49,10 @@ export default function Chat({ sockyx, user }) {
     </div>
   );
 }
+
+Chat.propTypes = {
+  sockyx: PropTypes.object,
+  user: PropTypes.object,
+};
+
+export default Chat;

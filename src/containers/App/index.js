@@ -6,7 +6,6 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  *
  */
-
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
@@ -39,7 +38,7 @@ import neuronsSaga from '../Neurons/saga';
 export function App({ neurons, getNeuronsFunc, sockyx }) {
   useInjectSaga({ key: 'neurons', saga: neuronsSaga });
 
-  const [all_neurons, setNeurons] = useState([]);
+  const [allNeurons, setNeurons] = useState([]);
 
   useEffect(() => {
     getNeuronsFunc();
@@ -47,27 +46,28 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
 
   useMemo(() => {
     if (neurons.neurons.length) {
-      const all_neurons = neurons.neurons.map(neuron => {
-        const waitForChunk = () => {
-          return import(`@neurons/${neuron.raw_name}/index.js`)
-            .then(module => module);
-        }
+      const neuronsPromise = neurons.neurons.map(neuron => {
+        const waitForChunk = () =>
+          import(`@neurons/${neuron.raw_name}/index.js`).then(module => module);
 
         return new Promise(resolve =>
           waitForChunk().then(file => {
             resolve({ name: neuron.raw_name, data: file.default });
-          })
-        ).catch((e) => {
+          }),
+        ).catch(e => {
           // eslint-disable-next-line no-console
           console.error(`Error loading neuron "${neuron.raw_name}": ${e}`);
         });
       });
 
-      Promise.all(all_neurons).then(res => {
-        const all_neurons = res.reduce((prev, current) => prev.concat(current), []);
+      Promise.all(neuronsPromise).then(res => {
+        const neuronsAll = res.reduce(
+          (prev, current) => prev.concat(current),
+          [],
+        );
 
-        if (all_neurons.length) {
-          setNeurons(all_neurons);
+        if (neuronsAll.length) {
+          setNeurons(neuronsAll);
         }
       });
     }
@@ -132,9 +132,8 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
               path="/user/manage"
             />
 
-            {all_neurons.map(neuron => {
-
-              return neuron.data.map(route => (
+            {allNeurons.map(neuron =>
+              neuron.data.map(route => (
                 <CustomRoute
                   sockyx={sockyx}
                   exact
@@ -144,8 +143,8 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
                   routeType="user_connected"
                   path={route.url}
                 />
-              ));
-            })}
+              )),
+            )}
 
             <CustomRoute
               sockyx={sockyx}
@@ -163,6 +162,7 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
 }
 
 App.propTypes = {
+  sockyx: PropTypes.array,
   neurons: PropTypes.array,
   getNeuronsFunc: PropTypes.func,
 };

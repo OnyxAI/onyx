@@ -25,6 +25,7 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'arrow-body-style': [2, 'as-needed'],
+    "no-param-reassign": 0,
     'class-methods-use-this': 0,
     'import/imports-first': 0,
     'import/newline-after-import': 0,
@@ -34,13 +35,8 @@ module.exports = {
     'import/no-unresolved': 2,
     'import/no-webpack-loader-syntax': 0,
     'import/prefer-default-export': 0,
-    indent: [
-      2,
-      2,
-      {
-        SwitchCase: 1,
-      },
-    ],
+    "template-curly-spacing" : "off",
+    indent: "off",
     'jsx-a11y/aria-props': 2,
     'jsx-a11y/heading-has-content': 0,
     'jsx-a11y/label-has-associated-control': [

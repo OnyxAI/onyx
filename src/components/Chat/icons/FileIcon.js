@@ -45,7 +45,7 @@ function FileIcon({ onFocus, onBlur, onClick }) {
   );
 }
 
-FileIcon.propsTypes = {
+FileIcon.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,

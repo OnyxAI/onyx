@@ -3,6 +3,7 @@ dist/
 node_modules/
 scripts/generators/
 scripts/scripts/
+onyx/
 src/assets/
 package-lock.json
 yarn.lock

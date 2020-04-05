@@ -40,7 +40,7 @@ function Message({ message, color }) {
 
 Message.propTypes = {
   color: PropTypes.string,
-  message: PropTypes.array,
+  message: PropTypes.object,
 };
 
 export default Message;

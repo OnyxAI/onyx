@@ -48,15 +48,6 @@ const navReducer = (state = initialState, action) =>
       case ADD_NAV:
         draft.position = action.position;
         draft.buttonNumber = action.buttonNumber;
-        if (draft.icon === '') {
-          draft.icon = initialState.icon;
-        }
-        if (draft.url === '') {
-          draft.url = initialState.url;
-        }
-        if (draft.color === '') {
-          draft.color = initialState.color;
-        }
         break;
       case ADD_NAV_SUCCESS:
         draft.position = '';

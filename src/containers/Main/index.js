@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 export function Main() {
-  return <div>Welcome to main !</div>;
+  return <div>Welcome to main</div>;
 }
 
 const mapStateToProps = createStructuredSelector({});

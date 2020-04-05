@@ -20,9 +20,27 @@ describe('globalReducer', () => {
     });
   });
 
-  it('remove a toast', () => {
+  it('remove a toast which do not exist', () => {
     expect(
       globalReducer(undefined, {
+        type: REMOVE_TOAST,
+        payload: 1,
+      }),
+    ).toEqual({
+      toasts: [],
+    });
+  });
+
+  it('remove a toast', () => {
+    const state = {
+      toasts: [
+        {
+          id: 1,
+        },
+      ],
+    };
+    expect(
+      globalReducer(state, {
         type: REMOVE_TOAST,
         payload: 1,
       }),

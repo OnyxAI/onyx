@@ -6,7 +6,7 @@ const EmojiMessage = props => (
 );
 
 EmojiMessage.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
 };
 
 export default EmojiMessage;

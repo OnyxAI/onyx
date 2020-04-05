@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function PopupWindow({ isOpen, children, onInputChange, onClickedOutside }){
+function PopupWindow({ isOpen, children, onInputChange, onClickedOutside }) {
   let scLauncher = null;
   const [emojiPopup, setEmoji] = useState({});
 
-  function interceptLauncherClick(e){
+  function interceptLauncherClick(e) {
     const clickedOutside = !emojiPopup.contains(e.target) && isOpen;
     if (clickedOutside) {
       onClickedOutside(e);
@@ -14,9 +14,15 @@ function PopupWindow({ isOpen, children, onInputChange, onClickedOutside }){
 
   useEffect(() => {
     scLauncher = document.querySelector('#sc-launcher');
-    scLauncher.addEventListener('click', interceptLauncherClick);
+    if (scLauncher) {
+      scLauncher.addEventListener('click', interceptLauncherClick);
+    }
 
-    return scLauncher.removeEventListener('click', interceptLauncherClick);
+    return () => {
+      if (scLauncher) {
+        scLauncher.removeEventListener('click', interceptLauncherClick);
+      }
+    };
   });
 
   return (
@@ -38,6 +44,6 @@ PopupWindow.propTypes = {
   onClickedOutside: PropTypes.func,
   onInputChange: PropTypes.func,
   children: PropTypes.object,
-}
+};
 
 export default PopupWindow;

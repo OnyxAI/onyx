@@ -122,10 +122,11 @@ export function OnyxRoute({
 }
 
 OnyxRoute.propTypes = {
+  sockyx: PropTypes.array,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   currentUser: PropTypes.object,
-  container: PropTypes.func,
+  container: PropTypes.object,
   routeType: PropTypes.string,
   containerType: PropTypes.string,
 };

@@ -10,7 +10,11 @@ function MessageList(props) {
   });
 
   return (
-    <div className="sc-message-list" ref={el => setScroll(el)}>
+    <div
+      className="sc-message-list"
+      scrollList={scrollList}
+      ref={el => setScroll(el)}
+    >
       {props.messages.map((message, i) => (
         <Message color={props.color} message={message} key={i.toString()} />
       ))}

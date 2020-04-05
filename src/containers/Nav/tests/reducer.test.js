@@ -6,13 +6,13 @@ import {
   changeOnManage,
   changeNavUrl,
   addNav,
-  addNavSuccess,
   addNavError,
   removeNav,
   removeNavError,
   getNavSuccess,
   getNavError,
 } from '../actions';
+import { ADD_NAV_SUCCESS } from '../constants';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('authReducer', () => {
@@ -80,12 +80,17 @@ describe('authReducer', () => {
     const expectedResult = produce(state, draft => {
       draft.position = '';
       draft.buttonNumber = '';
-      draft.color = 'rgb(197, 56, 56)';
-      draft.icon = 'fa fa-home';
-      draft.url = '/';
+      draft.color = '';
+      draft.icon = '';
+      draft.url = '';
     });
 
-    expect(navReducer(state, addNavSuccess())).toEqual(expectedResult);
+    const action = {
+      type: ADD_NAV_SUCCESS,
+      error: 'An error has occured',
+    };
+
+    expect(navReducer(state, action)).toEqual(expectedResult);
   });
 
   it('should handle the addNavError action correctly', () => {

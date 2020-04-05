@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import SendIcon from './icons/SendIcon';
@@ -37,14 +38,14 @@ function UserInput(props) {
     fileUploadButton.click();
   }
 
-  function toggleEmojiPicker(e){
+  function toggleEmojiPicker(e) {
     e.preventDefault();
     if (!state.emojiPickerIsOpen) {
       setState({ ...state, emojiPickerIsOpen: true });
     }
   }
 
-  function closeEmojiPicker(e){
+  function closeEmojiPicker(e) {
     if (emojiPickerButton.contains(e.target)) {
       e.stopPropagation();
       e.preventDefault();
@@ -71,7 +72,7 @@ function UserInput(props) {
     }
   }
 
-  function handleEmojiPicked(emoji){
+  function handleEmojiPicked(emoji) {
     setState({ ...state, emojiPickerIsOpen: false });
     if (state.inputHasText) {
       userInput.innerHTML += emoji;
@@ -82,7 +83,7 @@ function UserInput(props) {
         data: { emoji },
       });
     }
-  };
+  }
 
   function handleEmojiFilterChange(event) {
     const emojiFilter = event.target.value;
@@ -120,7 +121,7 @@ function UserInput(props) {
           name="files[]"
           multiple
           ref={e => {
-            setFileUploadButton(e)
+            setFileUploadButton(e);
           }}
           onChange={onFilesSelected}
         />
@@ -140,7 +141,7 @@ function UserInput(props) {
           setState({ ...state, inputActive: false });
         }}
         ref={e => {
-          setUserInput(e)
+          setUserInput(e);
         }}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
