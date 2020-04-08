@@ -12,10 +12,10 @@ from os.path import join
 from threading import Timer
 from onyx.sockyx.client.ws import WebsocketClient
 from onyx.sockyx.message import Message
-from onyx.neurons.core import NEURONS_DIR, MainModule, load_neuron, create_neuron_descriptor
+from onyx.brains.core import NEURONS_DIR, MainModule, load_neuron, create_neuron_descriptor
 from onyx.utils.log import getLogger
 from onyx.utils import connected
-from onyx.neurons.brain import brain
+from onyx.brains.brain import brain
 
 logger = getLogger('Neuron')
 
@@ -60,7 +60,7 @@ def _watch_neurons():
         if os.path.exists(NEURONS_DIR):
             # checking neurons dir and getting all neurons there
             list = filter(lambda x: os.path.isdir(os.path.join(NEURONS_DIR, x)), os.listdir(NEURONS_DIR))
-            
+
             for neuron_folder in list:
 
                 if neuron_folder not in loaded_neurons:

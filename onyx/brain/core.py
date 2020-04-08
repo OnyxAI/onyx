@@ -11,7 +11,7 @@ import os, imp
 from onyx.config import Config
 from onyx.sockyx.message import Message
 from onyx.utils.log import getLogger
-from onyx.neurons.brain import brain
+from onyx.brain.brain import brain
 
 logger = getLogger("Neurons")
 

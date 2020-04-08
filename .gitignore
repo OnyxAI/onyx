@@ -15,8 +15,6 @@ data
 onyx/db
 !onyx/db/.gitkeep
 
-neurons
-!neurons/__init__.py
 neuron_list.json
 
 # Don't check auto-generated stuff into git

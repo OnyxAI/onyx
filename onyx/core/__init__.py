@@ -1,5 +1,5 @@
 from flask_restful import Api
-from onyx.neurons.core import get_api
+from onyx.brain.core import get_api
 from onyx.config import Config
 
 api = Api()
