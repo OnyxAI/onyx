@@ -25,7 +25,6 @@ neuron_reload_thread = None
 
 def _load_neurons():
     global ws, loaded_neurons, neuron_reload_thread
-
     check_connection()
 
     # Creating a thread to launch and monitors all neurons

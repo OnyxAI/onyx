@@ -12,7 +12,7 @@ function MessageList(props) {
   return (
     <div
       className="sc-message-list"
-      scrollList={scrollList}
+      scrolllist={scrollList}
       ref={el => setScroll(el)}
     >
       {props.messages.map((message, i) => (

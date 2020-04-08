@@ -7,9 +7,10 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
-import 'assets/css/auth.css';
-import Logo from 'assets/img/logo/blue.png';
+import '@onyx/assets/css/auth.css';
+import Logo from '@onyx/assets/img/logo/blue.png';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -40,20 +41,20 @@ export function Home() {
               src={Logo}
             />
             <div className="uk-form-row uk-padding-small">
-              <a
+              <Link
                 className="uk-button uk-button-primary uk-button-large"
-                href="/login"
+                to="/login"
               >
                 <FormattedMessage id="onyx.auth.login_header" />
-              </a>
+              </Link>
             </div>
             <div className="uk-form-row uk-padding-small">
-              <a
+              <Link
                 className="uk-button uk-button-primary uk-button-large"
-                href="/register"
+                to="/register"
               >
                 <FormattedMessage id="onyx.auth.register_header" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

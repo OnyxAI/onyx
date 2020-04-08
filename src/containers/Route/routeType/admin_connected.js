@@ -9,10 +9,10 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
-import Loader from 'components/Loader';
-import Nav from 'containers/Nav/Loadable';
+import Loader from '@onyx/components/Loader';
+import Nav from '@onyx/containers/Nav/Loadable';
 
-import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
 import saga from '../saga';
 
 export default function AdminConnected({
@@ -29,16 +29,18 @@ export default function AdminConnected({
 }) {
   useInjectSaga({ key: 'currentUser', saga });
 
+  const token = localStorage.getItem('access_token');
+
   useEffect(() => {
     verifyTokenFunc();
-  }, [0]);
+  }, [token]);
 
   return (
     <div>
       {isAuthenticating ? (
         <Loader />
       ) : isAuthenticated ? (
-        user.account_type === 1 && (
+        user.account_type === 1 ? (
           <div>
             {rest.nav && (
               <Nav
@@ -57,6 +59,8 @@ export default function AdminConnected({
               />
             </div>
           </div>
+        ) : (
+          <Redirect to="/" />
         )
       ) : (
         <Redirect to="/hello" />
@@ -66,11 +70,11 @@ export default function AdminConnected({
 }
 
 AdminConnected.propTypes = {
-  sockyx: PropTypes.array,
+  sockyx: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   path: PropTypes.string,
-  container: PropTypes.object,
+  container: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   containerType: PropTypes.string,

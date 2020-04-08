@@ -1,15 +1,28 @@
 import os
 
 class Config(object):
+    LANG = 'fr-FR'
     BASE_PATH = os.getcwd()
     ONYX_PATH = os.path.dirname(os.path.realpath(__file__))
-    NEURON_FOLDER = BASE_PATH + '/neurons'
+    DATA_PATH = BASE_PATH + '/data'
+    NEURON_PATH = BASE_PATH + '/neurons'
     SECRET_KEY = 'change me please'
     SECURITY_PASSWORD_SALT= 'change me please'
     PROPAGATE_EXCEPTIONS = False
     JWT_SECRET_KEY = 'change me please'
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+
+    STT = 'google'
+    TTS = 'google'
+
+    WS_HOST = '0.0.0.0'
+    WS_PORT = 8081
+    WS_ROUTE = '/core'
+    WS_SSL = False
+
+    WAV = 'aplay #1'
+    MP3 = 'mplayer #1'
 
 
 class ProdConfig(Config):

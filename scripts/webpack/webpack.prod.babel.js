@@ -1,12 +1,10 @@
 // Important modules this config uses
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin-compatible-5');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OfflinePlugin = require('offline-plugin');
-const { HashedModuleIdsPlugin } = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
+// const OfflinePlugin = require('offline-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
-var ExternalsPlugin = require('webpack-externals-plugin');
+const ExternalsPlugin = require('webpack-externals-plugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -24,46 +22,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          warnings: false,
-          compress: {
-            comparisons: false,
-          },
-          parse: {},
-          mangle: true,
-          output: {
-            comments: false,
-            ascii_only: true,
-          },
-        },
-        parallel: true,
-        cache: true,
-        sourceMap: true,
-      }),
-    ],
-    nodeEnv: 'production',
-    sideEffects: true,
-    concatenateModules: true,
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: 10,
-      minSize: 0,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            const packageName = module.context.match(
-              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
-            )[1];
-            return `npm.${packageName.replace('@', '')}`;
-          },
-        },
-      },
-    },
+    minimize: false,
   },
 
   plugins: [
@@ -83,37 +42,6 @@ module.exports = require('./webpack.base.babel')({
         minifyURLs: true,
       },
       inject: true,
-    }),
-
-    // Put it in the end to capture all the HtmlWebpackPlugin's
-    // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
-    new OfflinePlugin({
-      relativePaths: false,
-      publicPath: '/',
-      appShell: '/',
-
-      // No need to cache .htaccess. See http://mxs.is/googmp,
-      // this is applied before any match in `caches` section
-      excludes: ['.htaccess'],
-
-      caches: {
-        main: [':rest:'],
-
-        // All chunks marked as `additional`, loaded after main section
-        // and do not prevent SW to install. Change to `optional` if
-        // do not want them to be preloaded at all (cached only when first loaded)
-        additional: ['*.chunk.js'],
-      },
-
-      // Removes warning for about `additional` section usage
-      safeToUseOptionalCaches: true,
-    }),
-
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0.8,
     }),
 
     new WebpackPwaManifest({
@@ -136,16 +64,10 @@ module.exports = require('./webpack.base.babel')({
         },
       ],
     }),
-
-    new HashedModuleIdsPlugin({
-      hashFunction: 'sha256',
-      hashDigest: 'hex',
-      hashDigestLength: 20,
-    }),
   ],
   externals: /^(@neurons|neurons)$/i,
   alias: {
-    onyx: path.resolve(process.cwd(), './src'),
+    '@onyx': path.resolve(process.cwd(), './src'),
     '@neurons$': path.resolve(process.cwd(), './neurons'),
   },
 

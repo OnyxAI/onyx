@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import 'assets/css/toast.css';
+import '@onyx/assets/css/toast.css';
 
 class Toast extends Component {
   componentDidMount() {

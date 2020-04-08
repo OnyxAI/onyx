@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import Loader from 'components/Loader';
+import Loader from '@onyx/components/Loader';
 
 const loadable = (
   importFunc,

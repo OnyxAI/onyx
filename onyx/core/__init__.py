@@ -1,14 +1,15 @@
 from flask_restful import Api
 from onyx.neurons.core import get_api
-from onyx.app_config import Config
+from onyx.config import Config
 
 api = Api()
 
 # Importing each route
 from .User import *
+from .Settings import *
 from .Neurons import *
 
-all_neurons = get_api(Config().NEURON_FOLDER)
+all_neurons = get_api(Config.NEURON_PATH)
 API_ROUTES = []
     
 for neuron in all_neurons:

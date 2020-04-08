@@ -11,8 +11,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import injectNeuron from 'utils/loadNeuron';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
+import injectNeuron from '@onyx/utils/loadNeuron';
 
 import makeSelectCurrentUser from './selectors';
 
@@ -75,6 +75,28 @@ export function OnyxRoute({
       );
 
     case 'admin_connected':
+      if (containerType === 'neuron') {
+        const Neuron = injectNeuron({
+          mapDispatchToProps: container.mapDispatchToProps,
+          mapStateToProps: container.mapStateToProps,
+          reducers: container.reducers,
+          sagas: container.sagas,
+        })(container.component);
+
+        return (
+          <AdminConnected
+            sockyx={sockyx}
+            container={Neuron}
+            containerType={containerType}
+            verifyTokenFunc={verifyTokenFunc}
+            user={currentUser.user}
+            logoutUserFunc={logoutUserFunc}
+            isAuthenticated={currentUser.isAuthenticated}
+            isAuthenticating={currentUser.isAuthenticating}
+            {...rest}
+          />
+        );
+      }
       return (
         <AdminConnected
           sockyx={sockyx}
@@ -122,11 +144,11 @@ export function OnyxRoute({
 }
 
 OnyxRoute.propTypes = {
-  sockyx: PropTypes.array,
+  sockyx: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   currentUser: PropTypes.object,
-  container: PropTypes.object,
+  container: PropTypes.func,
   routeType: PropTypes.string,
   containerType: PropTypes.string,
 };

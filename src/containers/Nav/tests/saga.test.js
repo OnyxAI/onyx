@@ -4,8 +4,8 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { API_URL } from 'global/constants';
-import request from 'utils/request';
+import { API_URL } from '@onyx/global/constants';
+import request from '@onyx/utils/request';
 import { GET_NAV, ADD_NAV, REMOVE_NAV } from '../constants';
 import navSaga, { loadAddNav, loadGetNav, loadRemoveNav } from '../saga';
 import * as NavAction from '../actions';

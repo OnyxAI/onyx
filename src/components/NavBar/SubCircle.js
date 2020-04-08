@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Modal, Collapsible, CollapsibleItem } from 'react-materialize';
 
-import { getRoutes } from 'utils/getRoutes';
+import { getMessage } from '@onyx/i18n';
 
 import { ChromePicker } from 'react-color';
 import { Link } from 'react-router-dom';
@@ -30,10 +30,11 @@ function SubCircle({
   color,
   classColor,
   icon,
+  allRoutes,
 }) {
   return url === '' ? (
     <Modal
-      header={<FormattedMessage {...messages.modal_header} />}
+      header={getMessage(language.substring(0, 2), messages.modal_header.id)}
       actions={<p />}
       trigger={
         <button
@@ -64,28 +65,26 @@ function SubCircle({
             />
           </div>
           <div className="uk-padding-small">
-            <FormattedMessage {...messages.url}>
-              {message => (
-                <select
-                  name="url"
-                  className="uk-select uk-form-large"
-                  value={urlInput}
-                  onChange={onChangeNavUrl}
-                  required
+            <label htmlFor="url">
+              <FormattedMessage {...messages.url} />
+            </label>
+            <select
+              name="url"
+              className="uk-select uk-form-large"
+              value={urlInput}
+              onChange={onChangeNavUrl}
+              required
+            >
+              {allRoutes.map((item, index) => (
+                <option
+                  key={index.toString()}
+                  value={item.url}
+                  onClick={() => onChangeNavIcon(item.icon)}
                 >
-                  <option defaultValue>{message}</option>
-                  {getRoutes(language).map((item, index) => (
-                    <option
-                      key={index.toString()}
-                      value={item.url}
-                      onClick={() => onChangeNavIcon(item.icon)}
-                    >
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </FormattedMessage>
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="uk-padding-small center">
             <button
@@ -161,6 +160,7 @@ SubCircle.propTypes = {
   url: PropTypes.string,
   icon: PropTypes.string,
   language: PropTypes.string,
+  allRoutes: PropTypes.array,
 };
 
 export default memo(SubCircle);

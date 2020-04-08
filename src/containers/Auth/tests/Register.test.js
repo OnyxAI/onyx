@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import { browserHistory } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 
-import configureStore from 'configureStore';
+import configureStore from '@onyx/configureStore';
 
 import { changeInput, registerUser } from '../actions';
 

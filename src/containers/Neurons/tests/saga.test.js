@@ -5,7 +5,7 @@
 /* eslint-disable redux-saga/yield-effects */
 import { put, takeLatest, call } from 'redux-saga/effects';
 import { API_URL } from 'global/constants';
-import request from 'utils/request';
+import request from '@onyx/utils/request';
 
 import { GET_NEURONS } from '../constants';
 import * as NeuronsAction from '../actions';

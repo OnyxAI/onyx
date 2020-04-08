@@ -7,8 +7,8 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
-import configureStore from 'configureStore';
-import history from 'utils/history';
+import configureStore from '@onyx/configureStore';
+import history from '@onyx/utils/history';
 
 import Home from '../index';
 

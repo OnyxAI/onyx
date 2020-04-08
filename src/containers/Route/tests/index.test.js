@@ -4,8 +4,8 @@ import renderer from 'react-test-renderer';
 import { ConnectedRouter } from 'connected-react-router';
 import { IntlProvider } from 'react-intl';
 
-import configureStore from 'configureStore';
-import history from 'utils/history';
+import configureStore from '@onyx/configureStore';
+import history from '@onyx/utils/history';
 
 import { verifyToken } from '../actions';
 

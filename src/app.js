@@ -2,48 +2,48 @@
 import '@babel/polyfill';
 
 // Import UI KIT
-import 'assets/css/uikit.css';
+import '@onyx/assets/css/uikit.css';
 
 // Import Materialize CSS
-import 'assets/css/materialize.css';
+import '@onyx/assets/css/materialize.css';
 
 // Import Custom
-import 'assets/css/colors.css';
-import 'assets/css/custom.css';
-import 'assets/css/button.css';
+import '@onyx/assets/css/colors.css';
+import '@onyx/assets/css/custom.css';
+import '@onyx/assets/css/button.css';
 
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import history from 'utils/history';
+import history from '@onyx/utils/history';
 import 'sanitize.css/sanitize.css';
 
-import { Context } from 'utils/getContext';
+import { Context } from '@onyx/utils/getContext';
 
 // Import Sockyx
 
 // Import root app
-import App from 'containers/App';
+import App from '@onyx/containers/App';
 
 // Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
+import LanguageProvider from '@onyx/containers/LanguageProvider';
 
 // Load the favicon
 /* eslint-disable import/no-unresolved, import/extensions */
 import '!file-loader?name=[name].[ext]!./assets/img/favicon.ico';
 /* eslint-enable import/no-unresolved, import/extensions */
 
-import { WS_URL } from 'global/constants';
+import { WS_URL } from '@onyx/global/constants';
 
 import configureStore from './configureStore';
 
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-require('assets/js/uikit-icons'); // eslint-disable-line global-require
-require('assets/js/uikit'); // eslint-disable-line global-require
+require('@onyx/assets/js/uikit-icons'); // eslint-disable-line global-require
+require('@onyx/assets/js/uikit'); // eslint-disable-line global-require
 
 // Create redux store with history
 const initialState = {};
@@ -69,7 +69,7 @@ if (module.hot) {
   // Hot reloadable React components and translation json files
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['./i18n', 'containers/App'], () => {
+  module.hot.accept(['./i18n', '@onyx/containers/App'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     render(translationMessages);
   });

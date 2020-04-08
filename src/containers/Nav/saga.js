@@ -1,6 +1,6 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { API_URL } from 'global/constants';
-import request from 'utils/request';
+import { API_URL } from '@onyx/global/constants';
+import request from '@onyx/utils/request';
 import { ADD_NAV, REMOVE_NAV, GET_NAV } from './constants';
 
 import {

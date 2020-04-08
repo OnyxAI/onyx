@@ -11,10 +11,9 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { Card, CardBody, CardHeader, CardTitle } from 'uikit-react';
-
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
+import { useInjectReducer } from '@onyx/utils/injectReducer';
+import Container from '@onyx/components/Container';
 import { manageUser, updateUser, changeInput } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -45,131 +44,121 @@ export function Manage({
           </Helmet>
         )}
       </FormattedMessage>
-      <Card hover>
-        <CardHeader>
-          <CardTitle>
-            <FormattedMessage {...messages.manage_header} />
-          </CardTitle>
-          <CardBody>
-            <form
-              onSubmit={onSubmitForm}
-              id="manageForm"
-              className="uk-grid-small"
+      <Container title={<FormattedMessage {...messages.manage_header} />}>
+        {' '}
+        <form onSubmit={onSubmitForm} id="manageForm" className="uk-grid-small">
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.email}>
+              {message => (
+                <input
+                  type="email"
+                  id="email"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.email}
+                  onChange={evt => onChangeInput(evt, 'email')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.username}>
+              {message => (
+                <input
+                  type="text"
+                  id="username"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.username}
+                  onChange={evt => onChangeInput(evt, 'username')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.firstname}>
+              {message => (
+                <input
+                  type="text"
+                  id="firstname"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.firstname}
+                  onChange={evt => onChangeInput(evt, 'firstname')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.lastname}>
+              {message => (
+                <input
+                  type="text"
+                  id="lastname"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.lastname}
+                  onChange={evt => onChangeInput(evt, 'lastname')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.password}>
+              {message => (
+                <input
+                  type="password"
+                  id="password"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.password}
+                  onChange={evt => onChangeInput(evt, 'password')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row">
+            <select
+              className="uk-select uk-form-large"
+              id="language"
+              value={auth.language}
+              onChange={evt => onChangeInput(evt, 'language')}
             >
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.email}>
-                  {message => (
-                    <input
-                      type="email"
-                      id="email"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.email}
-                      onChange={evt => onChangeInput(evt, 'email')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.username}>
-                  {message => (
-                    <input
-                      type="text"
-                      id="username"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.username}
-                      onChange={evt => onChangeInput(evt, 'username')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.firstname}>
-                  {message => (
-                    <input
-                      type="text"
-                      id="firstname"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.firstname}
-                      onChange={evt => onChangeInput(evt, 'firstname')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.lastname}>
-                  {message => (
-                    <input
-                      type="text"
-                      id="lastname"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.lastname}
-                      onChange={evt => onChangeInput(evt, 'lastname')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.password}>
-                  {message => (
-                    <input
-                      type="password"
-                      id="password"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.password}
-                      onChange={evt => onChangeInput(evt, 'password')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row">
-                <select
-                  className="uk-select uk-form-large"
-                  id="language"
-                  value={auth.language}
-                  onChange={evt => onChangeInput(evt, 'language')}
-                >
-                  <FormattedMessage {...messages.language}>
-                    {message => <option default>{message}</option>}
-                  </FormattedMessage>
-                  <FormattedMessage {...messages.french}>
-                    {message => <option value="fr-FR">{message}</option>}
-                  </FormattedMessage>
-                  <FormattedMessage {...messages.english}>
-                    {message => <option value="en-US">{message}</option>}
-                  </FormattedMessage>
-                </select>
-              </div>
-              <div className="uk-form-row">
-                <FormattedMessage {...messages.verif_password}>
-                  {message => (
-                    <input
-                      type="password"
-                      id="verifPassword"
-                      className="uk-input uk-form-large"
-                      placeholder={message}
-                      value={auth.verifPassword}
-                      onChange={evt => onChangeInput(evt, 'verifPassword')}
-                    />
-                  )}
-                </FormattedMessage>
-              </div>
-              <div className="uk-form-row uk-padding-small">
-                <button
-                  className="uk-button uk-button-primary uk-button-large"
-                  type="submit"
-                >
-                  <FormattedMessage id="onyx.global.send" />
-                </button>
-              </div>
-            </form>
-          </CardBody>
-        </CardHeader>
-      </Card>
+              <FormattedMessage {...messages.language}>
+                {message => <option default>{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage {...messages.french}>
+                {message => <option value="fr-FR">{message}</option>}
+              </FormattedMessage>
+              <FormattedMessage {...messages.english}>
+                {message => <option value="en-US">{message}</option>}
+              </FormattedMessage>
+            </select>
+          </div>
+          <div className="uk-form-row">
+            <FormattedMessage {...messages.verif_password}>
+              {message => (
+                <input
+                  type="password"
+                  id="verifPassword"
+                  className="uk-input uk-form-large"
+                  placeholder={message}
+                  value={auth.verifPassword}
+                  onChange={evt => onChangeInput(evt, 'verifPassword')}
+                />
+              )}
+            </FormattedMessage>
+          </div>
+          <div className="uk-form-row uk-padding-small">
+            <button
+              className="uk-button uk-button-primary uk-button-large"
+              type="submit"
+            >
+              <FormattedMessage id="onyx.global.send" />
+            </button>
+          </div>
+        </form>
+      </Container>
     </div>
   );
 }

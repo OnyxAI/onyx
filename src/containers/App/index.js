@@ -10,15 +10,15 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
 
-import GlobalStyle from 'global-styles';
+import GlobalStyle from '@onyx/global-styles';
 
-import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import Loader from 'components/Loader';
+import Loader from '@onyx/components/Loader';
 
 import { makeSelectNeurons } from './selectors';
 
@@ -30,6 +30,8 @@ import Main from '../Main/Loadable';
 import { Login, Register, Manage } from '../Auth/Loadable';
 import Home from '../Home/Loadable';
 import DesignSettings from '../DesignSettings/Loadable';
+import Neurons from '../Neurons/Loadable';
+import Settings from '../Settings/Loadable';
 import NotFound from '../NotFound/Loadable';
 import CustomRoute from '../Route';
 
@@ -131,6 +133,24 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
               routeType="user_connected"
               path="/user/manage"
             />
+            <CustomRoute
+              sockyx={sockyx}
+              exact
+              nav
+              container={Settings}
+              containerType="native"
+              routeType="admin_connected"
+              path="/settings"
+            />
+            <CustomRoute
+              sockyx={sockyx}
+              exact
+              nav
+              container={Neurons}
+              containerType="native"
+              routeType="user_connected"
+              path="/neurons"
+            />
 
             {allNeurons.map(neuron =>
               neuron.data.map(route => (
@@ -162,8 +182,8 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
 }
 
 App.propTypes = {
-  sockyx: PropTypes.array,
-  neurons: PropTypes.array,
+  sockyx: PropTypes.object,
+  neurons: PropTypes.object,
   getNeuronsFunc: PropTypes.func,
 };
 

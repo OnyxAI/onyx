@@ -4,8 +4,8 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { put, takeLatest, call } from 'redux-saga/effects';
-import { API_URL } from 'global/constants';
-import request from 'utils/request';
+import { API_URL } from '@onyx/global/constants';
+import request from '@onyx/utils/request';
 
 import { CHANGE_COLOR } from '../constants';
 import * as DesignSettingsAction from '../actions';

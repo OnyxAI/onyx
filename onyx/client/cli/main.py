@@ -12,14 +12,12 @@ import onyx, sys, os, time
 import threading
 from threading import Thread
 
-from onyx.config import get_config
 from onyx.utils.log import getLogger
 from onyx.sockyx.client.ws import WebsocketClient
 from onyx.sockyx.message import Message
 
 global ws
 
-config = get_config('onyx')
 LOG = getLogger('Client')
 
 def handle_speak(event):

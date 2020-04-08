@@ -9,9 +9,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
-import Loader from 'components/Loader';
+import Loader from '@onyx/components/Loader';
 
-import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
 import saga from '../saga';
 
 export default function NotConnected({
@@ -50,10 +50,10 @@ export default function NotConnected({
 }
 
 NotConnected.propTypes = {
-  sockyx: PropTypes.array,
+  sockyx: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   path: PropTypes.string,
-  container: PropTypes.object,
+  container: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   containerType: PropTypes.string,

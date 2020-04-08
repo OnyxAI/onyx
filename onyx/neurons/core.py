@@ -8,18 +8,15 @@ You may not use this software for commercial purposes.
 @author :: Cassim Khouani
 """
 import os, imp
-from onyx.app_config import Config
-from onyx.config import get_config
+from onyx.config import Config
 from onyx.sockyx.message import Message
 from onyx.utils.log import getLogger
 from onyx.neurons.brain import brain
 
 logger = getLogger("Neurons")
-config = get_config('onyx')
-
 
 BLACKLISTED_NEURONS = []
-NEURONS_DIR = Config().NEURON_FOLDER
+NEURONS_DIR = Config.NEURON_PATH
 MainModule = '__init__'
 
 def load_neuron(neuron_descriptor, sockyx):
@@ -88,14 +85,14 @@ class OnyxNeuron(object):
         self.name = name
         self.raw_name = raw_name
         self.bind(sockyx)
-        self.config = config
+        self.config = Config
         self.brain = brain
         self.path = NEURONS_DIR + '/' + raw_name
         self.log = getLogger(name)
 
     @property
     def lang(self):
-        return self.config.get('Base', 'lang')
+        return self.config.LANG
 
     def bind(self, sockyx):
         if sockyx:

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import chatIconUrl from 'assets/img/chat/chat-icon.svg';
+import chatIconUrl from '@onyx/assets/img/chat/chat-icon.svg';
 import TextMessage from './TextMessage';
 import EmojiMessage from './EmojiMessage';
 import FileMessage from './FileMessage';

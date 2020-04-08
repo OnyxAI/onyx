@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
+import request from '@onyx/utils/request';
 
-import { API_URL } from 'global/constants';
+import { API_URL } from '@onyx/global/constants';
 import { VERIFY_TOKEN, LOGOUT_USER, REFRESH_TOKEN } from './constants';
 import {
   verifyToken,

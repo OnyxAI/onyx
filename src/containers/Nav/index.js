@@ -13,20 +13,23 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { getLogo } from 'utils/colors';
-import SubCircle from 'components/NavBar/SubCircle';
-import UserNav from 'components/NavBar/UserNav';
-import BasicNav from 'components/NavBar/BasicNav';
-import Buttons from 'components/NavBar/Buttons';
-import ManageButton from 'components/NavBar/ManageButton';
-import RemoveButtons from 'components/NavBar/RemoveButtons';
+import { getLogo } from '@onyx/utils/colors';
+import SubCircle from '@onyx/components/NavBar/SubCircle';
+import UserNav from '@onyx/components/NavBar/UserNav';
+import BasicNav from '@onyx/components/NavBar/BasicNav';
+import Buttons from '@onyx/components/NavBar/Buttons';
+import ManageButton from '@onyx/components/NavBar/ManageButton';
+import RemoveButtons from '@onyx/components/NavBar/RemoveButtons';
 
-import Chat from 'components/Chat/index';
+import Chat from '@onyx/components/Chat/index';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
+import { getRoutes } from '@onyx/utils/getRoutes';
+
+import { useInjectSaga } from '@onyx/utils/injectSaga';
+import { useInjectReducer } from '@onyx/utils/injectReducer';
 
 import makeSelectNav from './selectors';
+import { makeSelectNeurons } from '../Neurons/selectors';
 
 import {
   getNav,
@@ -43,6 +46,7 @@ import saga from './saga';
 
 export function Nav({
   sockyx,
+  neurons,
   nav,
   user,
   logoutUserFunc,
@@ -56,6 +60,8 @@ export function Nav({
 }) {
   useInjectReducer({ key: 'nav', reducer });
   useInjectSaga({ key: 'nav', saga });
+
+  const allRoutes = getRoutes(user.language, neurons.neurons);
 
   useEffect(() => {
     getNavFunc();
@@ -72,11 +78,12 @@ export function Nav({
             } darken-1`}
             htmlFor="toogle1"
           >
-            <i className="fa fa-table" />
+            <i className="fa fa-circle" />
           </label>
           <div className="subs1 subs">
             <Buttons
               addNavFunc={addNavFunc}
+              allRoutes={allRoutes}
               nav={nav.nav}
               onChangeNavIcon={onChangeNavIcon}
               onChangeManage={onChangeManage}
@@ -110,11 +117,12 @@ export function Nav({
             } darken-1`}
             htmlFor="toogle2"
           >
-            <i className="fa fa-suitcase" />
+            <i className="fa fa-circle" />
           </label>
           <div className="subs2 subs">
             <Buttons
               addNavFunc={addNavFunc}
+              allRoutes={allRoutes}
               nav={nav.nav}
               onChangeNavIcon={onChangeNavIcon}
               onChangeManage={onChangeManage}
@@ -148,11 +156,12 @@ export function Nav({
             } darken-1`}
             htmlFor="toogle3"
           >
-            <i className="material-icons">add</i>
+            <i className="fa fa-circle" />
           </label>
           <div className="subs3 subs">
             <Buttons
               addNavFunc={addNavFunc}
+              allRoutes={allRoutes}
               nav={nav.nav}
               onChangeNavIcon={onChangeNavIcon}
               onChangeManage={onChangeManage}
@@ -186,11 +195,12 @@ export function Nav({
             } darken-1`}
             htmlFor="toogle4"
           >
-            <i className="fa fa-video-camera" />
+            <i className="fa fa-circle" />
           </label>
           <div className="subs4 subs">
             <Buttons
               addNavFunc={addNavFunc}
+              allRoutes={allRoutes}
               nav={nav.nav}
               onChangeNavIcon={onChangeNavIcon}
               onChangeManage={onChangeManage}
@@ -224,11 +234,12 @@ export function Nav({
             } darken-1`}
             htmlFor="toogle5"
           >
-            <i className="material-icons">add</i>
+            <i className="fa fa-circle" />
           </label>
           <div className="subs5 subs">
             <Buttons
               addNavFunc={addNavFunc}
+              allRoutes={allRoutes}
               nav={nav.nav}
               onChangeNavIcon={onChangeNavIcon}
               onChangeManage={onChangeManage}
@@ -268,6 +279,7 @@ export function Nav({
             <SubCircle
               buttonNumber="6"
               position="1"
+              language={user.language}
               classColor={user.color}
               icon="fa fa-paint-brush"
               url="/user/design"
@@ -275,16 +287,51 @@ export function Nav({
             <SubCircle
               buttonNumber="6"
               position="2"
+              language={user.language}
               classColor={user.color}
               icon="fa fa-user"
               url="/user/manage"
             />
-            <SubCircle buttonNumber="6" position="3" classColor={user.color} />
-            <SubCircle buttonNumber="6" position="4" classColor={user.color} />
-            <SubCircle buttonNumber="6" position="5" classColor={user.color} />
-            <SubCircle buttonNumber="6" position="6" classColor={user.color} />
-            <SubCircle buttonNumber="6" position="7" classColor={user.color} />
-            <SubCircle buttonNumber="6" position="8" classColor={user.color} />
+            <SubCircle
+              buttonNumber="6"
+              position="3"
+              language={user.language}
+              classColor={user.color}
+              icon="fas fa-brain"
+              url="/neurons"
+            />
+            <SubCircle
+              buttonNumber="6"
+              position="4"
+              language={user.language}
+              classColor={user.color}
+              icon="fa fa-cogs"
+              url="/settings"
+            />
+            <SubCircle
+              buttonNumber="6"
+              position="5"
+              language={user.language}
+              classColor={user.color}
+            />
+            <SubCircle
+              buttonNumber="6"
+              position="6"
+              language={user.language}
+              classColor={user.color}
+            />
+            <SubCircle
+              buttonNumber="6"
+              position="7"
+              language={user.language}
+              classColor={user.color}
+            />
+            <SubCircle
+              buttonNumber="6"
+              position="8"
+              language={user.language}
+              classColor={user.color}
+            />
           </div>
         </div>
         <Link to="/">
@@ -303,11 +350,12 @@ export function Nav({
 }
 
 Nav.propTypes = {
-  sockyx: PropTypes.array,
+  sockyx: PropTypes.object,
   user: PropTypes.object,
   logoutUserFunc: PropTypes.func,
   getNavFunc: PropTypes.func,
   nav: PropTypes.object,
+  neurons: PropTypes.object,
   removeNavFunc: PropTypes.func,
   addNavFunc: PropTypes.func,
   onChangeNavUrl: PropTypes.func,
@@ -318,6 +366,7 @@ Nav.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   nav: makeSelectNav(),
+  neurons: makeSelectNeurons(),
 });
 
 function mapDispatchToProps(dispatch) {

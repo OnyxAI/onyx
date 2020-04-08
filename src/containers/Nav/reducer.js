@@ -22,9 +22,9 @@ export const initialState = {
   errorText: '',
   buttonNumber: '',
   position: '',
-  icon: 'fa fa-home',
-  url: '/',
-  color: 'rgb(197, 56, 56)',
+  icon: '',
+  url: '',
+  color: '',
   onManage: false,
   nav: [],
 };

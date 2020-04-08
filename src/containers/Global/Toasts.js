@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Toast from 'components/Toast';
-import { removeToast } from 'global/actions';
+import Toast from '@onyx/components/Toast';
+import { removeToast } from '@onyx/global/actions';
 
 const Toasts = ({ actions, toasts }) => (
   <ul className="toasts">

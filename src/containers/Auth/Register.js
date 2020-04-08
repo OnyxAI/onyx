@@ -10,13 +10,14 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 
-import 'assets/css/auth.css';
-import Logo from 'assets/img/logo/blue.png';
+import '@onyx/assets/css/auth.css';
+import Logo from '@onyx/assets/img/logo/blue.png';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
+import { useInjectReducer } from '@onyx/utils/injectReducer';
 import makeSelectAuth from './selectors';
 import { registerUser, changeInput } from './actions';
 import reducer from './reducer';
@@ -170,9 +171,12 @@ export function Register({ auth, onChangeInput, onSubmitForm }) {
               </button>
             </div>
             <div className="uk-form-row">
-              <a className="uk-float-right uk-link uk-link-muted" href="/login">
+              <Link
+                className="uk-float-right uk-link uk-link-muted"
+                to="/login"
+              >
                 <FormattedMessage {...messages.login} />
-              </a>
+              </Link>
             </div>
           </form>
         </div>

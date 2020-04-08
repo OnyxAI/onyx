@@ -4,10 +4,10 @@
 /* eslint-disable react/no-this-in-sfc */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-
-import launcherIcon from 'assets/img/chat/logo-no-bg.svg';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+import launcherIcon from '@onyx/assets/img/chat/logo-no-bg.svg';
 // import incomingMessageSound from 'assets/img/chat/sounds/notification.mp3';
-import launcherIconActive from 'assets/img/chat/close-icon.png';
+import launcherIconActive from '@onyx/assets/img/chat/close-icon.png';
 
 import ChatWindow from './ChatWindow';
 
@@ -46,6 +46,10 @@ function Launcher(props) {
 
   return (
     <div id="sc-launcher">
+      <KeyboardEventHandler
+        handleKeys={['esc']}
+        onKeyEvent={() => setIsOpen(false)}
+      />
       <div className={classList.join(' ')} onClick={handleClick}>
         <MessageCount count={props.newMessagesCount} isOpen={isOpen} />
         <img className="sc-open-icon" alt="" src={launcherIconActive} />

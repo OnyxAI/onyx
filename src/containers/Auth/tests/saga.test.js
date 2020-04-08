@@ -5,8 +5,8 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, call } from 'redux-saga/effects';
 
-import { API_URL } from 'global/constants';
-import request from 'utils/request';
+import { API_URL } from '@onyx/global/constants';
+import request from '@onyx/utils/request';
 
 import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from '../constants';
 import * as AuthAction from '../actions';

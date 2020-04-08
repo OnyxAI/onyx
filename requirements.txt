@@ -2,6 +2,7 @@
 
 psutil
 moment
+gitpython
 
 # Flask
 

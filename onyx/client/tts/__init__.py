@@ -10,14 +10,12 @@ You may not use this software for commercial purposes.
 from abc import abstractmethod
 
 import onyx, importlib
-from onyx.config import get_config
-
-config = get_config('onyx')
+from onyx.config import Config
 
 class TTS(object):
 
 	def __init__(self, lang):
-		self.lang = config.get('Base', 'lang')
+		self.lang = Config.LANG
 		self.voice = None
 		self.filename = '/tmp/tts.wav'
 
@@ -38,8 +36,8 @@ class TTSFactory(object):
     @staticmethod
     def create():
 
-        module = config.get('TTS', 'default')
-        lang = config.get('Base', 'lang')
+        module = Config.TTS
+        lang = Config.LANG
         classe = TTSFactory.CLASSES.get(module)
 
         tts = classe(lang)

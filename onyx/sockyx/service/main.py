@@ -12,7 +12,7 @@ import tornado.web as web
 import os
 
 from onyx.sockyx.service.ws import WebsocketEventHandler
-from onyx.config import get_config
+from onyx.config import Config
 
 settings = {
     'debug': True
@@ -26,11 +26,10 @@ def main():
     import tornado.options
     
     tornado.options.parse_command_line()
-    config = get_config('onyx')
 
-    host = config.get("Websocket", "host")
-    port = int(config.get("Websocket", "port"))
-    route = config.get("Websocket", "route")
+    host = Config.WS_HOST
+    port = Config.WS_PORT
+    route = Config.WS_ROUTE
     validate_param(host, "websocket.host")
     validate_param(port, "websocket.port")
     validate_param(route, "websocket.route")

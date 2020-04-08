@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
-import { API_URL } from 'global/constants';
+import request from '@onyx/utils/request';
+import { API_URL } from '@onyx/global/constants';
 import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from './constants';
 import makeSelectAuth from './selectors';
 
@@ -12,6 +12,9 @@ import {
   manageUserSuccess,
   manageUserError,
 } from './actions';
+
+import { changeLocale } from '../LanguageProvider/actions';
+import { verifyTokenSuccess } from '../Route/actions';
 
 // Login User
 export function* loadLoginUser() {
@@ -27,6 +30,8 @@ export function* loadLoginUser() {
       },
     });
     if (result && result.status === 'success') {
+      yield put(changeLocale(result.user.language));
+      yield put(verifyTokenSuccess(result.user));
       yield put(loginUserSuccess(result.access_token, result.refresh_token));
     } else if (result && result.status === 'error') {
       yield put(loginUserError(result.message));

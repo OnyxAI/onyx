@@ -3,12 +3,15 @@ from flask_jwt_extended import jwt_required, jwt_refresh_token_required, create_
 from flask_restful import Resource, reqparse
 from flask_restful.utils import cors
 
+from onyx.utils.log import getLogger
 from onyx.extensions import db
 from onyx.decorators import login_required
 from onyx.models import User, RevokedToken, Nav as NavModel, to_dict
 from passlib.hash import sha256_crypt
 
 import json
+
+log = getLogger('Users')
 
 class GetAllUser(Resource):
     @login_required
@@ -64,7 +67,7 @@ class Login(Resource):
                     access_token = create_access_token(identity = to_dict(user))
                     refresh_token = create_refresh_token(identity = to_dict(user))
                     
-                    return jsonify(status="success", access_token=access_token, refresh_token=refresh_token)
+                    return jsonify(status="success", access_token=access_token, refresh_token=refresh_token, user=to_dict(user))
                 else:
                     return jsonify(status="error", message="onyx.auth.login_error")
             else:
@@ -94,7 +97,7 @@ class Register(Resource):
             firstname = args['firstname']
             lastname = args['lastname']
 
-            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, account_type=0)
+            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', account_type=0)
             
             try:
                 db.session.add(user)
@@ -138,11 +141,33 @@ class Nav(Resource):
     parser.add_argument('url')
     parser.add_argument('icon')
 
+    # Function to remove all nav button using a neuron
+    def remove_neuron_nav(self, neuron_name, all_neurons):
+        try:
+            all_routes = []
+            # Getting all neuron route
+            for neuron in all_neurons:
+                if neuron['raw_name'] == neuron_name:
+                    if neuron['routes']:
+                        for route in neuron['routes']:
+                            all_routes.append(route['url'])
+
+            for route in all_routes:
+                queries = NavModel.query.filter(NavModel.url.endswith(route)).all()
+
+                for query in queries:
+                    db.session.delete(query)
+                    db.session.commit()
+
+            log.info('Successfully removing nav button for neuron {}'.format(neuron_name))
+        except Exception as e:
+            log.error('Removing Nav Neuron error : {}'.format(e))
+
+
     @login_required
     def get(self):
         try:
             user = get_jwt_identity()
-
 
             nav = []
 
@@ -292,8 +317,9 @@ class TokenValid(Resource):
             user = get_jwt_identity()
 
             return jsonify(status="success", user=user)
-        except IndexError as e:
-            print(e)
+        except ExpiredSignatureError as e:
+            return jsonify(status="error", message="onyx.error.expired_signature")
+        except Exception as e:
             return jsonify(status="error", message="{}".format(e))
 
 class Refresh(Resource):

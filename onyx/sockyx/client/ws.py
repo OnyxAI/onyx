@@ -14,7 +14,7 @@ from multiprocessing.pool import ThreadPool
 from pyee import EventEmitter
 from websocket import WebSocketApp
 
-from onyx.config import get_config
+from onyx.config import Config
 from onyx.sockyx.message import Message
 from onyx.utils.log import getLogger
 
@@ -22,15 +22,14 @@ from onyx.client.tts import TTSFactory
 tts = TTSFactory.create()
 
 LOG = getLogger(__name__)
-config = get_config('onyx')
 
 def validate_param(value, name):
     if not value:
         raise ValueError("Missing or empty %s in onyx.cfg " % name)
 
 class WebsocketClient(object):
-    def __init__(self, host=config.get("Websocket", "host"), port=int(config.get("Websocket", "port")),
-                 route=config.get("Websocket", "route"), ssl=config.getboolean("Websocket", "ssl")):
+    def __init__(self, host=Config.WS_HOST, port=Config.WS_PORT,
+                 route=Config.WS_ROUTE, ssl=Config.WS_SSL):
 
         validate_param(host, "websocket.host")
         validate_param(port, "websocket.port")

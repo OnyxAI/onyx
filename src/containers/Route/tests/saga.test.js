@@ -5,9 +5,9 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-import { API_URL } from 'global/constants';
-import { changeLocale } from 'containers/LanguageProvider/actions';
-import request from 'utils/request';
+import { API_URL } from '@onyx/global/constants';
+import { changeLocale } from '@onyx/containers/LanguageProvider/actions';
+import request from '@onyx/utils/request';
 
 import { VERIFY_TOKEN, LOGOUT_USER, REFRESH_TOKEN } from '../constants';
 

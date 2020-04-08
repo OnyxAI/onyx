@@ -9,10 +9,11 @@ __pycache__
 dist
 build
 venv
+
+data
+
 onyx/db
 !onyx/db/.gitkeep
-
-onyx/config/onyx.cfg
 
 neurons
 !neurons/__init__.py

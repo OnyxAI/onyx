@@ -8,20 +8,13 @@ module.exports = {
     '!src/global-styles.js',
     '!src/*/*/Loadable.{js,jsx}',
   ],
-  coverageThreshold: {
-    global: {
-      statements: 90,
-      branches: 85,
-      functions: 85,
-      lines: 90,
-    },
-  },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
     '.*\\.(css|less|styl|scss|sass)$': '<rootDir>/scripts/mocks/cssModule.js',
     '.*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/scripts/mocks/image.js',
+    '@onyx/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: [
     '<rootDir>/scripts/testing/test-bundler.js',

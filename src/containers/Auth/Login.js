@@ -12,11 +12,11 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
+import { useInjectReducer } from '@onyx/utils/injectReducer';
 
-import 'assets/css/auth.css';
-import Logo from 'assets/img/logo/blue.png';
+import '@onyx/assets/css/auth.css';
+import Logo from '@onyx/assets/img/logo/blue.png';
 
 import makeSelectAuth from './selectors';
 import { loginUser, changeInput } from './actions';

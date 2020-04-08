@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Launcher from './Launcher';
 
-import 'assets/css/chat/index';
+import '@onyx/assets/css/chat/index';
 
 function Chat({ sockyx, user }) {
   const [messageList, addMessage] = useState([]);

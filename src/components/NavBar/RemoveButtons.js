@@ -28,7 +28,7 @@ function RemoveButtons({ nav, onManage, removeNavFunc, buttonNumber }) {
                   name="sub-circle-remove"
                 />
                 <i
-                  className="fa fa-remove"
+                  className="fa fa-minus"
                   style={{
                     fontSize: '10px',
                     color: 'white',

@@ -25,6 +25,14 @@ export default defineMessages({
     id: `${scope}.home`,
     defaultMessage: 'Home',
   },
+  neurons: {
+    id: `${scope}.neurons`,
+    defaultMessage: 'Neurons',
+  },
+  settings: {
+    id: `${scope}.settings`,
+    defaultMessage: 'Settings',
+  },
   user: {
     id: `${scope}.user`,
     defaultMessage: 'User',

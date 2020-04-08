@@ -39,7 +39,7 @@ const EmojiIcon = ({ tooltip, onClick, isActive }) => (
 );
 
 EmojiIcon.propTypes = {
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.object,
   isActive: PropTypes.bool,
   onClick: PropTypes.func,
 };

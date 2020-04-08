@@ -4,7 +4,7 @@ import frRoutes from './routes/fr-FR.json';
 /**
  * Get Json Routes
  */
-export function getRoutes(language) {
+export function getRoutes(language, neurons) {
   let routes;
 
   switch (language) {
@@ -18,6 +18,10 @@ export function getRoutes(language) {
       routes = enRoutes;
       break;
   }
+
+  neurons.map(neuron => {
+    routes = routes.concat(neuron.routes);
+  });
 
   return routes;
 }

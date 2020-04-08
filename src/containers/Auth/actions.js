@@ -1,4 +1,4 @@
-import Toast from 'global/actions';
+import Toast from '@onyx/global/actions';
 import { push } from 'connected-react-router';
 import {
   LOGIN_USER,

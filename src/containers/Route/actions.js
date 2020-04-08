@@ -1,5 +1,5 @@
-import Toast from 'global/actions';
-import { getMessage } from '../../i18n';
+import Toast from '@onyx/global/actions';
+import { getMessage } from '@onyx/i18n';
 import {
   VERIFY_TOKEN,
   VERIFY_TOKEN_ERROR,

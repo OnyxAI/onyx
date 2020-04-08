@@ -22,6 +22,7 @@ function Buttons({
   icon,
   language,
   buttonNumber,
+  allRoutes,
 }) {
   return (
     <div>
@@ -45,6 +46,7 @@ function Buttons({
               language={language}
               url={item.url}
               color={item.color}
+              allRoutes={allRoutes}
             />
           ),
       )}
@@ -65,6 +67,7 @@ Buttons.propTypes = {
   color: PropTypes.string,
   buttonNumber: PropTypes.string,
   language: PropTypes.string,
+  allRoutes: PropTypes.array,
 };
 
 export default memo(Buttons);

@@ -4,7 +4,7 @@
  *
  */
 
-import loadable from 'utils/loadable';
+import loadable from '@onyx/utils/loadable';
 
 const Login = loadable(() => import('./Login'));
 const Register = loadable(() => import('./Register'));

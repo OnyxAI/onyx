@@ -7,7 +7,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import 'assets/css/404.css';
+import '@onyx/assets/css/404.css';
 
 import messages from './messages';
 

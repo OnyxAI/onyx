@@ -9,14 +9,15 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Redirect, Route } from 'react-router-dom';
-import Loader from 'components/Loader';
-import Nav from 'containers/Nav/Loadable';
+import Loader from '@onyx/components/Loader';
+import Nav from '@onyx/containers/Nav/Loadable';
 
-import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectSaga } from '@onyx/utils/injectSaga';
 import saga from '../saga';
 
 export default function UserConnected({
   sockyx,
+  neurons,
   verifyTokenFunc,
   logoutUserFunc,
   isAuthenticated,
@@ -40,7 +41,12 @@ export default function UserConnected({
       ) : isAuthenticated ? (
         <div>
           {rest.nav && (
-            <Nav sockyx={sockyx} user={user} logoutUserFunc={logoutUserFunc} />
+            <Nav
+              sockyx={sockyx}
+              neurons={neurons}
+              user={user}
+              logoutUserFunc={logoutUserFunc}
+            />
           )}
           <div className="main-container container">
             <Route
@@ -60,13 +66,14 @@ export default function UserConnected({
 }
 
 UserConnected.propTypes = {
-  sockyx: PropTypes.array,
+  sockyx: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   path: PropTypes.string,
-  container: PropTypes.object,
+  container: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   containerType: PropTypes.string,
   user: PropTypes.object,
+  neurons: PropTypes.object,
 };

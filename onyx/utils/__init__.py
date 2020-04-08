@@ -17,10 +17,9 @@ import os.path
 import psutil
 from os.path import dirname
 from onyx.utils.log import getLogger
-from onyx.config import get_config
+from onyx.config import Config
 
 LOG = getLogger(__name__)
-config = get_config('onyx')
 
 def record(file_path, duration, rate, channels):
     if duration > 0:
@@ -32,7 +31,7 @@ def record(file_path, duration, rate, channels):
             ["arecord", "-r", str(rate), "-c", str(channels), file_path])
 
 def play_wav(uri):
-    play_cmd = config.get("Sound", "wav")
+    play_cmd = Config.WAV
     play_wav_cmd = str(play_cmd).split(" ")
     for index, cmd in enumerate(play_wav_cmd):
         if cmd == "#1":
@@ -41,7 +40,7 @@ def play_wav(uri):
 
 
 def play_mp3(uri):
-    play_cmd = config.get("Sound", "mp3")
+    play_cmd = Config.MP3
     play_mp3_cmd = str(play_cmd).split(" ")
     for index, cmd in enumerate(play_mp3_cmd):
         if cmd == "#1":

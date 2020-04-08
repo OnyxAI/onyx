@@ -5,6 +5,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = options => ({
   mode: options.mode,
@@ -129,7 +130,7 @@ module.exports = options => ({
   ]),
   externals: options.externals,
   resolve: {
-    modules: ['node_modules', 'src'],
+    modules: ['node_modules'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
     alias: options.alias,

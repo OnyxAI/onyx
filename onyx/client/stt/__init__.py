@@ -10,14 +10,12 @@ You may not use this software for commercial purposes.
 from abc import abstractmethod
 
 from speech_recognition import Recognizer
-from onyx.config import get_config
-
-config = get_config('onyx')
+from onyx.config import Config
 
 class STT(object):
 
     def __init__(self):
-        self.lang = config.get("Base", "lang")
+        self.lang = Config.LANG
         self.recognizer = Recognizer()
 
     @abstractmethod
@@ -49,6 +47,6 @@ class STTFactory(object):
 
     @staticmethod
     def create():
-        module = config.get("STT", "default")
+        module = Config.STT
         classe = STTFactory.CLASSES.get(module)
         return classe()

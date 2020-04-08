@@ -1,10 +1,18 @@
 import React from 'react';
+import '@onyx/assets/css/loader.css';
 
 export default function Loader() {
   return (
-    <span
-      className="uk-margin-small-right uk-position-center"
-      uk-spinner="ratio: 3"
-    />
+    <div className="lds-grid uk-position-center">
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
   );
 }
