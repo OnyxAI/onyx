@@ -235,7 +235,7 @@ class Nav(Resource):
 
                 return jsonify(status="success")
             except Exception as e:
-                print(e)
+                return jsonify(status="error")
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
             

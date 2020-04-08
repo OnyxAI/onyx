@@ -7,10 +7,13 @@ import { getOnyxDataSuccess, getOnyxDataError } from './actions';
 
 // Get Onyx Data
 export function* loadGetOnyxData() {
+  const token = localStorage.getItem('access_token');
+
   try {
     const result = yield call(request, {
       method: 'GET',
       url: `${API_URL}/settings/get_onyx_data`,
+      headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
       yield put(getOnyxDataSuccess());
