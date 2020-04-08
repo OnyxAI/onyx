@@ -4,7 +4,7 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { put, takeLatest, call } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 
 import { CHANGE_COLOR } from '../constants';
@@ -30,7 +30,7 @@ describe('designSettings Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'POST',
-        url: `${API_URL}/users/color`,
+        url: `/api/users/color`,
         headers: { Authorization: `Bearer my_token` },
         data: {
           color,

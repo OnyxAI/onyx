@@ -1,5 +1,5 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 import { CHANGE_COLOR } from './constants';
 
@@ -16,7 +16,7 @@ export function* loadChangeColor() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/users/color`,
+      url: `/api/users/color`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         color,

@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 import { GET_ONYX_DATA } from './constants';
 
@@ -12,7 +12,7 @@ export function* loadGetOnyxData() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/settings/get_onyx_data`,
+      url: `/api/settings/get_onyx_data`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {

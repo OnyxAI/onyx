@@ -4,7 +4,7 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 import { GET_NAV, ADD_NAV, REMOVE_NAV } from '../constants';
 import navSaga, { loadAddNav, loadGetNav, loadRemoveNav } from '../saga';
@@ -36,7 +36,7 @@ describe('Nav Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/users/nav`,
+        url: `/api/users/nav`,
         headers: { Authorization: `Bearer my_token` },
       }),
     );
@@ -94,7 +94,7 @@ describe('Nav Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'POST',
-        url: `${API_URL}/users/nav`,
+        url: `/api/users/nav`,
         headers: { Authorization: `Bearer my_token` },
         data: {
           color: 'blue',
@@ -165,7 +165,7 @@ describe('Nav Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'PUT',
-        url: `${API_URL}/users/nav`,
+        url: `/api/users/nav`,
         headers: { Authorization: `Bearer my_token` },
         data: {
           position: '1',

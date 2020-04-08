@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import request from '@onyx/utils/request';
 
-import { API_URL } from '@onyx/global/constants';
+
 import { VERIFY_TOKEN, LOGOUT_USER, REFRESH_TOKEN } from './constants';
 import {
   verifyToken,
@@ -22,7 +22,7 @@ export function* loadVerifyToken() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/users/token_valid`,
+      url: `/api/users/token_valid`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
@@ -45,7 +45,7 @@ export function* loadRefreshUser() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/users/refresh_token`,
+      url: `/api/users/refresh_token`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
@@ -68,7 +68,7 @@ export function* loadLogoutUser() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/users/logout_access`,
+      url: `/api/users/logout_access`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {

@@ -5,7 +5,7 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, call } from 'redux-saga/effects';
 
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 
 import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from '../constants';
@@ -65,7 +65,7 @@ describe('loginUser Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'POST',
-        url: `${API_URL}/users/login`,
+        url: `/api/users/login`,
         data: {
           email,
           password,
@@ -145,7 +145,7 @@ describe('registerUser Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'POST',
-        url: `${API_URL}/users/register`,
+        url: `/api/users/register`,
         data: {
           email,
           password,
@@ -243,7 +243,7 @@ describe('manageUser Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'POST',
-        url: `${API_URL}/users/manage`,
+        url: `/api/users/manage`,
         headers: { Authorization: `Bearer my_token` },
         data: {
           email,

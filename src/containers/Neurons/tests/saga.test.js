@@ -4,7 +4,6 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { put, takeLatest, call } from 'redux-saga/effects';
-import { API_URL } from 'global/constants';
 import request from '@onyx/utils/request';
 
 import { GET_NEURONS } from '../constants';
@@ -26,7 +25,7 @@ describe('getNeurons Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/neurons/get_all`,
+        url: `/api/neurons/get_all`,
       }),
     );
   });

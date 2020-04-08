@@ -11,7 +11,7 @@ from .Neurons import *
 
 all_neurons = get_api(Config.NEURON_PATH)
 API_ROUTES = []
-    
+
 for neuron in all_neurons:
     if (hasattr(neuron, 'create_neuron') and callable(neuron.create_neuron)):
         Module = neuron.create_neuron()
@@ -20,6 +20,6 @@ for neuron in all_neurons:
             for route in all_routes:
                 API_ROUTES.append(route)
 
-    
+
 for route in API_ROUTES:
     api.add_resource(route['class'], route['route'])

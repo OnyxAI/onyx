@@ -1,5 +1,5 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 import { makeSelectNeurons } from './selectors';
 import {
@@ -25,7 +25,7 @@ export function* loadGetNeurons() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/neurons/get_all`,
+      url: `/api/neurons/get_all`,
     });
     if (result && result.status === 'success') {
       yield put(getNeuronsSuccess(result.neurons));
@@ -46,7 +46,7 @@ export function* loadGetNeuronsStore() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/neurons/get_store_list`,
+      url: `/api/neurons/get_store_list`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
@@ -69,7 +69,7 @@ export function* loadInstallNeuron() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/neurons/install`,
+      url: `/api/neurons/install`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         name: neurons.usingNeuron,
@@ -96,7 +96,7 @@ export function* loadRemoveNeuron() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/neurons/remove`,
+      url: `/api/neurons/remove`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         name: neurons.usingNeuron,

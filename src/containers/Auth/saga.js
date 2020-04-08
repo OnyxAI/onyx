@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from '@onyx/utils/request';
-import { API_URL } from '@onyx/global/constants';
+
 import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from './constants';
 import makeSelectAuth from './selectors';
 
@@ -23,7 +23,7 @@ export function* loadLoginUser() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/users/login`,
+      url: `/api/users/login`,
       data: {
         email: login.email,
         password: login.password,
@@ -51,7 +51,7 @@ export function* loadRegisterUser() {
     if (register.password === register.verifPassword) {
       const result = yield call(request, {
         method: 'POST',
-        url: `${API_URL}/users/register`,
+        url: `/api/users/register`,
         data: {
           email: register.email,
           password: register.password,
@@ -84,7 +84,7 @@ export function* loadManageUser() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/users/manage`,
+      url: `/api/users/manage`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         email: manage.email,

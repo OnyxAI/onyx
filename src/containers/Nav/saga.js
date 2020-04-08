@@ -1,5 +1,5 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { API_URL } from '@onyx/global/constants';
+
 import request from '@onyx/utils/request';
 import { ADD_NAV, REMOVE_NAV, GET_NAV } from './constants';
 
@@ -21,7 +21,7 @@ export function* loadGetNav() {
   try {
     const result = yield call(request, {
       method: 'GET',
-      url: `${API_URL}/users/nav`,
+      url: `/api/users/nav`,
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
@@ -45,7 +45,7 @@ export function* loadAddNav() {
   try {
     const result = yield call(request, {
       method: 'POST',
-      url: `${API_URL}/users/nav`,
+      url: `/api/users/nav`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         color: nav.color,
@@ -76,7 +76,7 @@ export function* loadRemoveNav() {
   try {
     const result = yield call(request, {
       method: 'PUT',
-      url: `${API_URL}/users/nav`,
+      url: `/api/users/nav`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         position: nav.position,

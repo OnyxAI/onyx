@@ -5,7 +5,7 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-import { API_URL } from '@onyx/global/constants';
+
 import { changeLocale } from '@onyx/containers/LanguageProvider/actions';
 import request from '@onyx/utils/request';
 
@@ -36,7 +36,7 @@ describe('Auth Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/users/token_valid`,
+        url: `/api/users/token_valid`,
         headers: { Authorization: `Bearer my_token` },
       }),
     );
@@ -106,7 +106,7 @@ describe('Auth Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/users/refresh_token`,
+        url: `/api/users/refresh_token`,
         headers: { Authorization: `Bearer my_token` },
       }),
     );
@@ -174,7 +174,7 @@ describe('Auth Saga', () => {
     expect(callDescriptor).toEqual(
       call(request, {
         method: 'GET',
-        url: `${API_URL}/users/logout_access`,
+        url: `/api/users/logout_access`,
         headers: { Authorization: `Bearer my_token` },
       }),
     );
