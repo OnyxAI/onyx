@@ -15,7 +15,6 @@ flask-cors
 
 flask_migrate
 flask_sqlalchemy
-psycopg2
 
 # User Login
 
