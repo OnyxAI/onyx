@@ -42,12 +42,6 @@ def register_extensions(app):
 		dir_name = os.path.join(app.static_folder, "/".join(path.split("/")[:-1]))
 		return send_from_directory(dir_name, file_name)
 
-	@app.route("/<some>/<path>")
-	def static_proxy2(some, path):
-		"""static folder serve"""
-		return send_from_directory(app.static_folder, "index.html")
-
-
 	@jwt.token_in_blacklist_loader
 	def check_if_token_in_blacklist(decrypted_token):
 		jti = decrypted_token['jti']

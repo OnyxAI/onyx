@@ -19,4 +19,7 @@ pip install --no-cache-dir -r requirements.txt
 
 mkdir -p ${TOP}/neurons
 
+yarn install
+yarn build
+
 echo "Setup Finished"

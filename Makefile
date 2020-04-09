@@ -10,6 +10,9 @@ start_api:
 start_client:
 	yarn start
 
+build_client:
+	yarn build
+
 test:
 	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes; yarn test
 
