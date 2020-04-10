@@ -19,7 +19,7 @@ pip install --no-cache-dir -r requirements.txt
 
 mkdir -p ${TOP}/neurons
 
-yarn install
+yarn install --network-timeout 1000000
 yarn build
 
 echo "Setup Finished"
