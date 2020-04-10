@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  *
  * UserNav
@@ -8,7 +9,7 @@ import React, { memo } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { SideNav, SideNavItem } from 'react-materialize';
-
+import M from 'materialize-css';
 import NavImg from '@onyx/assets/img/nav.png';
 
 import { FormattedMessage } from 'react-intl';
@@ -63,7 +64,7 @@ UserNav.propTypes = {
   logoutUserFunc: PropTypes.func,
   user: PropTypes.object,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
+    push: PropTypes.func,
   }),
 };
 

@@ -7,7 +7,7 @@ python:
   - "3.7"
   - "3.6"
 install:
-  - sudo apt-get install python3-pip
+  - sudo bash install_debian_script.sh
   - python3 -m pip install --upgrade pip
   - python3 -m pip install --upgrade virtualenv
   - make

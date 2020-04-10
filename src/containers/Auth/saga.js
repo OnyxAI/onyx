@@ -30,9 +30,9 @@ export function* loadLoginUser() {
       },
     });
     if (result && result.status === 'success') {
+      yield put(loginUserSuccess(result.access_token, result.refresh_token));
       yield put(changeLocale(result.user.language));
       yield put(verifyTokenSuccess(result.user));
-      yield put(loginUserSuccess(result.access_token, result.refresh_token));
     } else if (result && result.status === 'error') {
       yield put(loginUserError(result.message));
     } else {

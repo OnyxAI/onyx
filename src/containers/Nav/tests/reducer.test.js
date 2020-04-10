@@ -80,9 +80,9 @@ describe('authReducer', () => {
     const expectedResult = produce(state, draft => {
       draft.position = '';
       draft.buttonNumber = '';
-      draft.color = '';
-      draft.icon = '';
-      draft.url = '';
+      draft.color = state.color;
+      draft.icon = state.icon;
+      draft.url = state.url;
     });
 
     const action = {
@@ -98,9 +98,9 @@ describe('authReducer', () => {
       draft.errorText = 'Error';
       draft.position = '';
       draft.buttonNumber = '';
-      draft.color = '';
-      draft.icon = '';
-      draft.url = '';
+      draft.color = state.color;
+      draft.icon = state.icon;
+      draft.url = state.url;
     });
 
     expect(navReducer(state, addNavError('Error'))).toEqual(expectedResult);

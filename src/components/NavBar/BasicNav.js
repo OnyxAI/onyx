@@ -65,7 +65,7 @@ BasicNav.propTypes = {
   logoutUserFunc: PropTypes.func,
   user: PropTypes.object,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
+    push: PropTypes.func,
   }),
 };
 

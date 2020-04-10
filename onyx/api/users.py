@@ -46,7 +46,7 @@ class GetUser(Resource):
             return jsonify(status="error", message="{}".format(e)), 500
 
 class Login(Resource):
-    
+
     parser = reqparse.RequestParser(bundle_errors=True)
     parser.add_argument('email', required=True)
     parser.add_argument('password', required=True)
@@ -54,19 +54,19 @@ class Login(Resource):
     def post(self):
         try:
             args = self.parser.parse_args()
-            
+
             email = args['email']
             password = args['password']
-            
+
             user = User.query.filter_by(email=email).first()
-            
+
             if user:
-                
+
                 if sha256_crypt.verify(password, user.password):
 
                     access_token = create_access_token(identity = to_dict(user))
                     refresh_token = create_refresh_token(identity = to_dict(user))
-                    
+
                     return jsonify(status="success", access_token=access_token, refresh_token=refresh_token, user=to_dict(user))
                 else:
                     return jsonify(status="error", message="onyx.auth.login_error")
@@ -75,7 +75,7 @@ class Login(Resource):
         except Exception as e:
             return jsonify(status="error", message="onyx.global.error"), 500
 
-        
+
 
 class Register(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
@@ -98,7 +98,7 @@ class Register(Resource):
             lastname = args['lastname']
 
             user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', account_type=0)
-            
+
             try:
                 db.session.add(user)
                 db.session.commit()
@@ -177,7 +177,7 @@ class Nav(Resource):
                     for k in range(1, 8):
                         nav.append({
                             'buttonNumber': str(i),
-                            'position': str(k), 
+                            'position': str(k),
                             'url': "",
                             'color': colors[user['color']]['secondary_color'],
                             'icon': "fa fa-plus"
@@ -238,7 +238,7 @@ class Nav(Resource):
                 return jsonify(status="error")
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
-            
+
 
 class Manage(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
@@ -277,7 +277,7 @@ class Manage(Resource):
 
                 access_token = create_access_token(identity = to_dict(user))
                 refresh_token = create_refresh_token(identity = to_dict(user))
-                    
+
                 return jsonify(status="success", access_token=access_token, refresh_token=refresh_token)
             else:
                 return jsonify(status="error", message="onyx.auth.password_mismatch")

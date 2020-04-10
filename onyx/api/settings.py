@@ -21,7 +21,7 @@ class OnyxData(Resource):
                 data_folder = git.cmd.Git(Config.DATA_PATH)
                 data_folder.pull()
 
-        
-            return jsonify(status="success")   
+
+            return jsonify(status="success")
         except Exception as e:
             return jsonify(status="error", message="{}".format(e))

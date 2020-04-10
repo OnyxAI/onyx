@@ -32,9 +32,9 @@ export function Main() {
   );
 }
 
-const mapStateToProps = createStructuredSelector({});
+export const mapStateToProps = createStructuredSelector({});
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return { dispatch };
 }
 

@@ -22,9 +22,9 @@ export const initialState = {
   errorText: '',
   buttonNumber: '',
   position: '',
-  icon: '',
-  url: '',
-  color: '',
+  icon: 'fa fa-home',
+  url: '/',
+  color: 'rgb(197, 56, 56)',
   onManage: false,
   nav: [],
 };
@@ -52,17 +52,17 @@ const navReducer = (state = initialState, action) =>
       case ADD_NAV_SUCCESS:
         draft.position = '';
         draft.buttonNumber = '';
-        draft.color = '';
-        draft.icon = '';
-        draft.url = '';
+        draft.color = initialState.color;
+        draft.icon = initialState.icon;
+        draft.url = initialState.url;
         break;
       case ADD_NAV_ERROR:
         draft.errorText = action.error;
         draft.position = '';
         draft.buttonNumber = '';
-        draft.color = '';
-        draft.icon = '';
-        draft.url = '';
+        draft.color = initialState.color;
+        draft.icon = initialState.icon;
+        draft.url = initialState.url;
         break;
       case REMOVE_NAV:
         draft.position = action.position;

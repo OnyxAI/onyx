@@ -2,7 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import { browserHistory } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
+import LanguageProvider from '@onyx/containers/LanguageProvider';
+import { translationMessages } from '@onyx/i18n';
 
 import configureStore from '@onyx/configureStore';
 
@@ -23,9 +24,9 @@ describe('<Login />', () => {
     const submitSpy = jest.fn();
     renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Login />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
     expect(submitSpy).not.toHaveBeenCalled();
@@ -34,9 +35,9 @@ describe('<Login />', () => {
   it('should call onChangeInput if email is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Login />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -55,9 +56,9 @@ describe('<Login />', () => {
   it('should call onChangeInput if password is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Login />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -76,9 +77,9 @@ describe('<Login />', () => {
   it('should call onSubmit if button is pressed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Login />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -96,9 +97,9 @@ describe('<Login />', () => {
     };
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Login />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 

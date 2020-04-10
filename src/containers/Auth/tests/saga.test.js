@@ -5,11 +5,13 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, call } from 'redux-saga/effects';
 
-
 import request from '@onyx/utils/request';
 
 import { LOGIN_USER, REGISTER_USER, MANAGE_USER } from '../constants';
 import * as AuthAction from '../actions';
+
+import * as LanguageAction from '../../LanguageProvider/actions';
+import * as RouteAction from '../../Route/actions';
 
 import authSaga, {
   loadLoginUser,
@@ -75,17 +77,27 @@ describe('loginUser Saga', () => {
   });
 
   it('should call api success for login User', () => {
-    const spy = jest.spyOn(AuthAction, 'loginUserSuccess');
+    const spyLogin = jest.spyOn(AuthAction, 'loginUserSuccess');
+    const spyRoute = jest.spyOn(RouteAction, 'verifyTokenSuccess');
+    const spyLanguage = jest.spyOn(LanguageAction, 'changeLocale');
     const result = {
       status: 'success',
       access_token: 'my_token',
       refresh_token: 'my_token',
+      user: {
+        language: 'fr',
+      },
     };
+
     loginUserGenerator.next();
     loginUserGenerator.next({});
     loginUserGenerator.next(result);
+    loginUserGenerator.next();
+    loginUserGenerator.next();
 
-    expect(spy).toHaveBeenCalledWith('my_token', 'my_token');
+    expect(spyLogin).toHaveBeenCalledWith('my_token', 'my_token');
+    expect(spyRoute).toHaveBeenCalledWith(result.user);
+    expect(spyLanguage).toHaveBeenCalledWith(result.user.language);
   });
 
   it('should call api with error for login user', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
-import { browserHistory } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
-
+import { browserHistory, BrowserRouter } from 'react-router-dom';
+import LanguageProvider from '@onyx/containers/LanguageProvider';
+import { translationMessages } from '@onyx/i18n';
 import configureStore from '@onyx/configureStore';
 
 import { changeInput, registerUser } from '../actions';
@@ -12,34 +12,39 @@ import Register from '../Register';
 
 describe('<Register />', () => {
   let store;
+  let container;
 
   beforeEach(() => {
     store = configureStore({}, browserHistory);
 
     store.dispatch = jest.fn();
+
+    container = renderer.create(
+      <Provider store={store}>
+        <LanguageProvider messages={translationMessages}>
+          <BrowserRouter>
+            <Register />
+          </BrowserRouter>
+        </LanguageProvider>
+      </Provider>,
+    );
   });
 
   it('should not call onSubmitForm if email or password is an empty string', () => {
     const submitSpy = jest.fn();
     renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
+        <LanguageProvider messages={translationMessages}>
+          <BrowserRouter>
+            <Register />
+          </BrowserRouter>
+        </LanguageProvider>
       </Provider>,
     );
     expect(submitSpy).not.toHaveBeenCalled();
   });
 
   it('should call onChangeInput if email is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'email' })
@@ -53,14 +58,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if password is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'password' })
@@ -74,14 +71,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if verifPassword is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'verifPassword' })
@@ -95,14 +84,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if username is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'username' })
@@ -116,14 +97,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if firstname is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'firstname' })
@@ -137,14 +110,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if lastname is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'lastname' })
@@ -158,14 +123,6 @@ describe('<Register />', () => {
   });
 
   it('should call onChangeInput if language is changed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root
         .findByProps({ id: 'language' })
@@ -179,14 +136,6 @@ describe('<Register />', () => {
   });
 
   it('should call onSubmit if button is pressed', () => {
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
-
     renderer.act(() => {
       container.root.findByProps({ id: 'registerForm' }).props.onSubmit();
     });
@@ -199,13 +148,6 @@ describe('<Register />', () => {
     const evt = {
       preventDefault: jest.fn(),
     };
-    const container = renderer.create(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Register />
-        </IntlProvider>
-      </Provider>,
-    );
 
     renderer.act(() => {
       container.root.findByProps({ id: 'registerForm' }).props.onSubmit(evt);

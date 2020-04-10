@@ -31,7 +31,7 @@ function Launcher(props) {
     setIsOpen(!isOpen);
   }
 
-  /** Play a sound 
+  /** Play a sound
   useEffect(() => {
     if (props.mute) {
       return;
@@ -85,7 +85,7 @@ Launcher.propTypes = {
   color: PropTypes.string,
   onMessageWasSent: PropTypes.func,
   agentProfile: PropTypes.object,
-  onFilesSelected: PropTypes.array,
+  onFilesSelected: PropTypes.func,
   newMessagesCount: PropTypes.number,
   messageList: PropTypes.arrayOf(PropTypes.object),
   showEmoji: PropTypes.bool,

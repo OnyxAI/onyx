@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody, CardHeader, CardTitle } from 'uikit-react';
 
 export default function Container(props) {
   return (
-    <Card hover>
-      <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardBody>{props.children}</CardBody>
-      </CardHeader>
-    </Card>
+    <div className="uk-card uk-card-default">
+      <div className="uk-card-header">
+        <div className="uk-card-title">{props.title}</div>
+      </div>
+      <div className="uk-card-body">{props.children}</div>
+    </div>
   );
 }
 

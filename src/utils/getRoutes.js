@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import enRoutes from './routes/en-US.json';
 import frRoutes from './routes/fr-FR.json';
 

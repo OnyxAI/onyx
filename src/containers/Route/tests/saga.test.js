@@ -5,7 +5,6 @@
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-
 import { changeLocale } from '@onyx/containers/LanguageProvider/actions';
 import request from '@onyx/utils/request';
 

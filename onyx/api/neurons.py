@@ -28,7 +28,7 @@ class Neurons():
                         all_neurons.append(neuron)
 
         with open(Config.BASE_PATH + '/neuron_list.json', 'w') as outfile:
-            json.dump(all_neurons, outfile)   
+            json.dump(all_neurons, outfile)
 
     def getAllNeurons(self):
         with open(Config.BASE_PATH + '/neuron_list.json', 'r') as data:
@@ -40,7 +40,7 @@ class GetAllNeurons(Resource):
             neurons = Neurons()
             neurons.createNeuronFile(Config.NEURON_PATH)
 
-            return jsonify(status="success", neurons=neurons.getAllNeurons())   
+            return jsonify(status="success", neurons=neurons.getAllNeurons())
         except Exception as e:
             log.error(e)
             return jsonify(status="error", message="{}".format(e))
@@ -51,7 +51,7 @@ class NeuronsStore(Resource):
     def get(self):
         try:
             with open(Config.DATA_PATH + '/neurons/' + Config.LANG + '.json', 'r') as data:
-                return jsonify(status="success", neurons=json.load(data))   
+                return jsonify(status="success", neurons=json.load(data))
         except Exception as e:
             return jsonify(status="error", message="{}".format(e))
 
@@ -64,7 +64,7 @@ class InstallNeuron(Resource):
     def post(self):
         try:
             args = self.parser.parse_args()
-            
+
             name = args['name']
             url = args['url']
 
@@ -72,13 +72,13 @@ class InstallNeuron(Resource):
                 # Downloading Neuron
                 log.info('Downloading Neuron ' + name)
                 git.Repo.clone_from(url, Config.NEURON_PATH + '/' + name)
-                return jsonify(status="success") 
+                return jsonify(status="success")
             else:
                 # Update Data
                 log.info('Updating Neuron + ' + name)
                 neuron_folder = git.cmd.Git(Config.NEURON_PATH + '/' + name)
                 neuron_folder.pull()
-                return jsonify(status="success") 
+                return jsonify(status="success")
         except Exception as e:
             log.error(e)
             return jsonify(status="error", message="{}".format(e))
@@ -91,7 +91,7 @@ class RemoveNeuron(Resource):
     def post(self):
         try:
             args = self.parser.parse_args()
-            
+
             neurons = Neurons()
 
             name = args['name']
@@ -105,9 +105,9 @@ class RemoveNeuron(Resource):
 
                 shutil.rmtree( Config.NEURON_PATH + '/' + name)
 
-                return jsonify(status="success") 
+                return jsonify(status="success")
             else:
-                return jsonify(status="error") 
+                return jsonify(status="error")
 
         except Exception as e:
             return jsonify(status="error", message="{}".format(e))

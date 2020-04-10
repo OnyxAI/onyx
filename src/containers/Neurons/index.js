@@ -6,6 +6,7 @@
  */
 
 import React, { memo, useEffect } from 'react';
+import Proptypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -103,6 +104,13 @@ export function Neurons({
     </div>
   );
 }
+
+Neurons.propTypes = {
+  getNeuronsStoreFunc: Proptypes.func,
+  installNeuronFunc: Proptypes.func,
+  removeNeuronFunc: Proptypes.func,
+  neurons: Proptypes.object,
+};
 
 const mapStateToProps = createStructuredSelector({
   neurons: makeSelectNeurons(),

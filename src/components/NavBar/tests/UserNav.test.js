@@ -1,14 +1,36 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import { browserHistory, BrowserRouter } from 'react-router-dom';
+import LanguageProvider from '@onyx/containers/LanguageProvider';
+import { translationMessages } from '@onyx/i18n';
+import configureStore from '@onyx/configureStore';
 import UserNav from '../UserNav';
 
 describe('Nav UserNav', () => {
-  const user = {};
+  let store;
+  let wrapper;
+  const user = { username: 'Aituglo', email: 'contact@test.fr' };
   const logoutUserFunc = jest.fn();
 
-  const wrapper = shallow(
-    <UserNav user={user} logoutUserFunc={logoutUserFunc} />,
-  );
+  beforeEach(() => {
+    store = configureStore({}, browserHistory);
+
+    store.dispatch = jest.fn();
+    wrapper = mount(
+      <Provider store={store}>
+        <LanguageProvider messages={translationMessages}>
+          <BrowserRouter>
+            <UserNav
+              user={user}
+              logoutUserFunc={logoutUserFunc}
+              history={browserHistory}
+            />
+          </BrowserRouter>
+        </LanguageProvider>
+      </Provider>,
+    );
+  });
 
   it('Should render UserNav', () => {
     expect(
@@ -28,12 +50,10 @@ describe('Nav UserNav', () => {
   });
 
   it('Should check if username is empty', () => {
-    wrapper.setProps({ user: { username: 'Aituglo' } });
     expect(wrapper.find('.name').text()).toBe('Aituglo');
   });
 
   it('Should check if email is empty', () => {
-    wrapper.setProps({ user: { email: 'contact@test.fr' } });
     expect(wrapper.find('.email').text()).toBe('contact@test.fr');
   });
 });

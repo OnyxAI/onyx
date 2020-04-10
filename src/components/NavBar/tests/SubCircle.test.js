@@ -15,8 +15,15 @@ describe('Nav SubCircle', () => {
   const color = 'test';
   const classColor = 'test';
   const icon = 'test';
-  const language = 'test';
+  const language = 'en-US';
   const url = '';
+  const allRoutes = [
+    {
+      url: '/test',
+      icon: 'test',
+      color: 'blue',
+    },
+  ];
 
   const wrapper = shallow(
     <SubCircle
@@ -34,6 +41,7 @@ describe('Nav SubCircle', () => {
       url={url}
       icon={icon}
       language={language}
+      allRoutes={allRoutes}
     />,
   );
 

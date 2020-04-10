@@ -17,7 +17,7 @@ describe('Neurons Actions', () => {
     });
 
     it('should return the correct type and the passed getNeuronsSuccess', () => {
-      const fixture = []
+      const fixture = [];
       const expectedResult = {
         type: GET_NEURONS_SUCCESS,
         neurons: fixture,

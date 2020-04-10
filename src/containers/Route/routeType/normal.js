@@ -20,6 +20,6 @@ export default function Normal({
 
 Normal.propTypes = {
   sockyx: PropTypes.object,
-  container: PropTypes.func,
+  container: PropTypes.object,
   containerType: PropTypes.string,
 };

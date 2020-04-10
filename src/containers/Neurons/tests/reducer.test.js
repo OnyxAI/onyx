@@ -9,6 +9,11 @@ describe('neuronsReducer', () => {
     state = {
       errorText: '',
       loadingNeurons: true,
+      loadingNeuronsStore: false,
+      loading: false,
+      usingNeuron: '',
+      neuronUrl: '',
+      neuronsStoreList: [],
       neurons: [],
     };
   });

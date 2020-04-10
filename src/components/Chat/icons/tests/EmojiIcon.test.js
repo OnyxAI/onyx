@@ -4,7 +4,7 @@ import EmojiIcon from '../EmojiIcon';
 
 describe('Chat EmojiIcon', () => {
   const onClick = jest.fn();
-  const tooltip = 'test';
+  const tooltip = {};
 
   it('Should render the EmojiIcon component', () => {
     const isActive = true;

@@ -5,7 +5,7 @@ import pytest
 from webtest import TestApp
 from onyx.app import create_app
 from onyx.extensions import db as _db
-from onyx.config import TestConfig
+from onyx.app_config import TestConfig
 
 from onyx.models import User, to_dict
 
@@ -38,7 +38,7 @@ def connected_admin_app(app):
     """A Webtest app with connected admin user."""
     test_app = TestApp(app)
 
-    user = User(username='Admin', email='admin@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="Admin", lastname="Strator", language="en-US")
+    user = User(username='Admin', color='blue', email='admin@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="Admin", lastname="Strator", language="en-US")
     _db.session.add(user)
     _db.session.commit()
 
@@ -56,7 +56,7 @@ def connected_app(app):
     """A Webtest app with connected user."""
     test_app = TestApp(app)
 
-    user = User(username='User', email='user@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User", lastname="Name", language="en-US")
+    user = User(username='User', color='blue', email='user@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User", lastname="Name", language="en-US")
     _db.session.add(user)
     _db.session.commit()
 
@@ -73,7 +73,7 @@ def connected_app_refresh(app):
     """A Webtest app with connected user using refresh token."""
     test_app = TestApp(app)
 
-    user = User(username='User_refresh', email='user_refresh@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User_refresh", lastname="Name", language="en-US")
+    user = User(username='User_refresh', color='blue', email='user_refresh@starkindustries.com', password=sha256_crypt.hash("123456"), firstname="User_refresh", lastname="Name", language="en-US")
     _db.session.add(user)
     _db.session.commit()
 
@@ -101,7 +101,7 @@ def db(app):
 @pytest.yield_fixture(scope='function')
 def user_test_a(db):
     """A database for the tests."""
-    user = User(username='Tony', email='tony@starkindustries.com', password=sha256_crypt.hash("tony1234"), firstname="Tony", lastname="Stark", language="en-US")
+    user = User(username='Tony', color='blue', email='tony@starkindustries.com', password=sha256_crypt.hash("tony1234"), firstname="Tony", lastname="Stark", language="en-US")
     db.session.add(user)
     db.session.commit()
 
@@ -112,7 +112,7 @@ def user_test_a(db):
 @pytest.yield_fixture(scope='function')
 def user_test(db):
     """A database for the tests."""
-    user = User(username='Pepper', email='pepper@starkindustries.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", language="en-US")
+    user = User(username='Pepper', color='blue', email='pepper@starkindustries.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", language="en-US")
     db.session.add(user)
     db.session.commit()
 

@@ -53,7 +53,7 @@ NotConnected.propTypes = {
   sockyx: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   path: PropTypes.string,
-  container: PropTypes.func,
+  container: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   containerType: PropTypes.string,

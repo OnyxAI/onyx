@@ -19,29 +19,28 @@ from flask import session
 class Test_NavApi:
 
     def test_get_nav(self, connected_app):
-        response = connected_app.get('/users/nav')
-        
+        response = connected_app.get('/api/users/nav')
+
         assert response.status_code == 200
         assert response.content_type == 'application/json'
         assert response.json["status"] == "success"
 
     def test_add_nav(self, connected_app):
-        response = connected_app.post('/users/nav', {"position": "1", "buttonNumber": "1", "url": "url", "icon": "user", "color": "blue"})
-        
+        response = connected_app.post('/api/users/nav', {"position": "1", "buttonNumber": "1", "url": "url", "icon": "user", "color": "blue"})
+
         assert response.status_code == 200
         assert response.content_type == 'application/json'
         assert response.json == {"status": "success"}
 
     def test_remove_nav(self, connected_app):
-        nav = Nav(user=1, position="1", buttonNumber="1", url="/", icon="fa-user", color="blue") 
+        nav = Nav(user=1, position="1", buttonNumber="1", url="/", icon="fa-user", color="blue")
 
         db.session.add(nav)
         db.session.commit()
 
-        response = connected_app.put('/users/nav', {"position": "1", "buttonNumber": "1"})
-        
+        response = connected_app.put('/api/users/nav', {"position": "1", "buttonNumber": "1"})
+
         assert response.status_code == 200
         assert response.content_type == 'application/json'
         assert response.json == {"status": "success"}
 
-  

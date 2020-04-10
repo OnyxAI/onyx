@@ -7,7 +7,7 @@ describe('Chat Launcher', () => {
     color: 'blue',
     onMessageWasSent: jest.fn(),
     agentProfile: {},
-    onFilesSelected: [],
+    onFilesSelected: jest.fn(),
     newMessagesCount: 0,
     isOpen: false,
     handleClick: jest.fn(),

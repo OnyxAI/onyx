@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import { browserHistory } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
-
+import { LanguageProvider } from '@onyx/containers/LanguageProvider';
+import { translationMessages } from '@onyx/i18n';
 import configureStore from '@onyx/configureStore';
 
 import { changeInput, manageUser } from '../actions';
@@ -23,9 +23,9 @@ describe('<Manage />', () => {
     const submitSpy = jest.fn();
     renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
     expect(submitSpy).not.toHaveBeenCalled();
@@ -34,9 +34,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if email is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -55,9 +55,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if password is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -76,9 +76,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if verifPassword is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -97,9 +97,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if username is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -118,9 +118,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if firstname is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -139,9 +139,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if lastname is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -160,9 +160,9 @@ describe('<Manage />', () => {
   it('should call onChangeInput if language is changed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -181,9 +181,9 @@ describe('<Manage />', () => {
   it('should call onSubmit if button is pressed', () => {
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
@@ -201,9 +201,9 @@ describe('<Manage />', () => {
     };
     const container = renderer.create(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <Manage />
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
