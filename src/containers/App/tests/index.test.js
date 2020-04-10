@@ -1,8 +1,9 @@
 import React from 'react';
-import { render } from 'react-testing-library';
+import { mount } from 'enzyme';
 
 import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { LanguageProvider } from '@onyx/containers/LanguageProvider';
+import { translationMessages } from '@onyx/i18n';
 import { ConnectedRouter } from 'connected-react-router';
 
 import configureStore from '@onyx/configureStore';
@@ -10,7 +11,7 @@ import history from '@onyx/utils/history';
 
 import App from '../index';
 
-describe('<Toast />', () => {
+describe('<App />', () => {
   let store;
 
   beforeEach(() => {
@@ -19,19 +20,17 @@ describe('<Toast />', () => {
     store.dispatch = jest.fn();
   });
 
-  it('should render an <div> tag', () => {
-    const {
-      container: { firstChild },
-    } = render(
+  it('should render App', () => {
+    const wrapper = mount(
       <Provider store={store}>
-        <IntlProvider locale="en">
+        <LanguageProvider messages={translationMessages}>
           <ConnectedRouter history={history}>
             <App />
           </ConnectedRouter>
-        </IntlProvider>
+        </LanguageProvider>
       </Provider>,
     );
 
-    expect(firstChild.tagName).toEqual('DIV');
+    expect(wrapper.exists('div')).toBe(true);
   });
 });

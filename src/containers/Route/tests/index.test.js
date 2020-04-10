@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 import { ConnectedRouter } from 'connected-react-router';
 import { IntlProvider } from 'react-intl';
@@ -14,17 +15,58 @@ import UserConnected from '../routeType/user_connected';
 import AdminConnected from '../routeType/admin_connected';
 import NotConnected from '../routeType/not_connected';
 
-import OnyxRoute from '../index';
+import OnyxRoute, { mapDispatchToProps } from '../index';
 
-describe('<Register />', () => {
+describe('<OnyxRoute />', () => {
   let store;
   let Component;
+  let NeuronComponent;
+
+  // Fixtures
+  const NeuComponent = () => null;
+
+  const reducer = s => (s !== undefined ? s : null);
+
+  const reducers = { key: 'test', reducer };
+
+  const sagas = {
+    key: 'test',
+    saga: jest.fn(),
+  };
+
+  function dispatchToProps(dispatch) {
+    return {
+      test: () => dispatch('test'),
+    };
+  }
+
+  function mapStateToProps(state) {
+    return state;
+  }
 
   beforeEach(() => {
     store = configureStore({}, history);
     Component = renderer.create(<div>Test</div>);
 
     store.dispatch = jest.fn();
+
+    NeuronComponent = {
+      mapDispatchToProps: dispatchToProps,
+      mapStateToProps,
+      reducers,
+      sagas,
+      component: NeuComponent,
+    };
+  });
+
+  it('should logout the user', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).logoutUserFunc();
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'onyx/auth/LOGOUT_USER',
+    });
   });
 
   it('should call normal container', () => {
@@ -96,14 +138,61 @@ describe('<Register />', () => {
     expect(store.dispatch).toHaveBeenCalledWith(verifyToken());
   });
 
-  it('should call admin_connected container', () => {
+  it('should call user_connected neuron container', () => {
     const container = renderer.create(
+      <Provider store={store}>
+        <IntlProvider locale="en">
+          <ConnectedRouter history={history}>
+            <OnyxRoute
+              container={NeuronComponent}
+              containerType="neuron"
+              routeType="user_connected"
+              isAuthenticated
+              isAuthenticating={false}
+              path="/test"
+            />
+          </ConnectedRouter>
+        </IntlProvider>
+      </Provider>,
+    );
+
+    expect(container.root.findByType(UserConnected).props.path).toBe('/test');
+
+    container.update();
+
+    expect(store.dispatch).toHaveBeenCalledWith(verifyToken());
+  });
+
+  it('should call admin_connected container', () => {
+    const container = mount(
       <Provider store={store}>
         <IntlProvider locale="en">
           <ConnectedRouter history={history}>
             <OnyxRoute
               container={Component}
               containerType="native"
+              routeType="admin_connected"
+              user={{ account_type: 1 }}
+              isAuthenticated
+              isAuthenticating={false}
+              path="/test"
+            />
+          </ConnectedRouter>
+        </IntlProvider>
+      </Provider>,
+    );
+
+    expect(container.find(AdminConnected).props().path).toBe('/test');
+  });
+
+  it('should call admin_connected neuron container', () => {
+    const container = renderer.create(
+      <Provider store={store}>
+        <IntlProvider locale="en">
+          <ConnectedRouter history={history}>
+            <OnyxRoute
+              container={NeuronComponent}
+              containerType="neuron"
               routeType="admin_connected"
               isAuthenticated
               isAuthenticating={false}

@@ -28,6 +28,18 @@ describe('Global actions', () => {
       expect(addToast({ color: '#ffffff' })).toEqual(expected);
     });
 
+    it('should dispatch adding toast without options', () => {
+      const expected = {
+        type: ADD_TOAST,
+        payload: {
+          id: 2,
+          color: '#1e88e5',
+          duration: 5000,
+        },
+      };
+      expect(addToast()).toEqual(expected);
+    });
+
     it('should dispatch removing toast', () => {
       const expected = {
         type: REMOVE_TOAST,

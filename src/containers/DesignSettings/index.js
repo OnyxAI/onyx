@@ -73,7 +73,7 @@ const mapStateToProps = createStructuredSelector({
   color: makeSelectColor(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     changeColorFunc: color => {
       dispatch(changeColor(color));

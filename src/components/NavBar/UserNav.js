@@ -15,7 +15,7 @@ import NavImg from '@onyx/assets/img/nav.png';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function UserNav({ logoutUserFunc, user, history }) {
+export function UserNav({ logoutUserFunc, user, history }) {
   return (
     <div className="uk-visible@s">
       <SideNav

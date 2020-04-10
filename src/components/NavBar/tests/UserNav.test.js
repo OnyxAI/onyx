@@ -5,17 +5,19 @@ import { browserHistory, BrowserRouter } from 'react-router-dom';
 import LanguageProvider from '@onyx/containers/LanguageProvider';
 import { translationMessages } from '@onyx/i18n';
 import configureStore from '@onyx/configureStore';
-import UserNav from '../UserNav';
+
+import { UserNav } from '../UserNav';
 
 describe('Nav UserNav', () => {
   let store;
   let wrapper;
+  let history;
   const user = { username: 'Aituglo', email: 'contact@test.fr' };
   const logoutUserFunc = jest.fn();
 
   beforeEach(() => {
     store = configureStore({}, browserHistory);
-
+    history = { push: jest.fn() };
     store.dispatch = jest.fn();
     wrapper = mount(
       <Provider store={store}>
@@ -24,7 +26,7 @@ describe('Nav UserNav', () => {
             <UserNav
               user={user}
               logoutUserFunc={logoutUserFunc}
-              history={browserHistory}
+              history={history}
             />
           </BrowserRouter>
         </LanguageProvider>
@@ -49,11 +51,46 @@ describe('Nav UserNav', () => {
     expect(logoutUserFunc).toHaveBeenCalled();
   });
 
+  it('Should simulate User Manage click', () => {
+    wrapper
+      .find('SideNavItem')
+      .at(0)
+      .simulate('click');
+    expect(history.push).toHaveBeenCalledWith('/user/manage');
+  });
+
   it('Should check if username is empty', () => {
-    expect(wrapper.find('.name').text()).toBe('Aituglo');
+    wrapper = mount(
+      <Provider store={store}>
+        <LanguageProvider messages={translationMessages}>
+          <BrowserRouter>
+            <UserNav
+              user={{}}
+              logoutUserFunc={logoutUserFunc}
+              history={history}
+            />
+          </BrowserRouter>
+        </LanguageProvider>
+      </Provider>,
+    );
+    expect(wrapper.find('.name').text()).toBe('');
   });
 
   it('Should check if email is empty', () => {
-    expect(wrapper.find('.email').text()).toBe('contact@test.fr');
+    wrapper = mount(
+      <Provider store={store}>
+        <LanguageProvider messages={translationMessages}>
+          <BrowserRouter>
+            <UserNav
+              user={{}}
+              logoutUserFunc={logoutUserFunc}
+              history={history}
+            />
+          </BrowserRouter>
+        </LanguageProvider>
+      </Provider>,
+    );
+
+    expect(wrapper.find('.email').text()).toBe('');
   });
 });

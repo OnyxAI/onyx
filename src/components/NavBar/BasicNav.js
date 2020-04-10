@@ -17,7 +17,7 @@ import { Navbar, NavItem, Icon } from 'react-materialize';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function BasicNav({ logoutUserFunc, user, history }) {
+export function BasicNav({ logoutUserFunc, user, history }) {
   return (
     <div className="uk-hidden@xl">
       <Navbar

@@ -1,16 +1,21 @@
 import React from 'react';
-import { render } from 'react-testing-library';
-
-import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { shallow } from 'enzyme';
 
 import configureStore from '@onyx/configureStore';
 import history from '@onyx/utils/history';
 
-import Toasts from '../Toasts';
+import { Toasts } from '../Toasts';
 
 describe('<Toast />', () => {
   let store;
+  const toasts = [
+    {
+      id: 1,
+    },
+  ];
+  const actions = {
+    removeToast: jest.fn(),
+  };
 
   beforeEach(() => {
     store = configureStore({}, history);
@@ -19,17 +24,18 @@ describe('<Toast />', () => {
   });
 
   it('should render an <ul> tag', () => {
-    const {
-      container: { firstChild },
-    } = render(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <Toasts />
-        </IntlProvider>
-      </Provider>,
-    );
+    const wrapper = shallow(<Toasts actions={actions} toasts={toasts} />);
 
-    expect(firstChild.tagName).toEqual('UL');
+    expect(wrapper.find('ul').hasClass('toasts')).toBe(true);
+
+    expect(wrapper.exists('Toast')).toBe(true);
+
+    wrapper
+      .find('Toast')
+      .props()
+      .removeToast();
+
+    expect(actions.removeToast).toHaveBeenCalledWith(1);
   });
   /*
   it('should adopt a valid attribute', () => {

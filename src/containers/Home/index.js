@@ -65,7 +65,7 @@ export function Home() {
 
 const mapStateToProps = createStructuredSelector({});
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return { dispatch };
 }
 

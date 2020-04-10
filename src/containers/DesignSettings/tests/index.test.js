@@ -6,33 +6,53 @@
  */
 
 import React from 'react';
-import { render } from 'react-testing-library';
+import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 import configureStore from '@onyx/configureStore';
 import { browserHistory } from 'react-router-dom';
-import DesignSettings from '../Loadable';
-import { DEFAULT_LOCALE } from '../../../i18n';
+import { translationMessages } from '@onyx/i18n';
+import { DesignSettings, mapDispatchToProps } from '../index';
 
 describe('<DesignSettings />', () => {
   let store;
+  const changeColorFunc = jest.fn();
+  const user = {
+    color: 'blue',
+  };
 
   beforeEach(() => {
-    store = configureStore({ color: 'blue' }, browserHistory);
+    store = configureStore({}, browserHistory);
 
     store.dispatch = jest.fn();
   });
 
-  it('Expect to not log errors in console', () => {
-    const spy = jest.spyOn(global.console, 'error');
-    const dispatch = jest.fn();
-    render(
+  it('Should Render Design Settings', () => {
+    const wrapper = mount(
       <Provider store={store}>
-        <IntlProvider locale={DEFAULT_LOCALE}>
-          <DesignSettings dispatch={dispatch} />
+        <IntlProvider messages={translationMessages}>
+          <DesignSettings user={user} changeColorFunc={changeColorFunc} />
         </IntlProvider>
       </Provider>,
     );
-    expect(spy).not.toHaveBeenCalled();
+
+    expect(wrapper.exists('Container')).toBe(true);
+
+    wrapper
+      .find('button')
+      .first()
+      .simulate('click');
+
+    expect(changeColorFunc).toHaveBeenCalled();
+  });
+
+  it('Should dispatch changeColor', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).changeColorFunc();
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'onyx/Design/CHANGE_COLOR',
+    });
   });
 });

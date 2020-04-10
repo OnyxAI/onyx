@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Toast from '@onyx/components/Toast';
 import { removeToast } from '@onyx/global/actions';
 
-const Toasts = ({ actions, toasts }) => (
+export const Toasts = ({ actions, toasts }) => (
   <ul className="toasts">
     {toasts.map(toast => {
       const { id } = toast;

@@ -369,7 +369,7 @@ const mapStateToProps = createStructuredSelector({
   neurons: makeSelectNeurons(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getNavFunc: () => {
       dispatch(getNav());

@@ -3,7 +3,7 @@ import makeSelectNav, { selectNavDomain } from '../selectors';
 describe('selectNavDomain', () => {
   it('should select the nav state', () => {
     const navState = {
-      userData: {},
+      nav: {},
     };
     const mockedState = {
       nav: navState,
