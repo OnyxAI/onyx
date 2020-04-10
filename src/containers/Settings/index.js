@@ -42,7 +42,7 @@ export function Settings({ getOnyxDataFunc, settings, user }) {
           ) : (
             <button
               type="button"
-              onClick={evt => getOnyxDataFunc(evt)}
+              onClick={() => getOnyxDataFunc()}
               className={`btn ${user.color} secondary`}
             >
               <FormattedMessage {...messages.onyx_data} />
@@ -66,10 +66,9 @@ const mapStateToProps = createStructuredSelector({
   settings: makeSelectSettings(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
-    getOnyxDataFunc: evt => {
-      evt.preventDefault();
+    getOnyxDataFunc: () => {
       dispatch(getOnyxData());
     },
   };
