@@ -1,5 +1,5 @@
 sudo: true
-language: python
+language: node_js
 node_js:
   - "12"
 python:
