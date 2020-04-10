@@ -67,6 +67,7 @@ const neuronsReducer = (state = initialState, action) =>
         draft.neuronUrl = '';
         break;
       case INSTALL_NEURON_ERROR:
+        draft.errorText = action.error;
         draft.usingNeuron = '';
         draft.loading = false;
         draft.neuronUrl = '';
@@ -80,6 +81,7 @@ const neuronsReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
       case REMOVE_NEURON_ERROR:
+        draft.errorText = action.error;
         draft.usingNeuron = '';
         draft.loading = false;
         break;

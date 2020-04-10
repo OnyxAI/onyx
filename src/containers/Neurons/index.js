@@ -58,7 +58,7 @@ export function Neurons({
               <div>
                 <div className="uk-card uk-card-default uk-card-small">
                   <div className="uk-card-media-top uk-cover-container">
-                    <img src={neuron.img} alt={neuron.name} uk-cover />
+                    <img src={neuron.img} alt={neuron.name} data-uk-cover />
                   </div>
                   <div className="uk-card-body uk-text-center">
                     <h4 className="uk-card-title">{neuron.name}</h4>
@@ -116,7 +116,7 @@ const mapStateToProps = createStructuredSelector({
   neurons: makeSelectNeurons(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     getNeuronsStoreFunc: () => {
       dispatch(getNeuronsStore());
