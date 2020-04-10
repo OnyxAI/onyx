@@ -23,7 +23,8 @@ rm -f ${TOP}/FANN-2.2.0-Source.zip
 
 pip3 install virtualenv
 
-apt-get -y install nodejs npm
+curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+apt-get install nodejs
 npm install -g pm2
 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
