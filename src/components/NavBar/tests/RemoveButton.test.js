@@ -19,6 +19,7 @@ describe('Nav RemoveButton', () => {
     const wrapper = shallow(
       <RemoveButtons
         nav={nav}
+        selected={buttonNumber}
         removeNavFunc={removeNavFunc}
         onManage={onManage}
         buttonNumber={buttonNumber}
@@ -44,6 +45,7 @@ describe('Nav RemoveButton', () => {
     const wrapper = shallow(
       <RemoveButtons
         nav={nav}
+        selected={buttonNumber}
         removeNavFunc={removeNavFunc}
         onManage={onManage}
         buttonNumber={buttonNumber}
@@ -69,6 +71,7 @@ describe('Nav RemoveButton', () => {
     const wrapper = shallow(
       <RemoveButtons
         nav={nav}
+        selected={buttonNumber}
         removeNavFunc={removeNavFunc}
         onManage={onManage}
         buttonNumber={buttonNumber}
@@ -94,6 +97,7 @@ describe('Nav RemoveButton', () => {
     const wrapper = shallow(
       <RemoveButtons
         nav={nav}
+        selected={buttonNumber}
         removeNavFunc={removeNavFunc}
         onManage={onManage}
         buttonNumber={buttonNumber}

@@ -9,7 +9,7 @@ import configureStore from '@onyx/configureStore';
 import { Provider } from 'react-redux';
 import { LanguageProvider } from '@onyx/containers/LanguageProvider';
 import { translationMessages } from '@onyx/i18n';
-import { Nav, mapDispatchToProps } from '../index';
+import { Nav, mapDispatchToProps, getButtonIcon } from '../index';
 
 describe('<Nav />', () => {
   const store = configureStore({}, browserHistory);
@@ -34,6 +34,7 @@ describe('<Nav />', () => {
   const onChangeNavIcon = jest.fn();
   const onChangeNavUrl = jest.fn();
   const onChangeManage = jest.fn();
+  const onChangeButton = jest.fn();
 
   it('should render the Page Nav', () => {
     const wrapper = mount(
@@ -53,6 +54,7 @@ describe('<Nav />', () => {
               onChangeNavColor={onChangeNavColor}
               onChangeNavIcon={onChangeNavIcon}
               onChangeNavUrl={onChangeNavUrl}
+              onChangeButton={onChangeButton}
             />
           </BrowserRouter>
         </LanguageProvider>
@@ -178,5 +180,73 @@ describe('<Nav />', () => {
       type: 'app/Nav/CHANGE_NAV_ICON',
       icon: 'fa fa-home',
     });
+  });
+
+  it('Should dispatch onChangeNavCustomIcon', () => {
+    const dispatch = jest.fn();
+    const evt = {
+      target: { value: 'fa fa-home' },
+    };
+
+    mapDispatchToProps(dispatch).onChangeNavCustomIcon(evt);
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'app/Nav/CHANGE_NAV_CUSTOM_ICON',
+      icon: 'fa fa-home',
+    });
+  });
+
+  it('Should dispatch onChangeNavCustomIcon without target value', () => {
+    const dispatch = jest.fn();
+    const evt = 'fa fa-home';
+
+    mapDispatchToProps(dispatch).onChangeNavCustomIcon(evt);
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'app/Nav/CHANGE_NAV_CUSTOM_ICON',
+      icon: 'fa fa-home',
+    });
+  });
+
+  it('Should dispatch onChangeButton with evt undefined', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).onChangeButton(undefined);
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'app/Nav/CHANGE_BUTTON',
+    });
+  });
+
+  it('Should dispatch onChangeButton with evt', () => {
+    const dispatch = jest.fn();
+    const evt = {
+      preventDefault: jest.fn(),
+    };
+
+    mapDispatchToProps(dispatch).onChangeButton(evt);
+
+    expect(evt.preventDefault).toHaveBeenCalled();
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'app/Nav/CHANGE_BUTTON',
+    });
+  });
+
+  it('Should get the good button icon', () => {
+    const buttons = [
+      {
+        buttonNumber: '1',
+        icon: 'test',
+      },
+      {
+        buttonNumber: '2',
+        icon: 'fa fa-user',
+      },
+    ];
+
+    expect(getButtonIcon('1', buttons)).toBe('test');
+
+    expect(getButtonIcon('3', buttons)).toBe('fa fa-circle');
   });
 });

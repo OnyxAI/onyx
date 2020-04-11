@@ -3,19 +3,21 @@ import navReducer from '../reducer';
 import {
   changeNavColor,
   changeNavIcon,
+  changeNavCustomIcon,
   changeOnManage,
   changeNavUrl,
   addNav,
   addNavError,
+  changeButtonError,
   removeNav,
   removeNavError,
   getNavSuccess,
   getNavError,
 } from '../actions';
-import { ADD_NAV_SUCCESS } from '../constants';
+import { ADD_NAV_SUCCESS, CHANGE_BUTTON_SUCCESS } from '../constants';
 
 /* eslint-disable default-case, no-param-reassign */
-describe('authReducer', () => {
+describe('navReducer', () => {
   let state;
   beforeEach(() => {
     state = {
@@ -23,10 +25,13 @@ describe('authReducer', () => {
       buttonNumber: '',
       position: '',
       icon: 'fa fa-home',
+      customIcon: 'fa fa-home',
       url: '/',
       color: 'rgb(197, 56, 56)',
       onManage: false,
+      selectedButton: '',
       nav: [],
+      buttons: [],
     };
   });
 
@@ -51,6 +56,16 @@ describe('authReducer', () => {
     expect(navReducer(state, changeNavIcon('fa-user'))).toEqual(expectedResult);
   });
 
+  it('should handle the changeCustomIcon action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.customIcon = 'fa-user';
+    });
+
+    expect(navReducer(state, changeNavCustomIcon('fa-user'))).toEqual(
+      expectedResult,
+    );
+  });
+
   it('should handle the changeUrl action correctly', () => {
     const expectedResult = produce(state, draft => {
       draft.url = '/';
@@ -59,12 +74,26 @@ describe('authReducer', () => {
     expect(navReducer(state, changeNavUrl('/'))).toEqual(expectedResult);
   });
 
-  it('should handle the changeOnManage action correctly', () => {
+  it('should handle the changeOnManage action correctly with manage to true', () => {
     const expectedResult = produce(state, draft => {
       draft.onManage = true;
+      draft.selectedButton = '1';
     });
 
-    expect(navReducer(state, changeOnManage(true))).toEqual(expectedResult);
+    expect(navReducer(state, changeOnManage(true, '1'))).toEqual(
+      expectedResult,
+    );
+  });
+
+  it('should handle the changeOnManage action correctly with manage to false', () => {
+    const expectedResult = produce(state, draft => {
+      draft.onManage = true;
+      draft.selectedButton = '1';
+    });
+
+    expect(navReducer(state, changeOnManage(false, '1'))).toEqual(
+      expectedResult,
+    );
   });
 
   it('should handle the addNav action correctly', () => {
@@ -87,7 +116,6 @@ describe('authReducer', () => {
 
     const action = {
       type: ADD_NAV_SUCCESS,
-      error: 'An error has occured',
     };
 
     expect(navReducer(state, action)).toEqual(expectedResult);
@@ -108,10 +136,11 @@ describe('authReducer', () => {
 
   it('should handle the getNavSuccess action correctly', () => {
     const expectedResult = produce(state, draft => {
-      draft.nav = {};
+      draft.nav = [];
+      draft.buttons = [];
     });
 
-    expect(navReducer(state, getNavSuccess({}))).toEqual(expectedResult);
+    expect(navReducer(state, getNavSuccess([], []))).toEqual(expectedResult);
   });
 
   it('should handle the getNavError action correctly', () => {
@@ -137,5 +166,32 @@ describe('authReducer', () => {
     });
 
     expect(navReducer(state, removeNavError('Error'))).toEqual(expectedResult);
+  });
+
+  it('should handle the changeButtonSuccess action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.customIcon = '';
+      draft.onManage = false;
+      draft.selectedButton = '';
+    });
+
+    const action = {
+      type: CHANGE_BUTTON_SUCCESS,
+    };
+
+    expect(navReducer(state, action)).toEqual(expectedResult);
+  });
+
+  it('should handle the changeButtonError action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.errorText = 'Error';
+      draft.customIcon = '';
+      draft.onManage = false;
+      draft.selectedButton = '';
+    });
+
+    expect(navReducer(state, changeButtonError('Error'))).toEqual(
+      expectedResult,
+    );
   });
 });

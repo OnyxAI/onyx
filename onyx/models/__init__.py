@@ -3,9 +3,10 @@ import json
 
 from .UserModel import User
 from .NavModel import Nav
+from .ButtonsModel import Buttons
 from .RevokedTokenModel import RevokedToken
 
-__all__ = ['User', 'RevokedToken', 'Nav']
+__all__ = ['User', 'RevokedToken', 'Nav', 'Buttons']
 
 def to_dict(obj):
     if isinstance(obj.__class__, DeclarativeMeta):

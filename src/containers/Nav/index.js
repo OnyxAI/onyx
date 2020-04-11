@@ -18,7 +18,7 @@ import SubCircle from '@onyx/components/NavBar/SubCircle';
 import UserNav from '@onyx/components/NavBar/UserNav';
 import BasicNav from '@onyx/components/NavBar/BasicNav';
 import Buttons from '@onyx/components/NavBar/Buttons';
-import ManageButton from '@onyx/components/NavBar/ManageButton';
+import { ManageButton, ManageIcon } from '@onyx/components/NavBar/ManageButton';
 import RemoveButtons from '@onyx/components/NavBar/RemoveButtons';
 
 import Chat from '@onyx/components/Chat/index';
@@ -38,11 +38,28 @@ import {
   changeNavUrl,
   changeNavIcon,
   changeOnManage,
+  changeNavCustomIcon,
   removeNav,
+  changeButton,
 } from './actions';
+
+import settingsButton from './settingsButton.json';
 
 import reducer from './reducer';
 import saga from './saga';
+
+export const getButtonIcon = (buttonNumber, buttons) => {
+  if (buttons) {
+    const currentButton = buttons.filter(
+      button => button.buttonNumber === buttonNumber,
+    );
+    if (currentButton.length === 1) {
+      return currentButton[0].icon;
+    }
+    return 'fa fa-circle';
+  }
+  return 'fa fa-circle';
+};
 
 export function Nav({
   sockyx,
@@ -55,8 +72,10 @@ export function Nav({
   addNavFunc,
   onChangeNavColor,
   onChangeNavIcon,
+  onChangeNavCustomIcon,
   onChangeNavUrl,
   onChangeManage,
+  onChangeButton,
 }) {
   useInjectReducer({ key: 'nav', reducer });
   useInjectSaga({ key: 'nav', saga });
@@ -70,201 +89,63 @@ export function Nav({
   return (
     <div>
       <div className="uk-visible@xl">
-        <div>
-          <input className="hidden-trigger_top" id="toogle1" type="checkbox" />
-          <label
-            className={`button-top1 uk-position-fixed btn-floating btn-large ${
-              user.color
-            } darken-1`}
-            htmlFor="toogle1"
-          >
-            <i className="fa fa-circle" />
-          </label>
-          <div className="subs1 subs">
-            <Buttons
-              addNavFunc={addNavFunc}
-              allRoutes={allRoutes}
-              nav={nav.nav}
-              onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
-              onChangeNavUrl={onChangeNavUrl}
-              onChangeNavColor={onChangeNavColor}
+        {['1', '2', '3', '4', '5'].map(buttonNumber => (
+          <div>
+            <ManageIcon
+              user={user}
+              onChangeNavCustomIcon={onChangeNavCustomIcon}
+              currentIcon={getButtonIcon(buttonNumber, nav.buttons)}
+              customIconInput={nav.customIcon}
+              onChangeButton={onChangeButton}
               onManage={nav.onManage}
-              color={nav.color}
-              url={nav.url}
-              icon={nav.icon}
+              selected={nav.selectedButton}
               language={user.language}
-              buttonNumber="1"
+              buttonNumber={buttonNumber}
             />
-            <ManageButton
-              onChangeManage={onChangeManage}
-              onManage={nav.onManage}
-              buttonNumber="1"
+            <input
+              className="hidden-trigger_top"
+              id={`toogle${buttonNumber}`}
+              type="checkbox"
             />
-            <RemoveButtons
-              removeNavFunc={removeNavFunc}
-              nav={nav.nav}
-              onManage={nav.onManage}
-              buttonNumber="1"
-            />
+            <label
+              className={`button-top${buttonNumber} uk-position-fixed btn-floating btn-large ${
+                user.color
+              } darken-1`}
+              htmlFor={`toogle${buttonNumber}`}
+            >
+              <i className={getButtonIcon(buttonNumber, nav.buttons)} />
+            </label>
+            <div className={`subs${buttonNumber} subs`}>
+              <Buttons
+                addNavFunc={addNavFunc}
+                allRoutes={allRoutes}
+                nav={nav.nav}
+                onChangeNavIcon={onChangeNavIcon}
+                onChangeNavUrl={onChangeNavUrl}
+                onChangeNavColor={onChangeNavColor}
+                onManage={nav.onManage}
+                color={nav.color}
+                url={nav.url}
+                icon={nav.icon}
+                language={user.language}
+                buttonNumber={buttonNumber}
+              />
+              <ManageButton
+                onChangeManage={onChangeManage}
+                onManage={nav.onManage}
+                selected={nav.selectedButton}
+                buttonNumber={buttonNumber}
+              />
+              <RemoveButtons
+                removeNavFunc={removeNavFunc}
+                nav={nav.nav}
+                selected={nav.selectedButton}
+                onManage={nav.onManage}
+                buttonNumber={buttonNumber}
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <input className="hidden-trigger_top" id="toogle2" type="checkbox" />
-          <label
-            className={`button-top2 uk-position-fixed btn-floating btn-large ${
-              user.color
-            } darken-1`}
-            htmlFor="toogle2"
-          >
-            <i className="fa fa-circle" />
-          </label>
-          <div className="subs2 subs">
-            <Buttons
-              addNavFunc={addNavFunc}
-              allRoutes={allRoutes}
-              nav={nav.nav}
-              onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
-              onChangeNavUrl={onChangeNavUrl}
-              onChangeNavColor={onChangeNavColor}
-              onManage={nav.onManage}
-              color={nav.color}
-              url={nav.url}
-              icon={nav.icon}
-              language={user.language}
-              buttonNumber="2"
-            />
-            <ManageButton
-              onChangeManage={onChangeManage}
-              onManage={nav.onManage}
-              buttonNumber="2"
-            />
-            <RemoveButtons
-              removeNavFunc={removeNavFunc}
-              nav={nav.nav}
-              onManage={nav.onManage}
-              buttonNumber="2"
-            />
-          </div>
-        </div>
-        <div>
-          <input className="hidden-trigger_top" id="toogle3" type="checkbox" />
-          <label
-            className={`button-top3 uk-position-fixed btn-floating btn-large ${
-              user.color
-            } darken-1`}
-            htmlFor="toogle3"
-          >
-            <i className="fa fa-circle" />
-          </label>
-          <div className="subs3 subs">
-            <Buttons
-              addNavFunc={addNavFunc}
-              allRoutes={allRoutes}
-              nav={nav.nav}
-              onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
-              onChangeNavUrl={onChangeNavUrl}
-              onChangeNavColor={onChangeNavColor}
-              onManage={nav.onManage}
-              color={nav.color}
-              url={nav.url}
-              icon={nav.icon}
-              language={user.language}
-              buttonNumber="3"
-            />
-            <ManageButton
-              onChangeManage={onChangeManage}
-              onManage={nav.onManage}
-              buttonNumber="3"
-            />
-            <RemoveButtons
-              removeNavFunc={removeNavFunc}
-              nav={nav.nav}
-              onManage={nav.onManage}
-              buttonNumber="3"
-            />
-          </div>
-        </div>
-        <div>
-          <input className="hidden-trigger_top" id="toogle4" type="checkbox" />
-          <label
-            className={`button-top4 uk-position-fixed btn-floating btn-large ${
-              user.color
-            } darken-1`}
-            htmlFor="toogle4"
-          >
-            <i className="fa fa-circle" />
-          </label>
-          <div className="subs4 subs">
-            <Buttons
-              addNavFunc={addNavFunc}
-              allRoutes={allRoutes}
-              nav={nav.nav}
-              onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
-              onChangeNavUrl={onChangeNavUrl}
-              onChangeNavColor={onChangeNavColor}
-              onManage={nav.onManage}
-              color={nav.color}
-              url={nav.url}
-              icon={nav.icon}
-              language={user.language}
-              buttonNumber="4"
-            />
-            <ManageButton
-              onChangeManage={onChangeManage}
-              onManage={nav.onManage}
-              buttonNumber="4"
-            />
-            <RemoveButtons
-              removeNavFunc={removeNavFunc}
-              nav={nav.nav}
-              onManage={nav.onManage}
-              buttonNumber="4"
-            />
-          </div>
-        </div>
-        <div>
-          <input className="hidden-trigger_top" id="toogle5" type="checkbox" />
-          <label
-            className={`button-top5 uk-position-fixed btn-floating btn-large ${
-              user.color
-            } darken-1`}
-            htmlFor="toogle5"
-          >
-            <i className="fa fa-circle" />
-          </label>
-          <div className="subs5 subs">
-            <Buttons
-              addNavFunc={addNavFunc}
-              allRoutes={allRoutes}
-              nav={nav.nav}
-              onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
-              onChangeNavUrl={onChangeNavUrl}
-              onChangeNavColor={onChangeNavColor}
-              onManage={nav.onManage}
-              color={nav.color}
-              url={nav.url}
-              icon={nav.icon}
-              language={user.language}
-              buttonNumber="5"
-            />
-            <ManageButton
-              onChangeManage={onChangeManage}
-              onManage={nav.onManage}
-              buttonNumber="5"
-            />
-            <RemoveButtons
-              removeNavFunc={removeNavFunc}
-              nav={nav.nav}
-              onManage={nav.onManage}
-              buttonNumber="5"
-            />
-          </div>
-        </div>
+        ))}
         <div>
           <input className="hidden-trigger_top" id="toogle6" type="checkbox" />
           <label
@@ -276,62 +157,16 @@ export function Nav({
             <i className="fa fa-cog" />
           </label>
           <div className="subs6 subs">
-            <SubCircle
-              buttonNumber="6"
-              position="1"
-              language={user.language}
-              classColor={user.color}
-              icon="fa fa-paint-brush"
-              url="/user/design"
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="2"
-              language={user.language}
-              classColor={user.color}
-              icon="fa fa-user"
-              url="/user/manage"
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="3"
-              language={user.language}
-              classColor={user.color}
-              icon="fas fa-brain"
-              url="/neurons"
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="4"
-              language={user.language}
-              classColor={user.color}
-              icon="fa fa-cogs"
-              url="/settings"
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="5"
-              language={user.language}
-              classColor={user.color}
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="6"
-              language={user.language}
-              classColor={user.color}
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="7"
-              language={user.language}
-              classColor={user.color}
-            />
-            <SubCircle
-              buttonNumber="6"
-              position="8"
-              language={user.language}
-              classColor={user.color}
-            />
+            {settingsButton.map((button, index) => (
+              <SubCircle
+                buttonNumber="6"
+                position={(index + 1).toString()}
+                language={user.language}
+                classColor={user.color}
+                icon={button.icon}
+                url={button.url}
+              />
+            ))}
           </div>
         </div>
         <Link to="/">
@@ -360,8 +195,10 @@ Nav.propTypes = {
   addNavFunc: PropTypes.func,
   onChangeNavUrl: PropTypes.func,
   onChangeNavIcon: PropTypes.func,
+  onChangeNavCustomIcon: PropTypes.func,
   onChangeNavColor: PropTypes.func,
   onChangeManage: PropTypes.func,
+  onChangeButton: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -384,8 +221,8 @@ export function mapDispatchToProps(dispatch) {
     onChangeNavColor: color => {
       dispatch(changeNavColor(color.hex));
     },
-    onChangeManage: evt => {
-      dispatch(changeOnManage(evt.target.checked));
+    onChangeManage: (evt, button) => {
+      dispatch(changeOnManage(evt.target.checked, button));
     },
     onChangeNavUrl: evt => {
       dispatch(changeNavUrl(evt.target.value));
@@ -396,6 +233,17 @@ export function mapDispatchToProps(dispatch) {
       } else {
         dispatch(changeNavIcon(evt));
       }
+    },
+    onChangeNavCustomIcon: evt => {
+      if (evt.target) {
+        dispatch(changeNavCustomIcon(evt.target.value));
+      } else {
+        dispatch(changeNavCustomIcon(evt));
+      }
+    },
+    onChangeButton: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(changeButton());
     },
   };
 }

@@ -6,7 +6,7 @@ from flask_restful.utils import cors
 from onyx.utils.log import getLogger
 from onyx.extensions import db
 from onyx.decorators import login_required
-from onyx.models import User, RevokedToken, Nav as NavModel, to_dict
+from onyx.models import User, RevokedToken, Nav as NavModel, to_dict, Buttons as ButtonsModel
 from passlib.hash import sha256_crypt
 
 import json
@@ -184,13 +184,14 @@ class Nav(Resource):
                         })
 
             nav_all = [to_dict(nav) for nav in NavModel.query.filter_by(user=user['id']).limit(50)]
+            buttons = [to_dict(button) for button in ButtonsModel.query.filter_by(user=user['id']).limit(50)]
 
             for i in range(len(nav_all)):
                 for k in range(len(nav)):
                     if nav[k]['buttonNumber'] == nav_all[i]['buttonNumber'] and nav[k]['position'] == nav_all[i]['position']:
                         nav[k] = nav_all[i]
 
-            return jsonify(status="success", nav=nav)
+            return jsonify(status="success", nav=nav, buttons=buttons)
         except Exception as e:
             return jsonify(status="error", message="{}".format(e))
 
@@ -237,6 +238,39 @@ class Nav(Resource):
             except Exception as e:
                 return jsonify(status="error")
         except Exception as e:
+            return jsonify(status="error", message="{}".format(e)), 500
+
+class Buttons(Resource):
+    parser = reqparse.RequestParser(bundle_errors=True)
+    parser.add_argument('buttonNumber')
+    parser.add_argument('icon')
+
+    @login_required
+    def post(self):
+        try:
+            args = self.parser.parse_args()
+
+            user = get_jwt_identity()
+
+            buttonNumber = args['buttonNumber']
+            icon = args['icon']
+
+            try:
+                query = ButtonsModel.query.filter_by(user=user['id'], buttonNumber=buttonNumber).first()
+
+                query.icon = icon
+
+                db.session.add(query)
+                db.session.commit()
+            except:
+                button = ButtonsModel(user=user['id'], buttonNumber=buttonNumber, icon=icon)
+
+                db.session.add(button)
+                db.session.commit()
+
+            return jsonify(status="success")
+        except Exception as e:
+            log.error(e)
             return jsonify(status="error", message="{}".format(e)), 500
 
 

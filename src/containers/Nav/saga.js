@@ -1,7 +1,7 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 
 import request from '@onyx/utils/request';
-import { ADD_NAV, REMOVE_NAV, GET_NAV } from './constants';
+import { ADD_NAV, REMOVE_NAV, GET_NAV, CHANGE_BUTTON } from './constants';
 
 import {
   addNavSuccess,
@@ -10,6 +10,8 @@ import {
   removeNavError,
   getNavError,
   getNavSuccess,
+  changeButtonSuccess,
+  changeButtonError,
 } from './actions';
 
 import makeSelectNav from './selectors';
@@ -25,7 +27,7 @@ export function* loadGetNav() {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
-      yield put(getNavSuccess(result.nav));
+      yield put(getNavSuccess(result.nav, result.buttons));
     } else if (result && result.status === 'error') {
       yield put(getNavError(result.message));
     } else {
@@ -67,6 +69,34 @@ export function* loadAddNav() {
   }
 }
 
+// Change Button
+export function* loadChangeButton() {
+  const token = localStorage.getItem('access_token');
+
+  const nav = yield select(makeSelectNav());
+
+  try {
+    const result = yield call(request, {
+      method: 'POST',
+      url: `/api/users/buttons`,
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        icon: nav.customIcon,
+        buttonNumber: nav.selectedButton,
+      },
+    });
+    if (result && result.status === 'success') {
+      yield put(changeButtonSuccess());
+    } else if (result && result.status === 'error') {
+      yield put(changeButtonError(result.message));
+    } else {
+      yield put(changeButtonError('An error has occured'));
+    }
+  } catch (error) {
+    yield put(changeButtonError(error.toString()));
+  }
+}
+
 // Remove Nav
 export function* loadRemoveNav() {
   const token = localStorage.getItem('access_token');
@@ -100,4 +130,5 @@ export default function* navSaga() {
   yield takeLatest(GET_NAV, loadGetNav);
   yield takeLatest(ADD_NAV, loadAddNav);
   yield takeLatest(REMOVE_NAV, loadRemoveNav);
+  yield takeLatest(CHANGE_BUTTON, loadChangeButton);
 }

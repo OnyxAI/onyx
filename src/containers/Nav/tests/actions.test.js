@@ -15,6 +15,9 @@ import {
   GET_NAV,
   GET_NAV_ERROR,
   GET_NAV_SUCCESS,
+  CHANGE_BUTTON,
+  CHANGE_BUTTON_ERROR,
+  CHANGE_BUTTON_SUCCESS,
 } from '../constants';
 
 import {
@@ -31,6 +34,9 @@ import {
   removeNav,
   removeNavError,
   removeNavSuccess,
+  changeButton,
+  changeButtonError,
+  changeButtonSuccess,
 } from '../actions';
 
 const middlewares = [thunk];
@@ -187,6 +193,40 @@ describe('Auth Actions', () => {
       };
 
       expect(getNavError(error)).toEqual(expectedResult);
+    });
+  });
+
+  describe('changeButton', () => {
+    it('should return the correct type changeButton', () => {
+      const expectedResult = {
+        type: CHANGE_BUTTON,
+      };
+
+      expect(changeButton()).toEqual(expectedResult);
+    });
+  });
+
+  describe('changeButtonSuccess', () => {
+    it('should return the correct type and the passed changeButtonSuccess', () => {
+      const expectedResult = {
+        type: CHANGE_BUTTON_SUCCESS,
+      };
+
+      store.dispatch(changeButtonSuccess());
+
+      expect(store.getActions()[0]).toEqual(expectedResult);
+    });
+  });
+
+  describe('changeButtonError', () => {
+    it('should return the correct type and the passed error', () => {
+      const error = 'An error has occured';
+      const expectedResult = {
+        type: CHANGE_BUTTON_ERROR,
+        error,
+      };
+
+      expect(changeButtonError(error)).toEqual(expectedResult);
     });
   });
 });

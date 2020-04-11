@@ -7,10 +7,17 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-function RemoveButtons({ nav, onManage, removeNavFunc, buttonNumber }) {
+function RemoveButtons({
+  nav,
+  onManage,
+  removeNavFunc,
+  buttonNumber,
+  selected,
+}) {
   return (
     <div>
       {onManage &&
+        selected === buttonNumber &&
         nav.map(
           (item, index) =>
             item.buttonNumber === buttonNumber && (
@@ -48,6 +55,7 @@ RemoveButtons.propTypes = {
   removeNavFunc: PropTypes.func,
   onManage: PropTypes.bool,
   buttonNumber: PropTypes.string,
+  selected: PropTypes.string,
 };
 
 export default memo(RemoveButtons);

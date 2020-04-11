@@ -9,6 +9,7 @@ import {
   ADD_NAV_SUCCESS,
   CHANGE_NAV_COLOR,
   CHANGE_NAV_ICON,
+  CHANGE_NAV_CUSTOM_ICON,
   CHANGE_NAV_URL,
   CHANGE_NAV_ON_MANAGE,
   REMOVE_NAV,
@@ -17,6 +18,9 @@ import {
   GET_NAV,
   GET_NAV_ERROR,
   GET_NAV_SUCCESS,
+  CHANGE_BUTTON,
+  CHANGE_BUTTON_ERROR,
+  CHANGE_BUTTON_SUCCESS,
 } from './constants';
 
 export function getNav() {
@@ -25,10 +29,11 @@ export function getNav() {
   };
 }
 
-export function getNavSuccess(nav) {
+export function getNavSuccess(nav, buttons) {
   return {
     type: GET_NAV_SUCCESS,
     nav,
+    buttons,
   };
 }
 
@@ -61,10 +66,31 @@ export function addNavError(error) {
   };
 }
 
-export function changeOnManage(onManage) {
+export function changeButton() {
+  return {
+    type: CHANGE_BUTTON,
+  };
+}
+
+export function changeButtonSuccess() {
+  return dispatch => {
+    dispatch({ type: CHANGE_BUTTON_SUCCESS });
+    dispatch(getNav());
+  };
+}
+
+export function changeButtonError(error) {
+  return {
+    type: CHANGE_BUTTON_ERROR,
+    error,
+  };
+}
+
+export function changeOnManage(onManage, button) {
   return {
     type: CHANGE_NAV_ON_MANAGE,
     onManage,
+    button,
   };
 }
 
@@ -78,6 +104,13 @@ export function changeNavColor(color) {
 export function changeNavIcon(icon) {
   return {
     type: CHANGE_NAV_ICON,
+    icon,
+  };
+}
+
+export function changeNavCustomIcon(icon) {
+  return {
+    type: CHANGE_NAV_CUSTOM_ICON,
     icon,
   };
 }

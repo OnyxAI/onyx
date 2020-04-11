@@ -1,0 +1,22 @@
+[
+  {
+    "url": "/user/design",
+    "icon": "fa fa-paint-brush"
+  },
+  {
+    "url": "/user/manage",
+    "icon": "fa fa-user"
+  },
+  {
+    "url": "/neurons",
+    "icon": "fas fa-brain"
+  },
+  {
+    "url": "/settings",
+    "icon": "fa fa-cogs"
+  },
+  {},
+  {},
+  {},
+  {}
+]

@@ -15,7 +15,12 @@ export const REMOVE_NAV = 'app/Nav/REMOVE_NAV';
 export const REMOVE_NAV_SUCCESS = 'app/Nav/REMOVE_NAV_SUCCESS';
 export const REMOVE_NAV_ERROR = 'app/Nav/REMOVE_NAV_ERROR';
 
+export const CHANGE_BUTTON = 'app/Nav/CHANGE_BUTTON';
+export const CHANGE_BUTTON_SUCCESS = 'app/Nav/CHANGE_BUTTON_SUCCESS';
+export const CHANGE_BUTTON_ERROR = 'app/Nav/CHANGE_BUTTON_ERROR';
+
 export const CHANGE_NAV_COLOR = 'app/Nav/CHANGE_NAV_COLOR';
 export const CHANGE_NAV_URL = 'app/Nav/CHANGE_NAV_URL';
 export const CHANGE_NAV_ICON = 'app/Nav/CHANGE_NAV_ICON';
+export const CHANGE_NAV_CUSTOM_ICON = 'app/Nav/CHANGE_NAV_CUSTOM_ICON';
 export const CHANGE_NAV_ON_MANAGE = 'app/Nav/CHANGE_NAV_ONMANAGE';

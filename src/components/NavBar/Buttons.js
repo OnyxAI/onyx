@@ -13,7 +13,6 @@ function Buttons({
   addNavFunc,
   nav,
   onChangeNavIcon,
-  onChangeManage,
   onChangeNavUrl,
   onChangeNavColor,
   onManage,
@@ -37,7 +36,6 @@ function Buttons({
               onChangeNavColor={onChangeNavColor}
               onChangeNavUrl={onChangeNavUrl}
               onChangeNavIcon={onChangeNavIcon}
-              onChangeManage={onChangeManage}
               onManage={onManage}
               iconInput={icon}
               colorInput={color}
@@ -60,7 +58,6 @@ Buttons.propTypes = {
   onChangeNavColor: PropTypes.func,
   onChangeNavUrl: PropTypes.func,
   onChangeNavIcon: PropTypes.func,
-  onChangeManage: PropTypes.func,
   onManage: PropTypes.bool,
   icon: PropTypes.string,
   url: PropTypes.string,

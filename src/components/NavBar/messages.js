@@ -41,6 +41,10 @@ export default defineMessages({
     id: `${scope}.modal_header`,
     defaultMessage: 'Add Link',
   },
+  modal_header_icon: {
+    id: `${scope}.modal_header_icon`,
+    defaultMessage: 'Modifier',
+  },
   url: {
     id: `${scope}.url`,
     defaultMessage: 'Link',
