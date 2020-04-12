@@ -5,8 +5,8 @@ import sys
 import threading
 import time
 import traceback
-from SimpleHTTPServer import SimpleHTTPRequestHandler
-from SocketServer import TCPServer
+from http.server import SimpleHTTPRequestHandler
+from socketserver import TCPServer
 from os.path import dirname, realpath
 from shutil import copyfile
 from subprocess import Popen, PIPE
@@ -18,8 +18,8 @@ from wifi import Cell
 
 from onyx.sockyx.client.ws import WebsocketClient
 from onyx.sockyx.message import Message
-from onyx.util import connected
-from onyx.util.log import getLogger
+from onyx.utils import connected
+from onyx.utils.log import getLogger
 
 __author__ = 'aatchison and penrods'
 

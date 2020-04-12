@@ -1,55 +1,56 @@
-var WS = {
-    ws: null,
-    wsConnected: false,
-    listeners: {},
-    onOpenListeners: [],
+const WS = {
+  ws: null,
+  wsConnected: false,
+  listeners: {},
+  onOpenListeners: [],
 
-    connect: function () {
-        this.ws = new WebSocket(Config.wsUrl);
-        this.setWSListeners();
-    },
+  connect() {
+    this.ws = new WebSocket(Config.wsUrl);
+    this.setWSListeners();
+  },
 
-    setWSListeners: function () {
-        this.ws.onmessage = this.onMessage.bind(this);
-        this.ws.onopen = this.onOpen.bind(this);
-    },
+  setWSListeners() {
+    this.ws.onmessage = this.onMessage.bind(this);
+    this.ws.onopen = this.onOpen.bind(this);
+  },
 
-    setOnOpenListener: function (cb) {
-        this.onOpenListeners.push(cb);
-    },
+  setOnOpenListener(cb) {
+    this.onOpenListeners.push(cb);
+  },
 
-    onMessage: function (evt) {
-        var msg = JSON.parse(evt.data);
-        if (this.listeners[msg.type]) {
-            this.listeners[msg.type].forEach(function (cb) {
-                cb(msg.data);
-            });
-        }
-    },
-
-    onOpen: function () {
-        this.wsConnected = true;
-        this.onOpenListeners.forEach(function (cb) {
-            cb();
-        });
-    },
-
-    send: function (type, data) {
-        this.ws.send(JSON.stringify({
-            type: type,
-            data: data
-        }));
-    },
-
-    close: function () {
-        this.ws.close();
-        this.wsConnected = false;
-        this.ws = null;
-    },
-
-    addMessageListener: function (type, callback) {
-        this.listeners[type] = this.listeners[type] || [];
-        this.listeners[type].push(callback);
+  onMessage(evt) {
+    const msg = JSON.parse(evt.data);
+    if (this.listeners[msg.type]) {
+      this.listeners[msg.type].forEach(function(cb) {
+        cb(msg.data);
+      });
     }
+  },
 
+  onOpen() {
+    this.wsConnected = true;
+    this.onOpenListeners.forEach(function(cb) {
+      cb();
+    });
+  },
+
+  send(type, data) {
+    this.ws.send(
+      JSON.stringify({
+        type,
+        data,
+      }),
+    );
+  },
+
+  close() {
+    this.ws.close();
+    this.wsConnected = false;
+    this.ws = null;
+  },
+
+  addMessageListener(type, callback) {
+    this.listeners[type] = this.listeners[type] || [];
+    this.listeners[type].push(callback);
+  },
 };

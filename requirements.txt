@@ -44,3 +44,8 @@ factory-boy==2.8.1
 # NLU
 
 padatious
+
+# Wifi Setup
+
+pyric
+wifi
