@@ -37,43 +37,98 @@ import CustomRoute from '../Route';
 
 import neuronsSaga from '../Neurons/saga';
 
+function loadComponent(scope, module) {
+  return async () => {
+    const factory = await window[scope].get(module);
+    const Module = factory();
+    return Module;
+  }
+}
+
+const useDynamicScript = (args) => {
+  const [ready, setReady] = React.useState(false);
+  const [failed, setFailed] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!args.url) {
+      return
+    }
+
+    const element = document.createElement('script');
+
+    element.src = args.url;
+    element.type = 'text/javascript';
+    element.async = true;
+
+    setReady(false);
+
+    element.onload = () => {
+      console.log(`Dynamic Script Loaded: ${args.url}`);
+      setReady(true);
+    };
+
+    element.onerror = () => {
+      console.error(`Dynamic Script Error: ${args.url}`);
+      setReady(false);
+      setFailed(true)
+    };
+
+    document.head.appendChild(element);
+
+    return () => {
+      console.log(`Dynamic Script Removed: ${args.url}`);
+      document.head.removeChild(element);
+    }
+  }, [args.url]);
+
+  return {
+    ready,
+    failed,
+  }
+};
+
+function System(props) {
+  const { ready, failed } = useDynamicScript({
+    url: props.system && props.system.url
+  });
+
+  if (!props.system) {
+    return <h2>Not system specified</h2>
+  }
+
+  if (!ready) {
+    return <h2>Loading dynamic script: {props.system.url}</h2>
+  }
+
+  if (failed) {
+    return <h2>Failed to load dynamic script: {props.system.url}</h2>
+  }
+
+  const Component = React.lazy(loadComponent(props.system.scope, props.system.module));
+
+  return (
+    <React.Suspense fallback="Loading System">
+      <Component />
+    </React.Suspense>
+  )
+}
+
 export function App({ neurons, getNeuronsFunc, sockyx }) {
   useInjectSaga({ key: 'neurons', saga: neuronsSaga });
 
-  const [allNeurons, setNeurons] = useState([]);
+  const [system, setSystem] = React.useState(undefined);
 
   useEffect(() => {
     getNeuronsFunc();
+    /**
+    setSystem({
+      url: 'http://localhost:3002/remoteEntry.js',
+      scope: 'calendar',
+      module: 'calendar'
+    })
+     */
   }, [0]);
 
-  useMemo(() => {
-    if (neurons.neurons.length) {
-      const neuronsPromise = neurons.neurons.map(neuron => {
-        const waitForChunk = () =>
-          import(`@neurons/${neuron.raw_name}/index.js`).then(module => module);
-
-        return new Promise(resolve =>
-          waitForChunk().then(file => {
-            resolve({ name: neuron.raw_name, data: file.default });
-          }),
-        ).catch(e => {
-          // eslint-disable-next-line no-console
-          console.error(`Error loading neuron "${neuron.raw_name}": ${e}`);
-        });
-      });
-
-      Promise.all(neuronsPromise).then(res => {
-        const neuronsAll = res.reduce(
-          (prev, current) => prev.concat(current),
-          [],
-        );
-
-        if (neuronsAll.length) {
-          setNeurons(neuronsAll);
-        }
-      });
-    }
-  }, [neurons.loadingNeurons]);
 
   return (
     <div>
@@ -81,6 +136,7 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
         <Loader />
       ) : (
         <div>
+          <System system={system} />
           <Switch>
             <CustomRoute
               sockyx={sockyx}
@@ -151,20 +207,6 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
               routeType="user_connected"
               path="/neurons"
             />
-
-            {allNeurons.map(neuron =>
-              neuron.data.map(route => (
-                <CustomRoute
-                  sockyx={sockyx}
-                  exact
-                  nav
-                  container={route}
-                  containerType="neuron"
-                  routeType="user_connected"
-                  path={route.url}
-                />
-              )),
-            )}
 
             <CustomRoute
               sockyx={sockyx}

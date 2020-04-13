@@ -1,6 +1,6 @@
 // Important modules this config uses
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin-compatible-5');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 // const OfflinePlugin = require('offline-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');

@@ -26,7 +26,7 @@ pip3 install virtualenv
 apt-get -y install nodejs npm
 npm install -g pm2
 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+curl -k -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 apt update && apt install -y yarn
