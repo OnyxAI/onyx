@@ -22,8 +22,8 @@ class Neurons():
                     import_neuron_path = os.path.join(os.path.dirname(full_path), "dist", "index.js")
                     with open(full_path, 'r') as neuron_file:
                         neuron = json.load(neuron_file)
-                        neuron["path"] = os.path.dirname(full_path)
-                        neuron["import_path"] = import_neuron_path
+                        #neuron["path"] = os.path.dirname(full_path)
+                        #neuron["import_path"] = import_neuron_path
 
                         all_neurons.append(neuron)
 

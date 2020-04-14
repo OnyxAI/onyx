@@ -3,7 +3,7 @@ from flask import Flask, Blueprint, jsonify, render_template, send_from_director
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
-from onyx.core import api
+from onyx.core import api, neurons_bp
 from onyx.extensions import db
 from onyx.app_config import DevConfig
 from onyx.models import RevokedToken
@@ -30,6 +30,7 @@ def register_extensions(app):
 	db.init_app(app)
 	jwt = JWTManager(app)
 	app.register_blueprint(api_bp, url_prefix='/api')
+	app.register_blueprint(neurons_bp, url_prefix='/neurons')
 
 	@app.route("/")
 	def serve():

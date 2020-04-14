@@ -14,19 +14,26 @@ module.exports = require('./webpack.base.babel')({
   entry: [
     require.resolve('react-app-polyfill/ie11'),
     'webpack-hot-middleware/client?reload=true',
-    path.join(process.cwd(), 'src/app.js'), // Start with js/app.js
+    path.join(process.cwd(), 'src/bootstrap.js'), // Start with js/app.js
   ],
 
   // Don't use hashes in dev mode for better performance
   output: {
+    publicPath: 'http://localhost:3000/',
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
   },
 
   optimization: {
+    minimize: false,
+    runtimeChunk: {
+      name: entrypoint => `runtime-${entrypoint.name}`,
+    },
+    /*
     splitChunks: {
       chunks: 'all',
     },
+    **/
   },
 
   // Add development plugins
@@ -35,7 +42,10 @@ module.exports = require('./webpack.base.babel')({
       name: 'onyx',
       library: { type: 'var', name: 'onyx' },
       filename: 'remoteEntry.js',
-      shared: ['react', 'react-dom'],
+      exposes: {
+        utils: path.resolve(process.cwd(), './src/utils/index.js'),
+      },
+      shared: ['react', 'react-dom', 'react-intl', 'react-redux', 'redux', 'reselect', "react-materialize", "materialize-css"],
     }),
     new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
     new HtmlWebpackPlugin({

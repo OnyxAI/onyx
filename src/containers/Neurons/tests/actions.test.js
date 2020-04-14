@@ -130,7 +130,8 @@ describe('Neurons Actions', () => {
       store.dispatch(installNeuronSuccess());
 
       expect(store.getActions()[0]).toEqual(expectedResult);
-      expect(store.getActions()[1].type).toEqual('onyx/global/ADD_TOAST');
+      expect(store.getActions()[1].type).toEqual('app/Neurons/GET_NEURONS');
+      expect(store.getActions()[2].type).toEqual('onyx/global/ADD_TOAST');
     });
 
     it('should return the correct type and the passed installNeuronError', () => {
@@ -163,7 +164,8 @@ describe('Neurons Actions', () => {
       store.dispatch(removeNeuronSuccess());
 
       expect(store.getActions()[0]).toEqual(expectedResult);
-      expect(store.getActions()[1].type).toEqual('onyx/global/ADD_TOAST');
+      expect(store.getActions()[1].type).toEqual('app/Neurons/GET_NEURONS');
+      expect(store.getActions()[2].type).toEqual('onyx/global/ADD_TOAST');
     });
 
     it('should return the correct type and the passed removeNeuronError', () => {

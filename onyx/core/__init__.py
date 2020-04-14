@@ -1,8 +1,11 @@
 from flask_restful import Api
+from flask import Blueprint, send_from_directory
 from onyx.brain.core import get_api
 from onyx.config import Config
+import os
 
 api = Api()
+neurons_bp = Blueprint('neurons', __name__, static_folder='../../neurons')
 
 # Importing each route
 from .User import *
@@ -23,3 +26,9 @@ for neuron in all_neurons:
 
 for route in API_ROUTES:
     api.add_resource(route['class'], route['route'])
+
+@neurons_bp.route('/<neuron>/<path>')
+def serve_neuron(neuron, path):
+    file_name = path.split("/")[-1]
+    dir_name = os.path.join(neurons_bp.static_folder + '/' + neuron + '/dist', "/".join(path.split("/")[:-1]))
+    return send_from_directory(dir_name, file_name)

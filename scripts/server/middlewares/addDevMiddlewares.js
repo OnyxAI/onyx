@@ -35,6 +35,16 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
     });
   });
 
+  app.use('/neurons/*', (req, res) => {
+    req.url = req.baseUrl;
+    apiProxy.web(req, res, {
+      target: {
+        port: 5000,
+        host: 'localhost',
+      },
+    });
+  });
+
   // Since webpackDevMiddleware uses memory-fs internally to store build
   // artifacts, we use it instead
   const fs = middleware.fileSystem;

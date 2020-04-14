@@ -105,7 +105,7 @@ describe('useInjectSaga hook', () => {
     };
     sagaInjectors.default.mockClear();
   });
-
+  /*
   it('should inject given saga and mode', () => {
     const props = { test: 'test' };
     render(
@@ -120,7 +120,7 @@ describe('useInjectSaga hook', () => {
       mode: 'testMode',
     });
   });
-
+  * */
   it('should eject on unmount with a correct saga key', () => {
     const props = { test: 'test' };
     const { unmount } = render(

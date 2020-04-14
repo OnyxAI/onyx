@@ -12,7 +12,6 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from '@onyx/utils/injectSaga';
-import injectNeuron from '@onyx/utils/loadNeuron';
 
 import makeSelectCurrentUser from './selectors';
 
@@ -32,39 +31,19 @@ export function OnyxRoute({
   routeType,
   container,
   containerType,
+  neuronSettings,
   ...rest
 }) {
   useInjectSaga({ key: 'currentUser', saga });
 
   switch (routeType) {
     case 'user_connected':
-      if (containerType === 'neuron') {
-        const Neuron = injectNeuron({
-          mapDispatchToProps: container.mapDispatchToProps,
-          mapStateToProps: container.mapStateToProps,
-          reducers: container.reducers,
-          sagas: container.sagas,
-        })(container.component);
-
-        return (
-          <UserConnected
-            sockyx={sockyx}
-            container={Neuron}
-            containerType={containerType}
-            verifyTokenFunc={verifyTokenFunc}
-            user={currentUser.user}
-            logoutUserFunc={logoutUserFunc}
-            isAuthenticated={currentUser.isAuthenticated}
-            isAuthenticating={currentUser.isAuthenticating}
-            {...rest}
-          />
-        );
-      }
       return (
         <UserConnected
           sockyx={sockyx}
           container={container}
           containerType={containerType}
+          neuronSettings={neuronSettings}
           verifyTokenFunc={verifyTokenFunc}
           user={currentUser.user}
           logoutUserFunc={logoutUserFunc}
@@ -75,33 +54,12 @@ export function OnyxRoute({
       );
 
     case 'admin_connected':
-      if (containerType === 'neuron') {
-        const Neuron = injectNeuron({
-          mapDispatchToProps: container.mapDispatchToProps,
-          mapStateToProps: container.mapStateToProps,
-          reducers: container.reducers,
-          sagas: container.sagas,
-        })(container.component);
-
-        return (
-          <AdminConnected
-            sockyx={sockyx}
-            container={Neuron}
-            containerType={containerType}
-            verifyTokenFunc={verifyTokenFunc}
-            user={currentUser.user}
-            logoutUserFunc={logoutUserFunc}
-            isAuthenticated={currentUser.isAuthenticated}
-            isAuthenticating={currentUser.isAuthenticating}
-            {...rest}
-          />
-        );
-      }
       return (
         <AdminConnected
           sockyx={sockyx}
           container={container}
           containerType={containerType}
+          neuronSettings={neuronSettings}
           verifyTokenFunc={verifyTokenFunc}
           user={currentUser.user}
           logoutUserFunc={logoutUserFunc}
@@ -145,6 +103,7 @@ export function OnyxRoute({
 
 OnyxRoute.propTypes = {
   sockyx: PropTypes.object,
+  neuronSettings: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   currentUser: PropTypes.object,

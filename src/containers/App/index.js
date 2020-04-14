@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable global-require */
 /**
  *
  * App.js
@@ -6,7 +10,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  *
  */
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
 
@@ -38,20 +42,35 @@ import CustomRoute from '../Route';
 import neuronsSaga from '../Neurons/saga';
 
 function loadComponent(scope, module) {
-  return async () => {
-    const factory = await window[scope].get(module);
+  window[scope].override(
+    Object.assign(
+      {
+        react: () => Promise.resolve().then(() => () => require('react')),
+        'react-dom': () =>
+          Promise.resolve().then(() => () => require('react-dom')),
+        redux: () => Promise.resolve().then(() => () => require('redux')),
+        'react-redux': () =>
+          Promise.resolve().then(() => () => require('react-redux')),
+        'react-intl': () =>
+          Promise.resolve().then(() => () => require('react-intl')),
+      },
+      __webpack_require__.O,
+    ),
+  );
+
+  return window[scope].get(module).then(factory => {
     const Module = factory();
     return Module;
-  }
+  });
 }
 
-const useDynamicScript = (args) => {
+const useDynamicScript = args => {
   const [ready, setReady] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
   React.useEffect(() => {
     if (!args.url) {
-      return
+      return;
     }
 
     const element = document.createElement('script');
@@ -63,72 +82,71 @@ const useDynamicScript = (args) => {
     setReady(false);
 
     element.onload = () => {
-      console.log(`Dynamic Script Loaded: ${args.url}`);
+      console.log(`Neuron Loaded: ${args.url}`);
       setReady(true);
     };
 
     element.onerror = () => {
-      console.error(`Dynamic Script Error: ${args.url}`);
+      console.error(`Neuron Error: ${args.url}`);
       setReady(false);
-      setFailed(true)
+      setFailed(true);
     };
 
     document.head.appendChild(element);
 
     return () => {
-      console.log(`Dynamic Script Removed: ${args.url}`);
+      console.log(`Neuron Removed: ${args.url}`);
       document.head.removeChild(element);
-    }
+    };
   }, [args.url]);
 
   return {
     ready,
     failed,
-  }
+  };
 };
 
-function System(props) {
+function GetComponent(props) {
   const { ready, failed } = useDynamicScript({
-    url: props.system && props.system.url
+    url: props.neuronSettings && props.neuronSettings.url,
   });
 
-  if (!props.system) {
-    return <h2>Not system specified</h2>
+  if (!props.neuronSettings) {
+    return <div />;
   }
 
   if (!ready) {
-    return <h2>Loading dynamic script: {props.system.url}</h2>
+    return <span className="uk-margin-small-right" uk-spinner="ratio: 1" />;
   }
 
   if (failed) {
-    return <h2>Failed to load dynamic script: {props.system.url}</h2>
+    return <h2>Failed to load dynamic script: {props.neuronSettings.url}</h2>;
   }
 
-  const Component = React.lazy(loadComponent(props.system.scope, props.system.module));
+  const Component = React.lazy(() =>
+    loadComponent(props.neuronSettings.scope, props.neuronSettings.module),
+  );
 
   return (
-    <React.Suspense fallback="Loading System">
-      <Component />
+    <React.Suspense
+      fallback={
+        <span
+          className="uk-margin-small-right uk-position-center"
+          uk-spinner="ratio: 2"
+        />
+      }
+    >
+      <Component {...props} />
     </React.Suspense>
-  )
+  );
 }
 
 export function App({ neurons, getNeuronsFunc, sockyx }) {
   useInjectSaga({ key: 'neurons', saga: neuronsSaga });
 
-  const [system, setSystem] = React.useState(undefined);
-
   useEffect(() => {
     getNeuronsFunc();
-    /**
-    setSystem({
-      url: 'http://localhost:3002/remoteEntry.js',
-      scope: 'calendar',
-      module: 'calendar'
-    })
-     */
   }, [0]);
-
 
   return (
     <div>
@@ -136,7 +154,6 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
         <Loader />
       ) : (
         <div>
-          <System system={system} />
           <Switch>
             <CustomRoute
               sockyx={sockyx}
@@ -146,6 +163,7 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
               routeType="not_connected"
               path="/hello"
             />
+
             <CustomRoute
               sockyx={sockyx}
               exact
@@ -208,6 +226,27 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
               path="/neurons"
             />
 
+            {neurons.neurons.map(neuron => {
+              const { routes } = neuron;
+
+              return routes.map(route => (
+                <CustomRoute
+                  sockyx={sockyx}
+                  exact
+                  nav
+                  neuronSettings={{
+                    url: `/neurons/${route.raw}/remoteEntry.js`,
+                    scope: route.raw,
+                    module: route.name,
+                  }}
+                  container={GetComponent}
+                  containerType="neuron"
+                  routeType="user_connected"
+                  path={route.url}
+                />
+              ));
+            })}
+
             <CustomRoute
               sockyx={sockyx}
               container={NotFound}
@@ -227,6 +266,13 @@ App.propTypes = {
   sockyx: PropTypes.object,
   neurons: PropTypes.object,
   getNeuronsFunc: PropTypes.func,
+};
+
+GetComponent.propTypes = {
+  neuronSettings: PropTypes.object,
+  url: PropTypes.string,
+  scope: PropTypes.string,
+  module: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({

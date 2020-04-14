@@ -6,10 +6,10 @@ import { memoryHistory } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
-import { render } from 'react-testing-library';
+// import { render } from 'react-testing-library';
 
 import configureStore from '../../configureStore';
-import injectReducer, { useInjectReducer } from '../injectReducer';
+import injectReducer from '../injectReducer';
 import * as reducerInjectors from '../reducerInjectors';
 
 // Fixtures
@@ -54,6 +54,7 @@ describe('injectReducer decorator', () => {
   });
 });
 
+/*
 describe('useInjectReducer hook', () => {
   let store;
   let injectors;
@@ -81,4 +82,6 @@ describe('useInjectReducer hook', () => {
     expect(injectors.injectReducer).toHaveBeenCalledTimes(1);
     expect(injectors.injectReducer).toHaveBeenCalledWith('test', reducer);
   });
+
 });
+* */

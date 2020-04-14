@@ -34,6 +34,7 @@ export function installNeuronSuccess() {
     const { locale } = getState().language;
 
     dispatch({ type: INSTALL_NEURON_SUCCESS });
+    dispatch(getNeurons());
     dispatch(
       Toast.success({
         text: getMessage(locale, 'onyx.neurons.install_success'),
@@ -67,6 +68,7 @@ export function removeNeuronSuccess() {
     const { locale } = getState().language;
 
     dispatch({ type: REMOVE_NEURON_SUCCESS });
+    dispatch(getNeurons());
     dispatch(
       Toast.success({
         text: getMessage(locale, 'onyx.neurons.remove_success'),

@@ -24,6 +24,7 @@ export default function UserConnected({
   isAuthenticating,
   user,
   path,
+  neuronSettings,
   containerType,
   container: Container,
   ...rest
@@ -53,7 +54,12 @@ export default function UserConnected({
               {...rest}
               path={path}
               render={props => (
-                <Container sockyx={sockyx} user={user} {...props} />
+                <Container
+                  neuronSettings={neuronSettings}
+                  sockyx={sockyx}
+                  user={user}
+                  {...props}
+                />
               )}
             />
           </div>
@@ -67,6 +73,7 @@ export default function UserConnected({
 
 UserConnected.propTypes = {
   sockyx: PropTypes.object,
+  neuronSettings: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   path: PropTypes.string,

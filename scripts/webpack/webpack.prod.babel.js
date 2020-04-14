@@ -3,8 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 // const OfflinePlugin = require('offline-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
-const ExternalsPlugin = require('webpack-externals-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -12,11 +11,12 @@ module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: [
     require.resolve('react-app-polyfill/ie11'),
-    path.join(process.cwd(), 'src/app.js'),
+    path.join(process.cwd(), 'src/bootstrap.js'),
   ],
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
+    publicPath: '/',
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
   },
@@ -26,6 +26,24 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'onyx',
+      library: { type: 'var', name: 'onyx' },
+      filename: 'remoteEntry.js',
+      exposes: {
+        utils: path.resolve(process.cwd(), './src/utils/index.js'),
+      },
+      shared: [
+        'react',
+        'react-dom',
+        'react-intl',
+        'react-redux',
+        'redux',
+        'reselect',
+        'react-materialize',
+        'materialize-css',
+      ],
+    }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'src/index.html',
