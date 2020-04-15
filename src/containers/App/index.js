@@ -17,6 +17,7 @@ import { Switch } from 'react-router-dom';
 import GlobalStyle from '@onyx/global-styles';
 
 import { useInjectSaga } from '@onyx/utils/injectSaga';
+import { useInjectReducer } from '@onyx/utils/injectReducer';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -24,9 +25,10 @@ import { compose } from 'redux';
 
 import Loader from '@onyx/components/Loader';
 
-import { makeSelectNeurons } from './selectors';
+import { makeSelectNeurons, makeSelectInstall } from './selectors';
 
 import { getNeurons } from '../Neurons/actions';
+import { getInstall } from '../Install/actions';
 
 import Toasts from '../Global/Toasts';
 
@@ -37,9 +39,15 @@ import DesignSettings from '../DesignSettings/Loadable';
 import Neurons from '../Neurons/Loadable';
 import Settings from '../Settings/Loadable';
 import NotFound from '../NotFound/Loadable';
+
+import Install from '../Install/Loadable';
+
 import CustomRoute from '../Route';
 
 import neuronsSaga from '../Neurons/saga';
+
+import installSaga from '../Install/saga';
+import installReducer from '../Install/reducer';
 
 function loadComponent(scope, module) {
   window[scope].override(
@@ -141,10 +149,19 @@ function GetComponent(props) {
   );
 }
 
-export function App({ neurons, getNeuronsFunc, sockyx }) {
+export function App({
+  neurons,
+  getNeuronsFunc,
+  install,
+  getInstallFunc,
+  sockyx,
+}) {
+  useInjectReducer({ key: 'install', reducer: installReducer });
   useInjectSaga({ key: 'neurons', saga: neuronsSaga });
+  useInjectSaga({ key: 'install', saga: installSaga });
 
   useEffect(() => {
+    getInstallFunc();
     getNeuronsFunc();
   }, [0]);
 
@@ -154,106 +171,118 @@ export function App({ neurons, getNeuronsFunc, sockyx }) {
         <Loader />
       ) : (
         <div>
-          <Switch>
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              container={Home}
-              containerType="native"
-              routeType="not_connected"
-              path="/hello"
-            />
+          {!install.loading && install.isInstalled === 'true' ? (
+            <Switch>
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                container={Home}
+                containerType="native"
+                routeType="not_connected"
+                path="/hello"
+              />
 
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              container={Login}
-              containerType="native"
-              routeType="not_connected"
-              path="/login"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              container={Register}
-              containerType="native"
-              routeType="not_connected"
-              path="/register"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              nav
-              container={Main}
-              containerType="native"
-              routeType="user_connected"
-              path="/"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              nav
-              container={DesignSettings}
-              containerType="native"
-              routeType="user_connected"
-              path="/user/design"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              nav
-              container={Manage}
-              containerType="native"
-              routeType="user_connected"
-              path="/user/manage"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              nav
-              container={Settings}
-              containerType="native"
-              routeType="admin_connected"
-              path="/settings"
-            />
-            <CustomRoute
-              sockyx={sockyx}
-              exact
-              nav
-              container={Neurons}
-              containerType="native"
-              routeType="user_connected"
-              path="/neurons"
-            />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                container={Login}
+                containerType="native"
+                routeType="not_connected"
+                path="/login"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                container={Register}
+                containerType="native"
+                routeType="not_connected"
+                path="/register"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                nav
+                container={Main}
+                containerType="native"
+                routeType="user_connected"
+                path="/"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                nav
+                container={DesignSettings}
+                containerType="native"
+                routeType="user_connected"
+                path="/user/design"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                nav
+                container={Manage}
+                containerType="native"
+                routeType="user_connected"
+                path="/user/manage"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                nav
+                container={Settings}
+                containerType="native"
+                routeType="admin_connected"
+                path="/settings"
+              />
+              <CustomRoute
+                sockyx={sockyx}
+                exact
+                nav
+                container={Neurons}
+                containerType="native"
+                routeType="user_connected"
+                path="/neurons"
+              />
 
-            {neurons.neurons.map(neuron => {
-              const { routes } = neuron;
+              {neurons.neurons.map(neuron => {
+                const { routes } = neuron;
 
-              return routes.map(route => (
-                <CustomRoute
-                  sockyx={sockyx}
-                  exact
-                  nav
-                  neuronSettings={{
-                    url: `/neurons/${route.raw}/remoteEntry.js`,
-                    scope: route.raw,
-                    module: route.name,
-                  }}
-                  container={GetComponent}
-                  containerType="neuron"
-                  routeType="user_connected"
-                  path={route.url}
-                />
-              ));
-            })}
+                return routes.map(route => (
+                  <CustomRoute
+                    sockyx={sockyx}
+                    exact
+                    nav
+                    neuronSettings={{
+                      url: `/neurons/${route.raw}/remoteEntry.js`,
+                      scope: route.raw,
+                      module: route.name,
+                    }}
+                    container={GetComponent}
+                    containerType="neuron"
+                    routeType="user_connected"
+                    path={route.url}
+                  />
+                ));
+              })}
 
-            <CustomRoute
-              sockyx={sockyx}
-              container={NotFound}
-              containerType="native"
-              routeType="normal"
-            />
-          </Switch>
+              <CustomRoute
+                sockyx={sockyx}
+                container={NotFound}
+                containerType="native"
+                routeType="normal"
+              />
+            </Switch>
+          ) : (
+            <Switch>
+              <CustomRoute
+                sockyx={sockyx}
+                container={Install}
+                containerType="native"
+                routeType="normal"
+              />
+            </Switch>
+          )}
+
           <Toasts />
           <GlobalStyle />
         </div>
@@ -266,6 +295,8 @@ App.propTypes = {
   sockyx: PropTypes.object,
   neurons: PropTypes.object,
   getNeuronsFunc: PropTypes.func,
+  install: PropTypes.object,
+  getInstallFunc: PropTypes.func,
 };
 
 GetComponent.propTypes = {
@@ -277,12 +308,16 @@ GetComponent.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   neurons: makeSelectNeurons(),
+  install: makeSelectInstall(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     getNeuronsFunc: () => {
       dispatch(getNeurons());
+    },
+    getInstallFunc: () => {
+      dispatch(getInstall());
     },
   };
 }

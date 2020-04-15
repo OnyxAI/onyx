@@ -8,7 +8,6 @@ from onyx.config import Config
 log = getLogger('Settings')
 
 class OnyxData(Resource):
-    @login_required
     def get(self):
         try:
             if not os.listdir(Config.DATA_PATH) :

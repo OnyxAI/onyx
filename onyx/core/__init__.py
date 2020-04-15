@@ -1,16 +1,17 @@
 from flask_restful import Api
 from flask import Blueprint, send_from_directory
+from onyx.app_config import Config
 from onyx.brain.core import get_api
-from onyx.config import Config
 import os
 
-api = Api()
+api = Api(prefix="/api")
 neurons_bp = Blueprint('neurons', __name__, static_folder='../../neurons')
 
 # Importing each route
 from .User import *
 from .Settings import *
 from .Neurons import *
+from .Install import *
 
 all_neurons = get_api(Config.NEURON_PATH)
 API_ROUTES = []
@@ -22,8 +23,7 @@ for neuron in all_neurons:
             all_routes = Module.get_api()
             for route in all_routes:
                 API_ROUTES.append(route)
-
-
+print(API_ROUTES)
 for route in API_ROUTES:
     api.add_resource(route['class'], route['route'])
 

@@ -12,10 +12,10 @@ from os.path import join
 from threading import Timer
 from onyx.sockyx.client.ws import WebsocketClient
 from onyx.sockyx.message import Message
-from onyx.brains.core import NEURONS_DIR, MainModule, load_neuron, create_neuron_descriptor
+from onyx.brain.core import NEURONS_DIR, MainModule, load_neuron, create_neuron_descriptor
 from onyx.utils.log import getLogger
 from onyx.utils import connected
-from onyx.brains.brain import brain
+from onyx.brain.brain import brain
 
 logger = getLogger('Neuron')
 

@@ -8,6 +8,7 @@ describe('settingsReducer', () => {
   let state;
   beforeEach(() => {
     state = {
+      downloaded: false,
       errorText: '',
       loadingData: false,
     };
@@ -20,6 +21,7 @@ describe('settingsReducer', () => {
 
   it('should handle the getOnyxData action correctly', () => {
     const expectedResult = produce(state, draft => {
+      draft.downloaded = false;
       draft.loadingData = true;
     });
 
@@ -29,6 +31,7 @@ describe('settingsReducer', () => {
   it('should handle the getOnyxDataSuccess action correctly', () => {
     const expectedResult = produce(state, draft => {
       draft.loadingData = false;
+      draft.downloaded = true;
     });
 
     const action = {
@@ -41,6 +44,7 @@ describe('settingsReducer', () => {
   it('should handle the getOnyxDataError action correctly', () => {
     const expectedResult = produce(state, draft => {
       draft.errorText = 'An error has occured';
+      draft.downloaded = false;
       draft.loadingData = false;
     });
 

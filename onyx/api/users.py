@@ -107,7 +107,7 @@ class Register(Resource):
 
             return jsonify(status="success")
         except Exception as e:
-            return make_response(jsonify(status="error", message="onyx.auth.register_error"), 500)
+            return jsonify(status="error", message="onyx.auth.register_error")
 
 class Color(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)
