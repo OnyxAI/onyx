@@ -374,7 +374,7 @@ const mapStateToProps = createStructuredSelector({
   settings: makeSelectSettings(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     onSubmit: () => {
       dispatch(installOnyx());

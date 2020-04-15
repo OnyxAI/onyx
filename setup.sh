@@ -18,6 +18,7 @@ pip install --upgrade virtualenv
 pip install --no-cache-dir -r requirements.txt
 
 mkdir -p ${TOP}/neurons
+mkdir -p ${TOP}/data
 
 yarn install --network-timeout 1000000
 yarn build
