@@ -10,6 +10,7 @@ flask
 flask-restful
 flask_script
 flask-cors
+watchdog
 
 # Database
 
@@ -49,3 +50,7 @@ padatious
 
 pyric
 wifi
+
+# Production
+
+uwsgi

@@ -10,28 +10,13 @@ from onyx.app_config import DevConfig, Config
 from onyx.models import RevokedToken
 from onyx.api.neurons import Neurons
 
+from onyx.utils.log import getLogger
+
 to_reload = False
 neurons = Neurons()
-
-class AppReloader(object):
-    def __init__(self, create):
-        self.create = create
-        self.app = create()
-
-    def get_application(self):
-        global to_reload
-        if to_reload:
-            self.app = self.create()
-            to_reload = False
-
-        return self.app
-
-    def __call__(self, environ, start_response):
-        app = self.get_application()
-        return app(environ, start_response)
+log = getLogger('ONYX')
 
 def create_app(config=DevConfig):
-    print("create app now")
     app = Flask(__name__, template_folder='../dist', static_folder='../dist')
 
     cors = CORS(app, resources={r"*": {"origins": "*"}})
@@ -42,21 +27,23 @@ def create_app(config=DevConfig):
     with app.app_context():
         db.create_all()
 
-    @app.route('/reload/all')
-    def reload():
-        global to_reload
-        to_reload = True
-
-        return jsonify(status="success")
-
     return app
 
 def register_extensions(app):
     api.init_app(app)
     db.init_app(app)
     jwt = JWTManager(app)
-    #app.register_blueprint(api_bp, url_prefix='/api')
     app.register_blueprint(neurons_bp, url_prefix='/neurons')
+
+    @app.route('/api/reload_onyx')
+    def reload_onyx():
+        try:
+            import uwsgi
+            uwsgi.reload()
+        except Exception as e:
+            log.info('Reload Onyx is only use in production mode')
+
+        return jsonify(status="success")
 
     @app.route("/")
     def serve():

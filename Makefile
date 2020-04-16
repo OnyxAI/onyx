@@ -4,8 +4,11 @@ PYTHON=python
 
 all: setup
 
-start_api:
+dev_api:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000
+
+prod_api:
+	. $(VIRTUALENV_ROOT)/bin/activate; uwsgi --socket 0.0.0.0:8080 --protocol=http --wsgi-file uwsgi.py --py-autoreload 1
 
 start_client:
 	yarn start
@@ -15,12 +18,6 @@ build_client:
 
 test:
 	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes; yarn test
-
-debug:
-	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000
-
-prod:
-	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -p 80
 
 setup:
 	bash setup.sh

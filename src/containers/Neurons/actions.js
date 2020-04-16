@@ -3,7 +3,7 @@
  * Neurons actions
  *
  */
-import Toast from '@onyx/global/actions';
+import Toast, { reloadApi } from '@onyx/global/actions';
 import {
   GET_NEURONS_SUCCESS,
   GET_NEURONS_ERROR,
@@ -34,6 +34,7 @@ export function installNeuronSuccess() {
     const { locale } = getState().language;
 
     dispatch({ type: INSTALL_NEURON_SUCCESS });
+    dispatch(reloadApi());
     dispatch(getNeurons());
     dispatch(
       Toast.success({
@@ -68,6 +69,7 @@ export function removeNeuronSuccess() {
     const { locale } = getState().language;
 
     dispatch({ type: REMOVE_NEURON_SUCCESS });
+    dispatch(reloadApi());
     dispatch(getNeurons());
     dispatch(
       Toast.success({

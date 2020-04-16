@@ -16,6 +16,7 @@ import { useInjectSaga } from '@onyx/utils/injectSaga';
 
 import { useInjectReducer } from '@onyx/utils/injectReducer';
 import Container from '@onyx/components/Container';
+import globalSaga from '@onyx/global/saga';
 import { makeSelectNeurons } from './selectors';
 import { getNeuronsStore, installNeuron, removeNeuron } from './actions';
 import saga from './saga';
@@ -30,6 +31,7 @@ export function Neurons({
 }) {
   useInjectReducer({ key: 'neurons', reducer });
   useInjectSaga({ key: 'neurons', saga });
+  useInjectSaga({ key: 'global', saga: globalSaga });
 
   const isInstalled = name =>
     neurons.neurons.filter(neuron => neuron.raw_name === name).length > 0;

@@ -4,7 +4,7 @@
  * Global Actions
  *
  */
-import { ADD_TOAST, REMOVE_TOAST } from './constants';
+import { ADD_TOAST, REMOVE_TOAST, RELOAD_API, GLOBAL_ERROR } from './constants';
 
 let id = 0;
 
@@ -12,6 +12,19 @@ const defaultOptions = {
   color: '#1e88e5',
   duration: 5000,
 };
+
+export function globalError(error) {
+  return {
+    type: GLOBAL_ERROR,
+    error,
+  };
+}
+
+export function reloadApi() {
+  return {
+    type: RELOAD_API,
+  };
+}
 
 export function createToast(options) {
   return {

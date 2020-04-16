@@ -23,7 +23,7 @@ for neuron in all_neurons:
             all_routes = Module.get_api()
             for route in all_routes:
                 API_ROUTES.append(route)
-print(API_ROUTES)
+
 for route in API_ROUTES:
     api.add_resource(route['class'], route['route'])
 

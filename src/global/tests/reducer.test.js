@@ -5,6 +5,7 @@ import { ADD_TOAST, REMOVE_TOAST } from '../constants';
 describe('globalReducer', () => {
   it('returns the initial state', () => {
     expect(globalReducer(undefined, {})).toEqual({
+      errorText: '',
       toasts: [],
     });
   });
@@ -17,6 +18,7 @@ describe('globalReducer', () => {
       }),
     ).toEqual({
       toasts: [{}],
+      errorText: '',
     });
   });
 
@@ -28,6 +30,7 @@ describe('globalReducer', () => {
       }),
     ).toEqual({
       toasts: [],
+      errorText: '',
     });
   });
 
