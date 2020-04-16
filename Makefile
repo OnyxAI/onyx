@@ -8,7 +8,7 @@ dev_api:
 	. $(VIRTUALENV_ROOT)/bin/activate; $(PYTHON) manage.py run -d -r -p 5000
 
 prod_api:
-	. $(VIRTUALENV_ROOT)/bin/activate; uwsgi --socket 0.0.0.0:8080 --protocol=http --wsgi-file uwsgi.py --py-autoreload 1
+	. $(VIRTUALENV_ROOT)/bin/activate; uwsgi --socket 0.0.0.0:5000 --protocol=http --wsgi-file uwsgi.py --py-autoreload 1
 
 start_client:
 	yarn start

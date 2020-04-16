@@ -71,6 +71,13 @@ def get_neurons(neurons_folder):
     neurons = sorted(neurons, key=lambda p: p.get('name'))
     return neurons
 
+def get_neuron(neurons_folder, name):
+    all_neuron = get_neurons(neurons_folder)
+    for neuron in all_neuron:
+        if neuron['name'] == name:
+            return imp.load_module(neuron["name"] + MainModule, *neuron["info"])
+    return False
+
 def get_api(neurons_folder):
     all_neuron = get_neurons(neurons_folder)
     neurons = []
@@ -109,6 +116,15 @@ class OnyxNeuron(object):
 
     def initialize(self):
         raise Exception("Initialize not work for the neuron : " + self.name)
+
+    def install(self):
+        logger.info("No installation script for : " + self.name)
+
+    def update(self):
+        logger.info("No Update script for : " + self.name)
+
+    def remove(self):
+        logger.info("No Remove script for : " + self.name)
 
     def speak(self, utterance, lang='en-US'):
         logger.info("Speak: " + utterance)

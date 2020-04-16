@@ -2,6 +2,7 @@ import json, os, git, shutil
 from flask import jsonify, make_response, app
 from flask_restful import Resource, reqparse
 from onyx.decorators import login_required
+from onyx.brain.core import get_neuron
 from onyx.utils.log import getLogger
 from onyx.api.users import Nav
 
@@ -22,7 +23,7 @@ class Neurons():
                     import_neuron_path = os.path.join(os.path.dirname(full_path), "dist", "index.js")
                     with open(full_path, 'r') as neuron_file:
                         neuron = json.load(neuron_file)
-                        #neuron["path"] = os.path.dirname(full_path)
+                        neuron["path"] = os.path.dirname(full_path)
                         #neuron["import_path"] = import_neuron_path
 
                         all_neurons.append(neuron)
@@ -72,12 +73,28 @@ class InstallNeuron(Resource):
                 # Downloading Neuron
                 log.info('Downloading Neuron ' + name)
                 git.Repo.clone_from(url, Config.NEURON_PATH + '/' + name)
+
+                neuron = get_neuron(Config.NEURON_PATH, name)
+
+                if (hasattr(neuron, 'create_neuron') and callable(neuron.create_neuron)):
+                    Module = neuron.create_neuron()
+                    if (hasattr(Module, 'get_api') and callable(Module.install)):
+                        Module.install()
+
                 return jsonify(status="success")
             else:
-                # Update Data
+                # Update Neuron
                 log.info('Updating Neuron + ' + name)
                 neuron_folder = git.cmd.Git(Config.NEURON_PATH + '/' + name)
                 neuron_folder.pull()
+
+                neuron = get_neuron(Config.NEURON_PATH, name)
+
+                if (hasattr(neuron, 'create_neuron') and callable(neuron.create_neuron)):
+                    Module = neuron.create_neuron()
+                    if (hasattr(Module, 'get_api') and callable(Module.update)):
+                        Module.update()
+
                 return jsonify(status="success")
         except Exception as e:
             log.error(e)
@@ -100,6 +117,13 @@ class RemoveNeuron(Resource):
                 # Remove Neuron
                 log.info('Removing Neuron ' + name)
 
+                neuron = get_neuron(Config.NEURON_PATH, name)
+
+                if (hasattr(neuron, 'create_neuron') and callable(neuron.create_neuron)):
+                    Module = neuron.create_neuron()
+                    if (hasattr(Module, 'get_api') and callable(Module.remove)):
+                        Module.remove()
+
                 # Remove all nav using this neuron
                 nav.remove_neuron_nav(name, neurons.getAllNeurons())
 
@@ -110,4 +134,5 @@ class RemoveNeuron(Resource):
                 return jsonify(status="error")
 
         except Exception as e:
+            print(e)
             return jsonify(status="error", message="{}".format(e))

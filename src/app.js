@@ -22,13 +22,8 @@ import 'sanitize.css/sanitize.css';
 
 import { Context } from '@onyx/utils/getContext';
 
-// Import Sockyx
-
 // Import root app
 import App from '@onyx/containers/App';
-
-// Import Language Provider
-import LanguageProvider from '@onyx/containers/LanguageProvider';
 
 // Load the favicon
 /* eslint-disable import/no-unresolved, import/extensions */
@@ -38,9 +33,6 @@ import '!file-loader?name=[name].[ext]!./assets/img/favicon.ico';
 import { WS_URL } from '@onyx/global/constants';
 
 import configureStore from './configureStore';
-
-// Import i18n messages
-import { translationMessages } from './i18n';
 
 require('@onyx/assets/js/uikit-icons'); // eslint-disable-line global-require
 require('@onyx/assets/js/uikit'); // eslint-disable-line global-require
@@ -52,14 +44,12 @@ export const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 export const sockyx = new WebSocket(WS_URL);
 
-const render = messages => {
+const render = () => {
   ReactDOM.render(
     <Provider store={store} context={Context}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App sockyx={sockyx} />
-        </ConnectedRouter>
-      </LanguageProvider>
+      <ConnectedRouter history={history}>
+        <App sockyx={sockyx} />
+      </ConnectedRouter>
     </Provider>,
     MOUNT_NODE,
   );
@@ -71,7 +61,7 @@ if (module.hot) {
   // have to be constants at compile-time
   module.hot.accept(['./i18n', '@onyx/containers/App'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    render(translationMessages);
+    render();
   });
 }
 
@@ -81,12 +71,12 @@ if (!window.Intl) {
     resolve(import('intl'));
   })
     .then(() => Promise.all([import('intl/locale-data/jsonp/en.js')]))
-    .then(() => render(translationMessages))
+    .then(() => render())
     .catch(err => {
       throw err;
     });
 } else {
-  render(translationMessages);
+  render();
 }
 
 // Install ServiceWorker and AppCache in the end since
