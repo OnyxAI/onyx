@@ -15,12 +15,27 @@ import NavImg from '@onyx/assets/img/nav.png';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-export function UserNav({ logoutUserFunc, user, history }) {
+export function UserNav({ logoutUserFunc, user, history, notifications }) {
+  const getUnseenNotifications = allNotifications => {
+    if (allNotifications) {
+      return allNotifications.notifications.filter(
+        notification => !notification.seen,
+      ).length;
+    }
+    return 0;
+  };
+
   return (
     <div className="uk-visible@s">
       <SideNav
         trigger={
           <div className="avatar-button">
+            {getUnseenNotifications(notifications) !== 0 && (
+              <span className={`uk-badge avatar-badge ${user.color} secondary`}>
+                {getUnseenNotifications(notifications)}
+              </span>
+            )}
+
             <button
               type="button"
               className={`vertical button-collapse btn-floating btn-large ${
@@ -51,6 +66,9 @@ export function UserNav({ logoutUserFunc, user, history }) {
         <SideNavItem onClick={() => history.push('/user/manage')}>
           <FormattedMessage {...messages.myaccount} />
         </SideNavItem>
+        <SideNavItem onClick={() => history.push('/notifications')}>
+          <FormattedMessage {...messages.notifications} />
+        </SideNavItem>
         <SideNavItem divider />
         <SideNavItem waves onClick={() => logoutUserFunc()}>
           <FormattedMessage {...messages.logout} />
@@ -62,6 +80,7 @@ export function UserNav({ logoutUserFunc, user, history }) {
 
 UserNav.propTypes = {
   logoutUserFunc: PropTypes.func,
+  notifications: PropTypes.object,
   user: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func,

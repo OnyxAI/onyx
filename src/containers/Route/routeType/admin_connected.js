@@ -8,6 +8,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { getMessage } from '@onyx/i18n';
 import { Redirect, Route } from 'react-router-dom';
 import Loader from '@onyx/components/Loader';
 import Nav from '@onyx/containers/Nav/Loadable';
@@ -21,6 +22,7 @@ export default function AdminConnected({
   logoutUserFunc,
   isAuthenticated,
   isAuthenticating,
+  toastFunc,
   user,
   path,
   containerType,
@@ -31,6 +33,19 @@ export default function AdminConnected({
 
   const token = localStorage.getItem('access_token');
 
+  const isAdmin = currentUser => {
+    if (currentUser.account_type !== 1) {
+      toastFunc({
+        text: getMessage(
+          currentUser.language.substring(0, 2),
+          'onyx.global.no_access',
+        ),
+      });
+      return false;
+    }
+    return true;
+  };
+
   useEffect(() => {
     verifyTokenFunc();
   }, [token]);
@@ -40,7 +55,7 @@ export default function AdminConnected({
       {isAuthenticating ? (
         <Loader />
       ) : isAuthenticated ? (
-        user.account_type === 1 ? (
+        isAdmin(user) ? (
           <div>
             {rest.nav && (
               <Nav
@@ -71,6 +86,7 @@ export default function AdminConnected({
 
 AdminConnected.propTypes = {
   sockyx: PropTypes.object,
+  toastFunc: PropTypes.func,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
   path: PropTypes.string,

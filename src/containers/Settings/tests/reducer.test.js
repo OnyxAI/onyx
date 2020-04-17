@@ -8,9 +8,14 @@ describe('settingsReducer', () => {
   let state;
   beforeEach(() => {
     state = {
-      downloaded: false,
       errorText: '',
       loadingData: false,
+      downloaded: false,
+      tokens: [],
+      tokenId: '',
+      tokenName: '',
+      loadingToken: false,
+      selected: '',
     };
   });
 

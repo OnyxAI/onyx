@@ -10,5 +10,23 @@
     "name": "Mon Compte",
     "raw": "compte",
     "icon": "fa fa-cogs"
+  },
+  {
+    "url": "/notifications",
+    "name": "Notifications",
+    "raw": "notifications",
+    "icon": "fas fa-bell"
+  },
+  {
+    "url": "/neurons",
+    "name": "Neurones",
+    "raw": "neurons",
+    "icon": "fas fa-brain"
+  },
+  {
+    "url": "/settings",
+    "name": "Paramètres",
+    "raw": "settings",
+    "icon": "fa fa-cog"
   }
 ]

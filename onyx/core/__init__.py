@@ -10,8 +10,10 @@ neurons_bp = Blueprint('neurons', __name__, static_folder='../../neurons')
 # Importing each route
 from .User import *
 from .Settings import *
+from .Notifications import *
 from .Neurons import *
 from .Install import *
+from .Tokens import *
 
 all_neurons = get_api(Config.NEURON_PATH)
 API_ROUTES = []

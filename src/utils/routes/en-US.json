@@ -10,5 +10,23 @@
     "name": "Manage",
     "raw": "manage",
     "icon": "fa fa-cogs"
+  },
+  {
+    "url": "/notifications",
+    "name": "Notifications",
+    "raw": "notifications",
+    "icon": "fas fa-bell"
+  },
+  {
+    "url": "/neurons",
+    "name": "Neurons",
+    "raw": "neurons",
+    "icon": "fas fa-brain"
+  },
+  {
+    "url": "/settings",
+    "name": "Settings",
+    "raw": "settings",
+    "icon": "fa fa-cog"
   }
 ]

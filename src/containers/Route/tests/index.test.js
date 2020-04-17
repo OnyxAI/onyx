@@ -172,7 +172,7 @@ describe('<OnyxRoute />', () => {
               container={Component}
               containerType="native"
               routeType="admin_connected"
-              user={{ account_type: 1 }}
+              user={{ account_type: 1, language: 'fr-FR' }}
               isAuthenticated
               isAuthenticating={false}
               path="/test"
@@ -194,6 +194,7 @@ describe('<OnyxRoute />', () => {
               container={NeuronComponent}
               containerType="neuron"
               routeType="admin_connected"
+              user={{ account_type: 1, language: 'fr-FR' }}
               isAuthenticated
               isAuthenticating={false}
               path="/test"

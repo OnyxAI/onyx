@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
+import Toast from '@onyx/global/actions';
+
 import { useInjectSaga } from '@onyx/utils/injectSaga';
 
 import makeSelectCurrentUser from './selectors';
@@ -32,6 +34,7 @@ export function OnyxRoute({
   container,
   containerType,
   neuronSettings,
+  toastFunc,
   ...rest
 }) {
   useInjectSaga({ key: 'currentUser', saga });
@@ -61,6 +64,7 @@ export function OnyxRoute({
           containerType={containerType}
           neuronSettings={neuronSettings}
           verifyTokenFunc={verifyTokenFunc}
+          toastFunc={toastFunc}
           user={currentUser.user}
           logoutUserFunc={logoutUserFunc}
           isAuthenticated={currentUser.isAuthenticated}
@@ -103,6 +107,7 @@ export function OnyxRoute({
 
 OnyxRoute.propTypes = {
   sockyx: PropTypes.object,
+  toastFunc: PropTypes.func,
   neuronSettings: PropTypes.object,
   verifyTokenFunc: PropTypes.func,
   logoutUserFunc: PropTypes.func,
@@ -123,6 +128,9 @@ export function mapDispatchToProps(dispatch) {
     },
     logoutUserFunc: () => {
       dispatch(logoutUser());
+    },
+    toastFunc: options => {
+      dispatch(Toast.error(options));
     },
   };
 }

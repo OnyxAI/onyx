@@ -3,6 +3,13 @@ button {
     outline: none;
 }
 
+.avatar-badge {
+  z-index:100;
+  position: relative;
+  bottom: 20px;
+  left: 20%;
+}
+
 .btn-floating.tiny-button {
   width: 10px;
   height: 10px;
@@ -369,5 +376,3 @@ button {
     opacity: 1;
     transition: 1s;
   }
-
-

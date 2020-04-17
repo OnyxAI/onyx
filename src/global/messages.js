@@ -24,4 +24,8 @@ export default defineMessages({
     id: `${scope}.home`,
     defaultMessage: 'Home',
   },
+  no_access: {
+    id: `${scope}.no_access`,
+    defaultMessage: "You don't have the right to access it !",
+  },
 });

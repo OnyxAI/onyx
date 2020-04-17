@@ -45,6 +45,7 @@ import DesignSettings from '../DesignSettings/Loadable';
 import Neurons from '../Neurons/Loadable';
 import Settings from '../Settings/Loadable';
 import NotFound from '../NotFound/Loadable';
+import Notifications from '../Notifications/Loadable';
 
 import Install from '../Install/Loadable';
 
@@ -251,6 +252,15 @@ export function App({
                   containerType="native"
                   routeType="user_connected"
                   path="/user/design"
+                />
+                <CustomRoute
+                  sockyx={sockyx}
+                  exact
+                  nav
+                  container={Notifications}
+                  containerType="native"
+                  routeType="user_connected"
+                  path="/notifications"
                 />
                 <CustomRoute
                   sockyx={sockyx}

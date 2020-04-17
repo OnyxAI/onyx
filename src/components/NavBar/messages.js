@@ -25,6 +25,10 @@ export default defineMessages({
     id: `${scope}.home`,
     defaultMessage: 'Home',
   },
+  notifications: {
+    id: `${scope}.notifications`,
+    defaultMessage: 'Notifications',
+  },
   neurons: {
     id: `${scope}.neurons`,
     defaultMessage: 'Neurons',

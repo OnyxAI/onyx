@@ -31,6 +31,11 @@ import { useInjectReducer } from '@onyx/utils/injectReducer';
 import makeSelectNav from './selectors';
 import { makeSelectNeurons } from '../Neurons/selectors';
 
+import { makeSelectNotifications } from '../Notifications/selectors';
+import { getNotifications } from '../Notifications/actions';
+import notificationsSaga from '../Notifications/saga';
+import notificationsReducer from '../Notifications/reducer';
+
 import {
   getNav,
   addNav,
@@ -64,6 +69,8 @@ export const getButtonIcon = (buttonNumber, buttons) => {
 export function Nav({
   sockyx,
   neurons,
+  getNotificationsFunc,
+  notifications,
   nav,
   user,
   logoutUserFunc,
@@ -79,10 +86,13 @@ export function Nav({
 }) {
   useInjectReducer({ key: 'nav', reducer });
   useInjectSaga({ key: 'nav', saga });
+  useInjectReducer({ key: 'notifications', reducer: notificationsReducer });
+  useInjectSaga({ key: 'notifications', saga: notificationsSaga });
 
   const allRoutes = getRoutes(user.language, neurons.neurons);
 
   useEffect(() => {
+    getNotificationsFunc();
     getNavFunc();
   }, [0]);
 
@@ -157,16 +167,46 @@ export function Nav({
             <i className="fa fa-cog" />
           </label>
           <div className="subs6 subs">
-            {settingsButton.map((button, index) => (
-              <SubCircle
-                buttonNumber="6"
-                position={(index + 1).toString()}
-                language={user.language}
-                classColor={user.color}
-                icon={button.icon}
-                url={button.url}
-              />
-            ))}
+            {settingsButton.map((button, index) => {
+              if (button.admin !== 'true') {
+                return (
+                  <SubCircle
+                    buttonNumber="6"
+                    position={(index + 1).toString()}
+                    language={user.language}
+                    classColor={user.color}
+                    icon={button.icon}
+                    url={button.url}
+                  />
+                );
+              }
+              if (
+                button.admin &&
+                button.admin === 'true' &&
+                user.account_type === 1
+              ) {
+                return (
+                  <SubCircle
+                    buttonNumber="6"
+                    position={(index + 1).toString()}
+                    language={user.language}
+                    classColor={user.color}
+                    icon={button.icon}
+                    url={button.url}
+                  />
+                );
+              }
+              return (
+                <SubCircle
+                  buttonNumber="6"
+                  position={(index + 1).toString()}
+                  language={user.language}
+                  classColor={user.color}
+                  icon={undefined}
+                  url={undefined}
+                />
+              );
+            })}
           </div>
         </div>
         <Link to="/">
@@ -178,7 +218,13 @@ export function Nav({
         </Link>
       </div>
       <Chat sockyx={sockyx} user={user} />
-      <UserNav logoutUserFunc={logoutUserFunc} user={user} />
+      {notifications && !notifications.loading && (
+        <UserNav
+          logoutUserFunc={logoutUserFunc}
+          user={user}
+          notifications={notifications}
+        />
+      )}
       <BasicNav logoutUserFunc={logoutUserFunc} user={user} />
     </div>
   );
@@ -186,11 +232,13 @@ export function Nav({
 
 Nav.propTypes = {
   sockyx: PropTypes.object,
+  notifications: PropTypes.object,
   user: PropTypes.object,
   logoutUserFunc: PropTypes.func,
   getNavFunc: PropTypes.func,
   nav: PropTypes.object,
   neurons: PropTypes.object,
+  getNotificationsFunc: PropTypes.func,
   removeNavFunc: PropTypes.func,
   addNavFunc: PropTypes.func,
   onChangeNavUrl: PropTypes.func,
@@ -204,12 +252,16 @@ Nav.propTypes = {
 const mapStateToProps = createStructuredSelector({
   nav: makeSelectNav(),
   neurons: makeSelectNeurons(),
+  notifications: makeSelectNotifications(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     getNavFunc: () => {
       dispatch(getNav());
+    },
+    getNotificationsFunc: () => {
+      dispatch(getNotifications());
     },
     addNavFunc: (evt, buttonNumber, position) => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();

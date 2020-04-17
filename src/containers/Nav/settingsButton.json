@@ -13,6 +13,7 @@
   },
   {
     "url": "/settings",
+    "admin": "true",
     "icon": "fa fa-cogs"
   },
   {},
