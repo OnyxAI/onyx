@@ -44,7 +44,10 @@ export function Manage({
           </Helmet>
         )}
       </FormattedMessage>
-      <Container title={<FormattedMessage {...messages.manage_header} />}>
+      <Container
+        user={user}
+        title={<FormattedMessage {...messages.manage_header} />}
+      >
         {' '}
         <form onSubmit={onSubmitForm} id="manageForm" className="uk-grid-small">
           <div className="uk-form-row">

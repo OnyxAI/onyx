@@ -7,8 +7,10 @@ from .NavModel import Nav
 from .ButtonsModel import Buttons
 from .RevokedTokenModel import RevokedToken
 from .Tokens import Tokens
+from .Widgets import Widgets
+from .Screen import Screen
 
-__all__ = ['User', 'RevokedToken', 'Nav', 'Buttons', 'Notifications', 'Tokens']
+__all__ = ['User', 'RevokedToken', 'Nav', 'Buttons', 'Notifications', 'Tokens', 'Widgets', 'Screen']
 
 def to_dict(obj):
     if isinstance(obj.__class__, DeclarativeMeta):

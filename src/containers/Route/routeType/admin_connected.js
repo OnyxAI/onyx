@@ -64,7 +64,7 @@ export default function AdminConnected({
                 logoutUserFunc={logoutUserFunc}
               />
             )}
-            <div className="container main-container">
+            <div className={rest.nav && 'main-container container'}>
               <Route
                 {...rest}
                 path={path}

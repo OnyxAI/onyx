@@ -67,6 +67,15 @@ export default defineMessages({
     defaultMessage:
       'Please download all the Onyx data to get the best experience.',
   },
+  header_token: {
+    id: `${scope}.header_token`,
+    defaultMessage:
+      'Add an API token to allows Onyx communicate with all services.',
+  },
+  add_token: {
+    id: `${scope}.add_token`,
+    defaultMessage: 'Add Token.',
+  },
   download_data: {
     id: `${scope}.download_data`,
     defaultMessage: 'Download Data',

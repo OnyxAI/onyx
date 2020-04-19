@@ -13,7 +13,7 @@ log = getLogger('Neurons')
 
 class Neurons():
 
-    def createNeuronFile(self, path):
+    def getAllNeurons(self, path):
         all_neurons = []
 
         for root, dirs, files in os.walk(path):
@@ -28,20 +28,15 @@ class Neurons():
 
                         all_neurons.append(neuron)
 
-        with open(Config.BASE_PATH + '/neuron_list.json', 'w') as outfile:
-            json.dump(all_neurons, outfile)
+        return all_neurons
 
-    def getAllNeurons(self):
-        with open(Config.BASE_PATH + '/neuron_list.json', 'r') as data:
-            return json.load(data)
 
 class GetAllNeurons(Resource):
     def get(self):
         try:
             neurons = Neurons()
-            neurons.createNeuronFile(Config.NEURON_PATH)
-
-            return jsonify(status="success", neurons=neurons.getAllNeurons())
+            
+            return jsonify(status="success", neurons=neurons.getAllNeurons(Config.NEURON_PATH))
         except Exception as e:
             log.error(e)
             return jsonify(status="error", message="{}".format(e))

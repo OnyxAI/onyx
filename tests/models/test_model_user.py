@@ -17,7 +17,7 @@ class TestUser:
 
     def test_get_by_id(self, db):
         """Get user by ID."""
-        user = User(username='foo', email='foo@bar.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", language="en-US")
+        user = User(username='foo', email='foo@bar.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", color='blue', mode='light', language="en-US")
         db.session.add(user)
         db.session.commit()
 
@@ -26,7 +26,7 @@ class TestUser:
 
     def test_factory(self, db):
         """Test user factory."""
-        user = UserFactory(username='foo', email='foo@bar.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", language="en-US")
+        user = UserFactory(username='foo', email='foo@bar.com', password=sha256_crypt.hash("pepper1234"), firstname="Pepper", lastname="Pot", color='blue', mode='light', language="en-US")
         db.session.commit()
         assert bool(user.username)
         assert bool(user.email)

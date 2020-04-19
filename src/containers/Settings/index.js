@@ -57,7 +57,10 @@ export function Settings({
         )}
       </FormattedMessage>
       {settings ? (
-        <Container title={<FormattedMessage {...messages.header} />}>
+        <Container
+          user={user}
+          title={<FormattedMessage {...messages.header} />}
+        >
           <div className="uk-padding center">
             <label htmlFor="settings" className="uk-form-label">
               <FormattedMessage {...messages.header} />

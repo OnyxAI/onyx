@@ -47,7 +47,7 @@ export function UserNav({ logoutUserFunc, user, history, notifications }) {
           </div>
         }
         options={{ closeOnClick: true }}
-        className="side-nav"
+        className={`side-nav secondary ${user.mode}`}
       >
         <li>
           <div className="userView">

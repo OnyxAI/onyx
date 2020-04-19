@@ -24,7 +24,6 @@ class Tokens(Resource):
         except Exception as e:
             return jsonify(status="error", message="{}".format(e))
 
-    @login_required
     def post(self):
         try:
             args = self.parser.parse_args()

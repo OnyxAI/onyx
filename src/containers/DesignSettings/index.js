@@ -16,14 +16,14 @@ import colors from '@onyx/utils/colors.json';
 import { useInjectSaga } from '@onyx/utils/injectSaga';
 import { useInjectReducer } from '@onyx/utils/injectReducer';
 import Container from '@onyx/components/Container';
-import { makeSelectColor } from './selectors';
+import { makeSelectColor, makeSelectMode } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-import { changeColor } from './actions';
+import { changeColor, changeMode } from './actions';
 
-export function DesignSettings({ changeColorFunc, user }) {
+export function DesignSettings({ changeColorFunc, user, changeModeFunc }) {
   useInjectReducer({ key: 'designSettings', reducer });
   useInjectSaga({ key: 'designSettings', saga });
 
@@ -37,7 +37,7 @@ export function DesignSettings({ changeColorFunc, user }) {
           </Helmet>
         )}
       </FormattedMessage>
-      <Container title={<FormattedMessage {...messages.header} />}>
+      <Container user={user} title={<FormattedMessage {...messages.header} />}>
         <h3>
           <FormattedMessage {...messages.main_color} />
         </h3>
@@ -46,7 +46,7 @@ export function DesignSettings({ changeColorFunc, user }) {
             <button
               type="button"
               onClick={() => changeColorFunc(item.name)}
-              className={`uk-margin-small-right uk-margin-bottom btn-floating uk-padding-large btn-medium darken-1 ${
+              className={`uk-margin-small-right z-depth-4 uk-margin-bottom btn-floating uk-padding-large btn-medium darken-1 ${
                 item.name
               }`}
             >
@@ -59,6 +59,26 @@ export function DesignSettings({ changeColorFunc, user }) {
             </button>
           ))}
         </div>
+
+        <h3>
+          <FormattedMessage {...messages.main_mode} />
+        </h3>
+        <div className="center">
+          {['dark', 'light'].map(item => (
+            <button
+              type="button"
+              onClick={() => changeModeFunc(item)}
+              className={`uk-margin-small-right z-depth-4 uk-margin-bottom btn-floating uk-padding-large btn-medium darken-1 ${item}`}
+            >
+              {user.mode === item && (
+                <button
+                  type="button"
+                  className="btn-floating tiny-button blue darken-4"
+                />
+              )}
+            </button>
+          ))}
+        </div>
       </Container>
     </div>
   );
@@ -66,17 +86,22 @@ export function DesignSettings({ changeColorFunc, user }) {
 
 DesignSettings.propTypes = {
   changeColorFunc: PropTypes.func,
+  changeModeFunc: PropTypes.func,
   user: object,
 };
 
 const mapStateToProps = createStructuredSelector({
   color: makeSelectColor(),
+  mode: makeSelectMode(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     changeColorFunc: color => {
       dispatch(changeColor(color));
+    },
+    changeModeFunc: mode => {
+      dispatch(changeMode(mode));
     },
   };
 }

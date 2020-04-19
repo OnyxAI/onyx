@@ -28,6 +28,7 @@ export function Neurons({
   installNeuronFunc,
   removeNeuronFunc,
   neurons,
+  user,
 }) {
   useInjectReducer({ key: 'neurons', reducer });
   useInjectSaga({ key: 'neurons', saga });
@@ -50,7 +51,7 @@ export function Neurons({
           </Helmet>
         )}
       </FormattedMessage>
-      <Container title={<FormattedMessage {...messages.header} />}>
+      <Container user={user} title={<FormattedMessage {...messages.header} />}>
         <div
           className="uk-grid-medium uk-child-width-1-3@m"
           data-uk-grid
@@ -109,6 +110,7 @@ export function Neurons({
 }
 
 Neurons.propTypes = {
+  user: Proptypes.func,
   getNeuronsStoreFunc: Proptypes.func,
   installNeuronFunc: Proptypes.func,
   removeNeuronFunc: Proptypes.func,

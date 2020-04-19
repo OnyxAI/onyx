@@ -22,7 +22,7 @@ export function BasicNav({ logoutUserFunc, user, history }) {
     <div className="uk-hidden@xl">
       <Navbar
         alignLinks="right"
-        className={` darken-1 ${user.color}`}
+        className={`darken-1 ${user.color}`}
         brand={
           <a className="brand-logo" onClick={() => history.push('/')}>
             Onyx

@@ -45,7 +45,10 @@ export function Notifications({
         )}
       </FormattedMessage>
       {notifications ? (
-        <Container title={<FormattedMessage {...messages.header} />}>
+        <Container
+          user={user}
+          title={<FormattedMessage {...messages.header} />}
+        >
           {notifications.notifications.length === 0 ? (
             <h5 className="center">
               <FormattedMessage {...messages.no_notifications} />

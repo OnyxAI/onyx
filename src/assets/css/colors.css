@@ -1,3 +1,83 @@
+.dark {
+  background-color: #263238 !important;
+}
+
+.dark.secondary {
+  background-color: #043e5b !important;
+}
+
+.dark.text {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark span {
+  color: white;
+}
+
+.dark input {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark select {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark h4 {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark .modal-content {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark .modal-footer {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark .collapsible-header {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark .sc-message-list {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.dark #mobile-nav {
+  background-color: #043e5b !important;
+  color: white !important;
+}
+
+.light {
+  background-color: #eceff1 !important;
+}
+
+.light.secondary {
+  background-color: white !important;
+}
+
+.light.text {
+  background-color: white !important;
+  color: black !important;
+}
+
+.light .modal-content {
+  background-color: white !important;
+  color: black !important;
+}
+
+.light span {
+  color: black;
+}
+
+
 .amber.secondary {
   background-color: #004cff !important;
 }
@@ -65,5 +145,3 @@
 .yellow.secondary {
   background-color: #355afd !important;
 }
-
-

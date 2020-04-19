@@ -8,12 +8,10 @@ from onyx.core import api, neurons_bp
 from onyx.extensions import db
 from onyx.app_config import DevConfig, Config
 from onyx.models import RevokedToken
-from onyx.api.neurons import Neurons
 
 from onyx.utils.log import getLogger
 
 to_reload = False
-neurons = Neurons()
 log = getLogger('ONYX')
 
 def create_app(config=DevConfig):
@@ -30,8 +28,8 @@ def create_app(config=DevConfig):
     return app
 
 def register_extensions(app):
-    api.init_app(app)
     db.init_app(app)
+    api.init_app(app)
     jwt = JWTManager(app)
     app.register_blueprint(neurons_bp, url_prefix='/neurons')
 

@@ -40,7 +40,7 @@ class Install(Resource):
             firstname = args['firstname']
             lastname = args['lastname']
 
-            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', account_type=1)
+            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', mode='light', account_type=1)
 
             try:
                 db.session.add(user)

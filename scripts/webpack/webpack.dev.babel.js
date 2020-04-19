@@ -44,6 +44,7 @@ module.exports = require('./webpack.base.babel')({
       filename: 'remoteEntry.js',
       exposes: {
         utils: path.resolve(process.cwd(), './src/utils/index.js'),
+        components: path.resolve(process.cwd(), './src/components/index.js'),
       },
       shared: ['react', 'react-dom', 'react-intl', 'react-redux', 'redux', 'reselect', "react-materialize", "materialize-css"],
     }),

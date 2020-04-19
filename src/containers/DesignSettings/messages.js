@@ -17,4 +17,8 @@ export default defineMessages({
     id: `${scope}.main_color`,
     defaultMessage: 'Main Color',
   },
+  main_mode: {
+    id: `${scope}.main_mode`,
+    defaultMessage: 'Mode',
+  },
 });

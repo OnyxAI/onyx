@@ -19,5 +19,8 @@
   {},
   {},
   {},
-  {}
+  {
+    "url": "/screen",
+    "icon": "fas fa-desktop"
+  }
 ]

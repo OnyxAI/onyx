@@ -9,6 +9,7 @@ module.exports = {
     '!src/*/*/Loadable.{js,jsx}',
   ],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  modulePathIgnorePatterns: ['<rootDir>/neurons/'],
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
     '.*\\.(css|less|styl|scss|sass)$': '<rootDir>/scripts/mocks/cssModule.js',

@@ -22,4 +22,10 @@ const makeSelectColor = () =>
     substate => substate.color,
   );
 
-export { selectDesignSettingsDomain, makeSelectColor };
+const makeSelectMode = () =>
+  createSelector(
+    selectDesignSettingsDomain,
+    substate => substate.mode,
+  );
+
+export { selectDesignSettingsDomain, makeSelectColor, makeSelectMode };

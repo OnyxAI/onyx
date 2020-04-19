@@ -10,6 +10,8 @@ neurons_bp = Blueprint('neurons', __name__, static_folder='../../neurons')
 # Importing each route
 from .User import *
 from .Settings import *
+from .Widgets import *
+from .Screen import *
 from .Notifications import *
 from .Neurons import *
 from .Install import *

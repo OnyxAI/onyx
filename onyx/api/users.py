@@ -97,7 +97,7 @@ class Register(Resource):
             firstname = args['firstname']
             lastname = args['lastname']
 
-            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', account_type=0)
+            user = User(email=email, username=username, password=password, firstname=firstname, lastname=lastname, language=language, color='blue', mode='light', account_type=0)
 
             try:
                 db.session.add(user)
@@ -132,6 +132,31 @@ class Color(Resource):
             return jsonify(status="success")
         except Exception as e:
             return jsonify(status="error", message="{}".format(e)), 500
+
+class Mode(Resource):
+    parser = reqparse.RequestParser(bundle_errors=True)
+    parser.add_argument('mode', required=True)
+
+    @login_required
+    def post(self):
+        try:
+            user = get_jwt_identity()
+
+            args = self.parser.parse_args()
+
+            mode = args['mode']
+
+            query = User.query.filter_by(id=user['id']).first()
+
+            query.mode = mode
+
+            db.session.add(query)
+            db.session.commit()
+
+            return jsonify(status="success")
+        except Exception as e:
+            return jsonify(status="error", message="{}".format(e)), 500
+
 
 class Nav(Resource):
     parser = reqparse.RequestParser(bundle_errors=True)

@@ -10,6 +10,7 @@ describe('designSettingsReducer', () => {
     state = {
       errorText: '',
       color: '',
+      mode: '',
     };
   });
 

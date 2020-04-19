@@ -28,5 +28,11 @@
     "name": "Settings",
     "raw": "settings",
     "icon": "fa fa-cog"
+  },
+  {
+    "url": "/screen",
+    "name": "Screen",
+    "raw": "screen",
+    "icon": "fas fa-desktop"
   }
 ]

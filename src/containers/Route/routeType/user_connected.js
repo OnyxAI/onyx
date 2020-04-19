@@ -35,6 +35,12 @@ export default function UserConnected({
     verifyTokenFunc();
   }, [0]);
 
+  useEffect(() => {
+    if (user) {
+      document.body.className = user.mode;
+    }
+  }, [user.mode]);
+
   return (
     <div>
       {isAuthenticating ? (
@@ -49,7 +55,7 @@ export default function UserConnected({
               logoutUserFunc={logoutUserFunc}
             />
           )}
-          <div className="main-container container">
+          <div className={rest.nav && 'main-container container'}>
             <Route
               {...rest}
               path={path}

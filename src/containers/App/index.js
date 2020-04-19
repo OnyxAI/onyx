@@ -39,6 +39,7 @@ import { getInstall } from '../Install/actions';
 import Toasts from '../Global/Toasts';
 
 import Main from '../Main/Loadable';
+import Screen from '../Screen/Loadable';
 import { Login, Register, Manage } from '../Auth/Loadable';
 import Home from '../Home/Loadable';
 import DesignSettings from '../DesignSettings/Loadable';
@@ -279,6 +280,14 @@ export function App({
                   containerType="native"
                   routeType="admin_connected"
                   path="/settings"
+                />
+                <CustomRoute
+                  sockyx={sockyx}
+                  exact
+                  container={Screen}
+                  containerType="native"
+                  routeType="user_connected"
+                  path="/screen"
                 />
                 <CustomRoute
                   sockyx={sockyx}

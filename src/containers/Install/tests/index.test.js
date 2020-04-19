@@ -334,9 +334,9 @@ describe('<Install />', () => {
     expect(wrapper.exists('button')).toBe(false);
   });
 
-  it('should render the Page Install step 4', () => {
+  it('should render the Page Install step 5', () => {
     const install = {
-      step: 4,
+      step: 5,
     };
     const settings = {};
 

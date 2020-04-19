@@ -20,7 +20,11 @@ import Logo from '@onyx/assets/img/logo/blue.png';
 import { useInjectSaga } from '@onyx/utils/injectSaga';
 import { useInjectReducer } from '@onyx/utils/injectReducer';
 
-import { getOnyxData } from '@onyx/containers/Settings/actions';
+import {
+  getOnyxData,
+  changeTokenName,
+  addToken,
+} from '@onyx/containers/Settings/actions';
 
 import settingsSaga from '@onyx/containers/Settings/saga';
 import settingsReducer from '@onyx/containers/Settings/reducer';
@@ -48,6 +52,7 @@ export function Install({
   onSubmit,
   accountErrorFunc,
   changeStepFunc,
+  addTokenFunc,
   getOnyxDataFunc,
 }) {
   useInjectReducer({ key: 'install', reducer });
@@ -339,6 +344,49 @@ export function Install({
               />
 
               <h5 className="center">
+                <FormattedMessage {...messages.header_token} />
+              </h5>
+
+              <div className="uk-form-row uk-padding-small center">
+                <button
+                  className="uk-button uk-button-primary uk-button-large"
+                  type="button"
+                  onClick={() => addTokenFunc()}
+                >
+                  <FormattedMessage {...messages.add_token} />
+                </button>
+              </div>
+
+              <div className="uk-form-row uk-padding-small center">
+                <button
+                  className="uk-button uk-button-primary uk-button-large"
+                  type="button"
+                  onClick={() => changeStepFunc(3)}
+                >
+                  <FormattedMessage {...messages.previous} />
+                </button>
+                <button
+                  className="uk-button uk-button-primary uk-button-large"
+                  type="button"
+                  onClick={() => changeStepFunc(5)}
+                >
+                  <FormattedMessage {...messages.next} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {install.step === 5 && (
+            <div>
+              <img
+                className="uk-margin-bottom center"
+                width="140"
+                height="120"
+                alt="logo"
+                src={Logo}
+              />
+
+              <h5 className="center">
                 <FormattedMessage {...messages.header_finish} />
               </h5>
 
@@ -364,6 +412,7 @@ Install.propTypes = {
   settings: PropTypes.object,
   changeStepFunc: PropTypes.func,
   accountErrorFunc: PropTypes.func,
+  addTokenFunc: PropTypes.func,
   getOnyxDataFunc: PropTypes.func,
   onSubmit: PropTypes.func,
   onChangeInput: PropTypes.func,
@@ -390,6 +439,10 @@ export function mapDispatchToProps(dispatch) {
     },
     accountErrorFunc: error => {
       dispatch(accountError(error));
+    },
+    addTokenFunc: () => {
+      dispatch(changeTokenName('system'));
+      dispatch(addToken());
     },
   };
 }
