@@ -236,7 +236,7 @@ export function Screen({
               data-uk-grid
             >
               {screen.screen.map(element => {
-                if (screen.type === 'neuron') {
+                if (element.type === 'neuron') {
                   return (
                     <GetScreen
                       neuronSettings={{

@@ -1,7 +1,12 @@
 import produce from 'immer';
 import designSettingsReducer from '../reducer';
-import { changeColorError, changeColor } from '../actions';
-import { CHANGE_COLOR_SUCCESS } from '../constants';
+import {
+  changeColorError,
+  changeColor,
+  changeMode,
+  changeModeError,
+} from '../actions';
+import { CHANGE_COLOR_SUCCESS, CHANGE_MODE_SUCCESS } from '../constants';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('designSettingsReducer', () => {
@@ -49,6 +54,39 @@ describe('designSettingsReducer', () => {
 
     expect(
       designSettingsReducer(state, changeColorError('An error has occured')),
+    ).toEqual(expectedResult);
+  });
+
+  it('should handle the changeMode action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.mode = 'light';
+    });
+
+    expect(designSettingsReducer(state, changeMode('light'))).toEqual(
+      expectedResult,
+    );
+  });
+
+  it('should handle the changeModeSuccess action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.mode = '';
+    });
+
+    const action = {
+      type: CHANGE_MODE_SUCCESS,
+    };
+
+    expect(designSettingsReducer(state, action)).toEqual(expectedResult);
+  });
+
+  it('should handle the changeModeError action correctly', () => {
+    const expectedResult = produce(state, draft => {
+      draft.errorText = 'An error has occured';
+      draft.mode = '';
+    });
+
+    expect(
+      designSettingsReducer(state, changeModeError('An error has occured')),
     ).toEqual(expectedResult);
   });
 });

@@ -1,4 +1,8 @@
-import { makeSelectColor, selectDesignSettingsDomain } from '../selectors';
+import {
+  makeSelectColor,
+  makeSelectMode,
+  selectDesignSettingsDomain,
+} from '../selectors';
 
 describe('selectDesignSettingsDomain', () => {
   it('should select the designSettings state', () => {
@@ -24,5 +28,18 @@ describe('makeSelectColor', () => {
       },
     };
     expect(colorSelector(mockedState)).toEqual(color);
+  });
+});
+
+describe('makeSelectMode', () => {
+  const modeSelector = makeSelectMode();
+  it('should select the mode', () => {
+    const mode = 'light';
+    const mockedState = {
+      designSettings: {
+        mode,
+      },
+    };
+    expect(modeSelector(mockedState)).toEqual(mode);
   });
 });

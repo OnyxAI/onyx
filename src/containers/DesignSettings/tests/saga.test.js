@@ -7,15 +7,16 @@ import { put, takeLatest, call } from 'redux-saga/effects';
 
 import request from '@onyx/utils/request';
 
-import { CHANGE_COLOR } from '../constants';
+import { CHANGE_COLOR, CHANGE_MODE } from '../constants';
 import * as DesignSettingsAction from '../actions';
 
-import designSettingsSaga, { loadChangeColor } from '../saga';
+import designSettingsSaga, { loadChangeColor, loadChangeMode } from '../saga';
 
 const color = 'blue';
+const mode = 'light';
 
 /* eslint-disable redux-saga/yield-effects */
-describe('designSettings Saga', () => {
+describe('designSettings Saga Color', () => {
   let changeColorGenerator;
 
   beforeEach(() => {
@@ -87,6 +88,79 @@ describe('designSettings Saga', () => {
   });
 });
 
+/* eslint-disable redux-saga/yield-effects */
+describe('designSettings Mode', () => {
+  let changeModeGenerator;
+
+  beforeEach(() => {
+    changeModeGenerator = loadChangeMode();
+  });
+
+  it('should call the api to changeMode', () => {
+    localStorage.setItem('access_token', 'my_token');
+    changeModeGenerator.next();
+    const callDescriptor = changeModeGenerator.next(mode).value;
+
+    expect(callDescriptor).toEqual(
+      call(request, {
+        method: 'POST',
+        url: `/api/users/mode`,
+        headers: { Authorization: `Bearer my_token` },
+        data: {
+          mode,
+        },
+      }),
+    );
+  });
+
+  it('should call api success for changeMode', () => {
+    const spy = jest.spyOn(DesignSettingsAction, 'changeModeSuccess');
+    const result = {
+      status: 'success',
+    };
+    changeModeGenerator.next();
+    changeModeGenerator.next({});
+    changeModeGenerator.next(result);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call api with error for changeMode', () => {
+    const result = {
+      status: 'error',
+      message: 'An error has occured',
+    };
+    changeModeGenerator.next();
+    changeModeGenerator.next({});
+    const putDescriptor = changeModeGenerator.next(result).value;
+
+    expect(putDescriptor).toEqual(
+      put(DesignSettingsAction.changeModeError('An error has occured')),
+    );
+  });
+
+  it('should dispatch an error if it requests doesnt work for changeMode', () => {
+    changeModeGenerator.next();
+    changeModeGenerator.next({});
+    const putDescriptor = changeModeGenerator.next().value;
+
+    expect(putDescriptor).toEqual(
+      put(DesignSettingsAction.changeModeError('onyx.global.error')),
+    );
+  });
+
+  it('should dispatch and error if an error is raised', () => {
+    const response = new Error('Some error');
+    changeModeGenerator.next();
+    changeModeGenerator.next({});
+    const putDescriptor = changeModeGenerator.throw(response).value;
+
+    expect(putDescriptor).toEqual(
+      put(DesignSettingsAction.changeModeError('Error: Some error')),
+    );
+  });
+});
+
 describe('designSettingsSaga Saga', () => {
   const designSettingsSagaFunc = designSettingsSaga();
 
@@ -94,6 +168,13 @@ describe('designSettingsSaga Saga', () => {
     const takeLatestDescriptor = designSettingsSagaFunc.next().value;
     expect(takeLatestDescriptor).toEqual(
       takeLatest(CHANGE_COLOR, loadChangeColor),
+    );
+  });
+
+  it('should start task to watch for CHANGE_MODE action', () => {
+    const takeLatestDescriptor = designSettingsSagaFunc.next().value;
+    expect(takeLatestDescriptor).toEqual(
+      takeLatest(CHANGE_MODE, loadChangeMode),
     );
   });
 });

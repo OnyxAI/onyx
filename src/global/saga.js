@@ -14,6 +14,8 @@ export function* loadReloadApi() {
     });
     if (result && result.status === 'error') {
       yield put(globalError(result.message));
+    } else {
+      yield put(globalError('onyx.global.error'));
     }
   } catch (error) {
     yield put(globalError(error.toString()));

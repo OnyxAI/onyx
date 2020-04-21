@@ -17,8 +17,10 @@ import { DesignSettings, mapDispatchToProps } from '../index';
 describe('<DesignSettings />', () => {
   let store;
   const changeColorFunc = jest.fn();
+  const changeModeFunc = jest.fn();
   const user = {
     color: 'blue',
+    mode: 'light',
   };
 
   beforeEach(() => {
@@ -27,11 +29,15 @@ describe('<DesignSettings />', () => {
     store.dispatch = jest.fn();
   });
 
-  it('Should Render Design Settings', () => {
+  it('Should Render Design Settings Color', () => {
     const wrapper = mount(
       <Provider store={store}>
         <IntlProvider messages={translationMessages}>
-          <DesignSettings user={user} changeColorFunc={changeColorFunc} />
+          <DesignSettings
+            user={user}
+            changeColorFunc={changeColorFunc}
+            changeModeFunc={changeModeFunc}
+          />
         </IntlProvider>
       </Provider>,
     );
@@ -46,6 +52,29 @@ describe('<DesignSettings />', () => {
     expect(changeColorFunc).toHaveBeenCalled();
   });
 
+  it('Should Render Design Settings Mode', () => {
+    const wrapper = mount(
+      <Provider store={store}>
+        <IntlProvider messages={translationMessages}>
+          <DesignSettings
+            user={user}
+            changeColorFunc={changeColorFunc}
+            changeModeFunc={changeModeFunc}
+          />
+        </IntlProvider>
+      </Provider>,
+    );
+
+    expect(wrapper.exists('Container')).toBe(true);
+
+    wrapper
+      .find('button')
+      .last()
+      .simulate('click');
+
+    expect(changeModeFunc).toHaveBeenCalled();
+  });
+
   it('Should dispatch changeColor', () => {
     const dispatch = jest.fn();
 
@@ -53,6 +82,16 @@ describe('<DesignSettings />', () => {
 
     expect(dispatch.mock.calls[0][0]).toEqual({
       type: 'onyx/Design/CHANGE_COLOR',
+    });
+  });
+
+  it('Should dispatch changeMode', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).changeModeFunc();
+
+    expect(dispatch.mock.calls[0][0]).toEqual({
+      type: 'onyx/Design/CHANGE_MODE',
     });
   });
 });

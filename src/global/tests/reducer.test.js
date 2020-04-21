@@ -1,5 +1,5 @@
 import globalReducer from '../reducer';
-import { ADD_TOAST, REMOVE_TOAST } from '../constants';
+import { ADD_TOAST, REMOVE_TOAST, GLOBAL_ERROR } from '../constants';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('globalReducer', () => {
@@ -7,6 +7,18 @@ describe('globalReducer', () => {
     expect(globalReducer(undefined, {})).toEqual({
       errorText: '',
       toasts: [],
+    });
+  });
+
+  it('should add a global error', () => {
+    expect(
+      globalReducer(undefined, {
+        type: GLOBAL_ERROR,
+        error: 'error',
+      }),
+    ).toEqual({
+      toasts: [],
+      errorText: 'error',
     });
   });
 
