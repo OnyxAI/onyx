@@ -1,16 +1,12 @@
 .screen-container {
-  margin: 0 auto;
   position: relative;
   top: 200px;
-  max-width: 1280px;
-  width: 90%;
 }
 
 @media only screen and (min-width: 601px) {
   .screen-container {
     position: relative;
     top: 200px;
-    width: 85%;
   }
 }
 
@@ -18,7 +14,6 @@
   .screen-container {
     position: relative;
     top: 200px;
-    width: 85%;
   }
 }
 
