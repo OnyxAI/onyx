@@ -118,14 +118,16 @@ describe('<OnyxRoute />', () => {
       <Provider store={store}>
         <IntlProvider locale="en">
           <ConnectedRouter history={history}>
-            <OnyxRoute
-              container={Component}
-              containerType="native"
-              routeType="user_connected"
-              isAuthenticated
-              isAuthenticating={false}
-              path="/test"
-            />
+            <div id="app">
+              <OnyxRoute
+                container={Component}
+                containerType="native"
+                routeType="user_connected"
+                isAuthenticated
+                isAuthenticating={false}
+                path="/test"
+              />
+            </div>
           </ConnectedRouter>
         </IntlProvider>
       </Provider>,
@@ -143,14 +145,16 @@ describe('<OnyxRoute />', () => {
       <Provider store={store}>
         <IntlProvider locale="en">
           <ConnectedRouter history={history}>
-            <OnyxRoute
-              container={NeuronComponent}
-              containerType="neuron"
-              routeType="user_connected"
-              isAuthenticated
-              isAuthenticating={false}
-              path="/test"
-            />
+            <div id="app">
+              <OnyxRoute
+                container={NeuronComponent}
+                containerType="neuron"
+                routeType="user_connected"
+                isAuthenticated
+                isAuthenticating={false}
+                path="/test"
+              />
+            </div>
           </ConnectedRouter>
         </IntlProvider>
       </Provider>,
@@ -190,15 +194,17 @@ describe('<OnyxRoute />', () => {
       <Provider store={store}>
         <IntlProvider locale="en">
           <ConnectedRouter history={history}>
-            <OnyxRoute
-              container={NeuronComponent}
-              containerType="neuron"
-              routeType="admin_connected"
-              user={{ account_type: 1, language: 'fr-FR' }}
-              isAuthenticated
-              isAuthenticating={false}
-              path="/test"
-            />
+            <div id="app">
+              <OnyxRoute
+                container={NeuronComponent}
+                containerType="neuron"
+                routeType="admin_connected"
+                user={{ account_type: 1, language: 'fr-FR' }}
+                isAuthenticated
+                isAuthenticating={false}
+                path="/test"
+              />
+            </div>
           </ConnectedRouter>
         </IntlProvider>
       </Provider>,

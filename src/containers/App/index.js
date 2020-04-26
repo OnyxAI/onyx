@@ -305,10 +305,10 @@ export function App({
                   return routes.map(route => (
                     <CustomRoute
                       sockyx={sockyx}
-                      exact
                       nav
+                      exact
                       neuronSettings={{
-                        url: `/neurons/${route.raw}/remoteEntry.js`,
+                        url: `/api/neurons/serve/${route.raw}/remoteEntry.js`,
                         scope: route.raw,
                         module: route.name,
                       }}

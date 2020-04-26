@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { browserHistory } from 'react-router-dom';
+import { browserHistory, BrowserRouter } from 'react-router-dom';
 import configureStore from '@onyx/configureStore';
 import { Provider } from 'react-redux';
 import { LanguageProvider } from '@onyx/containers/LanguageProvider';
@@ -18,6 +18,9 @@ describe('<Neurons />', () => {
   const getNeuronsStoreFunc = jest.fn();
   const installNeuronFunc = jest.fn();
   const removeNeuronFunc = jest.fn();
+  const user = {
+    mode: 'light',
+  }
 
   it('should render the Page Neurons', () => {
     const neurons = {
@@ -44,6 +47,7 @@ describe('<Neurons />', () => {
             installNeuronFunc={installNeuronFunc}
             removeNeuronFunc={removeNeuronFunc}
             neurons={neurons}
+            user={user}
           />
         </LanguageProvider>
       </Provider>,
@@ -76,6 +80,7 @@ describe('<Neurons />', () => {
             installNeuronFunc={installNeuronFunc}
             removeNeuronFunc={removeNeuronFunc}
             neurons={neurons}
+            user={user}
           />
         </LanguageProvider>
       </Provider>,
@@ -98,6 +103,12 @@ describe('<Neurons />', () => {
       neurons: [
         {
           raw_name: 'test',
+          routes: [
+            {
+              url: '/test',
+              default: 'true',
+            },
+          ],
         },
       ],
     };
@@ -105,12 +116,15 @@ describe('<Neurons />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Neurons
-            getNeuronsStoreFunc={getNeuronsStoreFunc}
-            installNeuronFunc={installNeuronFunc}
-            removeNeuronFunc={removeNeuronFunc}
-            neurons={neurons}
-          />
+          <BrowserRouter>
+            <Neurons
+              getNeuronsStoreFunc={getNeuronsStoreFunc}
+              installNeuronFunc={installNeuronFunc}
+              removeNeuronFunc={removeNeuronFunc}
+              neurons={neurons}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -138,6 +152,7 @@ describe('<Neurons />', () => {
             installNeuronFunc={installNeuronFunc}
             removeNeuronFunc={removeNeuronFunc}
             neurons={neurons}
+            user={user}
           />
         </LanguageProvider>
       </Provider>,
@@ -176,6 +191,7 @@ describe('<Neurons />', () => {
             installNeuronFunc={installNeuronFunc}
             removeNeuronFunc={removeNeuronFunc}
             neurons={neurons}
+            user={user}
           />
         </LanguageProvider>
       </Provider>,

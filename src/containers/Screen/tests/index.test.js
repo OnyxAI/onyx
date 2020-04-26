@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { browserHistory } from 'react-router-dom';
+import { browserHistory, BrowserRouter } from 'react-router-dom';
 import configureStore from '@onyx/configureStore';
 import { Provider } from 'react-redux';
 import { LanguageProvider } from '@onyx/containers/LanguageProvider';
@@ -27,15 +27,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -47,15 +49,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -83,15 +87,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -120,15 +126,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -157,15 +165,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );
@@ -187,15 +197,17 @@ describe('<Screen />', () => {
     const wrapper = mount(
       <Provider store={store}>
         <LanguageProvider messages={translationMessages}>
-          <Screen
-            getScreenStoreFunc={getScreenStoreFunc}
-            getScreenFunc={getScreenFunc}
-            addScreenFunc={addScreenFunc}
-            deleteScreenFunc={deleteScreenFunc}
-            onChangeScreenFunc={onChangeScreenFunc}
-            screen={screen}
-            user={user}
-          />
+          <BrowserRouter>
+            <Screen
+              getScreenStoreFunc={getScreenStoreFunc}
+              getScreenFunc={getScreenFunc}
+              addScreenFunc={addScreenFunc}
+              deleteScreenFunc={deleteScreenFunc}
+              onChangeScreenFunc={onChangeScreenFunc}
+              screen={screen}
+              user={user}
+            />
+          </BrowserRouter>
         </LanguageProvider>
       </Provider>,
     );

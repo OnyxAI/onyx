@@ -169,19 +169,21 @@ export function Main({
               )}
               actions={<p />}
               trigger={
-                <button
-                  type="button"
-                  className={`btn-floating btn-small center ${user.color}`}
-                >
-                  <i
-                    className="fa fa-plus"
-                    style={{
-                      fontSize: '10px',
-                      color: 'white',
-                      position: 'relative',
-                    }}
-                  />
-                </button>
+                <div className="widget-button">
+                  <button
+                    type="button"
+                    className={`btn-floating btn-large ${user.color}`}
+                  >
+                    <i
+                      className="fa fa-plus"
+                      style={{
+                        fontSize: '20px',
+                        color: 'white',
+                        position: 'relative',
+                      }}
+                    />
+                  </button>
+                </div>
               }
             >
               <div>
@@ -240,7 +242,7 @@ export function Main({
                   return (
                     <GetWidget
                       neuronSettings={{
-                        url: `/neurons/${widget.raw}/remoteEntry.js`,
+                        url: `/api/neurons/serve/${widget.raw}/remoteEntry.js`,
                         scope: widget.raw,
                         module: widget.name,
                       }}

@@ -21,4 +21,8 @@ export default defineMessages({
     id: `${scope}.remove`,
     defaultMessage: 'Remove',
   },
+  neuron_main: {
+    id: `${scope}.neuron_main`,
+    defaultMessage: 'Main',
+  },
 });

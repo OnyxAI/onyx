@@ -36,8 +36,8 @@ export default function UserConnected({
   }, [0]);
 
   useEffect(() => {
-    if (user) {
-      document.body.className = user.mode;
+    if (user && document.getElementById('app')) {
+      document.getElementById('app').className = user.mode;
     }
   }, [user.mode]);
 

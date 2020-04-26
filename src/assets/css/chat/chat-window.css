@@ -1,5 +1,5 @@
 .sc-chat-window {
-  z-index: 1000;
+  z-index: 10000;
   width: 370px;
   height: calc(100% - 120px);
   max-height: 590px;

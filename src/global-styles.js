@@ -1,8 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  html,
-  body {
+  html, body {
     height: 100%;
     width: 100%;
   }
@@ -16,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    min-height: 100%;
+    min-height:100vh;
     min-width: 100%;
   }
 

@@ -31,7 +31,7 @@ for neuron in all_neurons:
 for route in API_ROUTES:
     api.add_resource(route['class'], route['route'])
 
-@neurons_bp.route('/<neuron>/<path>')
+@neurons_bp.route('/api/neurons/serve/<neuron>/<path>')
 def serve_neuron(neuron, path):
     file_name = path.split("/")[-1]
     dir_name = os.path.join(neurons_bp.static_folder + '/' + neuron + '/dist', "/".join(path.split("/")[:-1]))

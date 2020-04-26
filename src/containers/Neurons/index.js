@@ -7,6 +7,7 @@
 
 import React, { memo, useEffect } from 'react';
 import Proptypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -37,6 +38,16 @@ export function Neurons({
   const isInstalled = name =>
     neurons.neurons.filter(neuron => neuron.raw_name === name).length > 0;
 
+  const getDefaultRoute = name => {
+    const neuronScope = neurons.neurons.filter(
+      neuron => neuron.raw_name === name,
+    )[0];
+
+    return neuronScope.routes.filter(
+      route => route.default && route.default === 'true',
+    )[0];
+  };
+
   useEffect(() => {
     getNeuronsStoreFunc();
   }, [0]);
@@ -62,26 +73,34 @@ export function Neurons({
               <div>
                 <div className="uk-card uk-card-default uk-card-small">
                   <div className="uk-card-media-top uk-cover-container">
-                    <img src={neuron.img} alt={neuron.name} data-uk-cover />
+                    <img src={neuron.img} alt={neuron.name} />
                   </div>
-                  <div className="uk-card-body uk-text-center">
+                  <div className={`uk-card-body ${user.mode} uk-text-center`}>
                     <h4 className="uk-card-title">{neuron.name}</h4>
                     <p>{neuron.description}</p>
                   </div>
-                  <div className="uk-card-footer uk-text-center">
+                  <div className={`uk-card-footer ${user.mode} uk-text-center`}>
                     {neurons.loading && neurons.usingNeuron === neuron.raw ? (
                       <span
                         className="uk-margin-small-right"
                         uk-spinner="ratio: 1"
                       />
                     ) : isInstalled(neuron.raw) ? (
-                      <button
-                        type="button"
-                        className="uk-button uk-button-default"
-                        onClick={() => removeNeuronFunc(neuron.raw)}
-                      >
-                        <FormattedMessage {...messages.remove} />
-                      </button>
+                      <div className="uk-padding-small">
+                        <button
+                          type="button"
+                          className="uk-button uk-button-default"
+                          onClick={() => removeNeuronFunc(neuron.raw)}
+                        >
+                          <FormattedMessage {...messages.remove} />
+                        </button>
+                        <Link
+                          className="uk-button uk-button-default"
+                          to={getDefaultRoute(neuron.raw).url}
+                        >
+                          <FormattedMessage {...messages.neuron_main} />
+                        </Link>
+                      </div>
                     ) : (
                       <button
                         type="button"

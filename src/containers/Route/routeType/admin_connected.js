@@ -50,6 +50,12 @@ export default function AdminConnected({
     verifyTokenFunc();
   }, [token]);
 
+  useEffect(() => {
+    if (user && document.getElementById('app')) {
+      document.getElementById('app').className = user.mode;
+    }
+  }, [user.mode]);
+
   return (
     <div>
       {isAuthenticating ? (

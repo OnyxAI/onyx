@@ -280,6 +280,12 @@ button {
   right: 5%;
 }
 
+.widget-button {
+  position: fixed;
+  bottom: 230px;
+  right: 5%;
+}
+
 .hidden-sub-trigger {
     display: none;
 }

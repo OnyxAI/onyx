@@ -31,7 +31,7 @@ def register_extensions(app):
     db.init_app(app)
     api.init_app(app)
     jwt = JWTManager(app)
-    app.register_blueprint(neurons_bp, url_prefix='/neurons')
+    app.register_blueprint(neurons_bp)
 
     @app.route('/api/reload_onyx')
     def reload_onyx():

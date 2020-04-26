@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 /**
@@ -12,16 +13,24 @@ import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Modal } from 'react-materialize';
+import { getLogo } from '@onyx/utils/colors';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { useInjectSaga } from '@onyx/utils/injectSaga';
 import { useInjectReducer } from '@onyx/utils/injectReducer';
+import { useInterval } from '@onyx/utils/useInterval';
 import { getMessage } from '@onyx/i18n';
+import styles from '@onyx/assets/css/screen.css';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import Container from '@onyx/components/Container';
 import Widget from '@onyx/components/Widget';
+
+import userSaga from '@onyx/containers/Route/saga';
+import { refreshToken } from '@onyx/containers/Route/actions';
 
 import {
   getScreen,
@@ -140,9 +149,21 @@ export function Screen({
   getScreenStoreFunc,
   addScreenFunc,
   deleteScreenFunc,
+  refreshTokenFunc,
 }) {
   useInjectReducer({ key: 'screen', reducer });
   useInjectSaga({ key: 'screen', saga });
+  useInjectSaga({ key: 'auth', saga: userSaga });
+
+  useInterval(() => {
+    refreshTokenFunc();
+  }, 300000);
+
+  useInterval(() => {
+    refreshTokenFunc();
+    getScreenStoreFunc();
+    getScreenFunc();
+  }, 60000);
 
   useEffect(() => {
     getScreenStoreFunc();
@@ -161,6 +182,14 @@ export function Screen({
       </FormattedMessage>
       {screen && (
         <div>
+          <Link to="/">
+            <Img
+              alt="Logo"
+              className="uk-position-fixed uk-position-top-center logo-top"
+              src={getLogo(user.color)}
+            />
+          </Link>
+
           {!screen.loadingScreenStore && (
             <Modal
               header={getMessage(
@@ -169,19 +198,21 @@ export function Screen({
               )}
               actions={<p />}
               trigger={
-                <button
-                  type="button"
-                  className={`btn-floating btn-small center ${user.color}`}
-                >
-                  <i
-                    className="fa fa-plus"
-                    style={{
-                      fontSize: '10px',
-                      color: 'white',
-                      position: 'relative',
-                    }}
-                  />
-                </button>
+                <div className="screen-button">
+                  <button
+                    type="button"
+                    className={`btn-floating btn-large ${user.color}`}
+                  >
+                    <i
+                      className="fa fa-plus"
+                      style={{
+                        fontSize: '15px',
+                        color: 'white',
+                        position: 'relative',
+                      }}
+                    />
+                  </button>
+                </div>
               }
             >
               <div>
@@ -232,7 +263,7 @@ export function Screen({
 
           {screen.screen && screen.screen.length !== 0 ? (
             <div
-              className="uk-grid-medium uk-flex-center uk-padding uk-text-center"
+              className="uk-grid-medium uk-flex-center uk-padding uk-text-center screen-container"
               data-uk-grid
             >
               {screen.screen.map(element => {
@@ -240,7 +271,7 @@ export function Screen({
                   return (
                     <GetScreen
                       neuronSettings={{
-                        url: `/neurons/${element.raw}/remoteEntry.js`,
+                        url: `/api/neurons/serve/${element.raw}/remoteEntry.js`,
                         scope: element.raw,
                         module: element.name,
                       }}
@@ -260,20 +291,28 @@ export function Screen({
               })}
             </div>
           ) : (
-            <Container
-              user={user}
-              title={<FormattedMessage {...messages.header} />}
-            >
-              <h4 className="center">
-                <FormattedMessage {...messages.no_screen} />
-              </h4>
-            </Container>
+            <div className="screen-container">
+              <Container
+                user={user}
+                title={<FormattedMessage {...messages.header} />}
+              >
+                <h4 className="center">
+                  <FormattedMessage {...messages.no_screen} />
+                </h4>
+              </Container>
+            </div>
           )}
         </div>
       )}
     </div>
   );
 }
+
+const Img = styled.img`
+  top: 20px;
+  width: 150px;
+  height: 150px;
+`;
 
 GetScreen.propTypes = {
   neuronSettings: PropTypes.object,
@@ -283,6 +322,7 @@ GetScreen.propTypes = {
 };
 
 Screen.propTypes = {
+  refreshTokenFunc: PropTypes.func,
   user: PropTypes.object,
   screen: PropTypes.object,
   onChangeScreenFunc: PropTypes.func,
@@ -298,6 +338,9 @@ export const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
+    refreshTokenFunc: () => {
+      dispatch(refreshToken());
+    },
     getScreenFunc: () => {
       dispatch(getScreen());
     },
