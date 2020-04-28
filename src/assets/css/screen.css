@@ -1,25 +1,35 @@
 .screen-container {
   position: relative;
-  top: 200px;
+  top: 50px;
 }
 
 @media only screen and (min-width: 601px) {
   .screen-container {
     position: relative;
-    top: 200px;
+    top: 50px;
   }
 }
 
 @media only screen and (min-width: 993px) {
   .screen-container {
     position: relative;
-    top: 200px;
+    top: 50px;
   }
 }
 
 .screen-button {
+  z-index: 1000;
   position: fixed;
   bottom: 50px;
+  right: 50px;
+}
+
+.screen-logo {
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  position: fixed;
+  bottom: 120px;
   right: 50px;
 }
 

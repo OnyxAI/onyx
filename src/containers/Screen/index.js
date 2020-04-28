@@ -17,7 +17,6 @@ import { Helmet } from 'react-helmet';
 import { Modal } from 'react-materialize';
 import { getLogo } from '@onyx/utils/colors';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { useInjectSaga } from '@onyx/utils/injectSaga';
 import { useInjectReducer } from '@onyx/utils/injectReducer';
@@ -203,11 +202,7 @@ export function Screen({
       {screen && (
         <div>
           <Link to="/">
-            <Img
-              alt="Logo"
-              className="uk-position-fixed uk-position-top-center logo-top"
-              src={getLogo(user.color)}
-            />
+            <img alt="Logo" className="screen-logo" src={getLogo(user.color)} />
           </Link>
 
           {!screen.loadingScreenStore && (
@@ -368,12 +363,6 @@ export function Screen({
     </div>
   );
 }
-
-const Img = styled.img`
-  top: 20px;
-  width: 150px;
-  height: 150px;
-`;
 
 GetScreen.propTypes = {
   neuronSettings: PropTypes.object,

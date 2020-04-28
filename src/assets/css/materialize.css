@@ -4423,7 +4423,6 @@ a {
 html {
   line-height: 1.5;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.87);
 }
 
 @media only screen and (min-width: 0) {
@@ -6044,7 +6043,7 @@ label {
   color: #d1d1d1;
 }
 
-/* Text inputs 
+/* Text inputs
 input:not([type]),
 input[type=text]:not(.browser-default),
 input[type=password]:not(.browser-default),

@@ -17,8 +17,6 @@ html {
   line-height: 1.5;
   /* 2 */
   -webkit-text-size-adjust: 100%;
-  /* 3 */
-  background: #fff;
 }
 /*
  * Remove the margin in all browsers.
