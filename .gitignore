@@ -12,6 +12,9 @@ venv
 
 data
 
+.cache-1
+.cache-2
+
 onyx/db
 !onyx/db/.gitkeep
 
