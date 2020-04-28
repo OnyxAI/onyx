@@ -6,9 +6,12 @@ import {
   GET_SCREEN_STORE,
   ADD_SCREEN,
   DELETE_SCREEN,
+  SET_SCREEN,
 } from './constants';
 
 import {
+  setScreenError,
+  setScreenSuccess,
   getScreenError,
   getScreenSuccess,
   getScreenStoreSuccess,
@@ -32,7 +35,7 @@ export function* loadGetScreen() {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (result && result.status === 'success') {
-      yield put(getScreenSuccess(result.screen));
+      yield put(getScreenSuccess(result.screen, result.layouts));
     } else if (result && result.status === 'error') {
       yield put(getScreenError(result.message));
     } else {
@@ -79,6 +82,8 @@ export function* loadAddScreen() {
         raw: screen.screenRaw,
         name: screen.screenName,
         type: screen.screenType,
+        beautifulName: screen.screenBeautifulName,
+        defaultLayout: screen.screenDefaultLayout,
       },
     });
     if (result && result.status === 'success') {
@@ -90,6 +95,32 @@ export function* loadAddScreen() {
     }
   } catch (error) {
     yield put(addScreenError(error.toString()));
+  }
+}
+
+// Set Screen
+export function* loadSetScreen() {
+  const token = localStorage.getItem('access_token');
+  const screen = yield select(makeSelectScreen());
+
+  try {
+    const result = yield call(request, {
+      method: 'POST',
+      url: `/api/screen/layouts`,
+      headers: { Authorization: `Bearer ${token}` },
+      data: {
+        layouts: screen.layouts,
+      },
+    });
+    if (result && result.status === 'success') {
+      yield put(setScreenSuccess());
+    } else if (result && result.status === 'error') {
+      yield put(setScreenError(result.message));
+    } else {
+      yield put(setScreenError('onyx.global.error'));
+    }
+  } catch (error) {
+    yield put(setScreenError(error.toString()));
   }
 }
 
@@ -125,4 +156,5 @@ export default function* screenSaga() {
   yield takeLatest(GET_SCREEN, loadGetScreen);
   yield takeLatest(ADD_SCREEN, loadAddScreen);
   yield takeLatest(DELETE_SCREEN, loadDeleteScreen);
+  yield takeLatest(SET_SCREEN, loadSetScreen);
 }

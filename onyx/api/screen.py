@@ -5,7 +5,7 @@ from flask_restful import Resource, reqparse
 from onyx.decorators import login_required
 from onyx.utils.log import getLogger
 from onyx.extensions import db
-from onyx.models import Screen as ScreenModel, to_dict
+from onyx.models import Screen as ScreenModel, to_dict, ScreenLayouts as ScreenLayoutsModel
 from onyx.config import Config
 
 log = getLogger('Screen')
@@ -38,6 +38,8 @@ class Screen(Resource):
     parser.add_argument('raw')
     parser.add_argument('type')
     parser.add_argument('id')
+    parser.add_argument('beautifulName')
+    parser.add_argument('defaultLayout')
 
     @login_required
     def get(self):
@@ -46,7 +48,14 @@ class Screen(Resource):
 
             all_screen = [to_dict(screen) for screen in ScreenModel.query.filter_by(user=user['id']).limit(100)]
 
-            return jsonify(status="success", screen=all_screen)
+            layouts_query = ScreenLayoutsModel.query.filter_by(user=user['id']).first()
+
+            if layouts_query is None:
+                layouts = "[]"
+            else:
+                layouts = layouts_query.layouts
+
+            return jsonify(status="success", screen=all_screen, layouts=layouts)
         except Exception as e:
             print(e)
             return jsonify(status="error", message="{}".format(e))
@@ -61,10 +70,12 @@ class Screen(Resource):
             raw = args['raw']
             name = args['name']
             type = args['type']
+            beautifulName = args['beautifulName']
+            defaultLayout = args['defaultLayout']
 
             try:
                 if raw != '' and name != '' and type != '':
-                    query = ScreenModel(user=user['id'], name=name, raw=raw, type=type)
+                    query = ScreenModel(user=user['id'], name=name, raw=raw, type=type, defaultLayout=defaultLayout, beautifulName=beautifulName)
 
                     db.session.add(query)
                     db.session.commit()
@@ -97,6 +108,37 @@ class Screen(Resource):
             except Exception as e:
                 print(e)
                 return jsonify(status="error")
+        except Exception as e:
+            print(e)
+            return jsonify(status="error", message="{}".format(e)), 500
+
+class ScreenLayouts(Resource):
+    parser = reqparse.RequestParser(bundle_errors=True)
+    parser.add_argument('layouts')
+
+    @login_required
+    def post(self):
+        try:
+            args = self.parser.parse_args()
+
+            user = get_jwt_identity()
+
+            layouts = args['layouts']
+
+            query = ScreenLayoutsModel.query.filter_by(user=user['id']).first()
+
+            if query is None:
+                new = ScreenLayoutsModel(user=user['id'], layouts=layouts)
+
+                db.session.add(new)
+            else:
+                query.layouts = layouts
+
+                db.session.add(query)
+
+            db.session.commit()
+
+            return jsonify(status="success")
         except Exception as e:
             print(e)
             return jsonify(status="error", message="{}".format(e)), 500

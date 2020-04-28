@@ -8,9 +8,9 @@ from .ButtonsModel import Buttons
 from .RevokedTokenModel import RevokedToken
 from .Tokens import Tokens
 from .Widgets import Widgets
-from .Screen import Screen
+from .Screen import Screen, ScreenLayouts
 
-__all__ = ['User', 'RevokedToken', 'Nav', 'Buttons', 'Notifications', 'Tokens', 'Widgets', 'Screen']
+__all__ = ['User', 'RevokedToken', 'Nav', 'Buttons', 'Notifications', 'Tokens', 'Widgets', 'Screen', 'ScreenLayouts']
 
 def to_dict(obj):
     if isinstance(obj.__class__, DeclarativeMeta):

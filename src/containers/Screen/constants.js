@@ -13,6 +13,10 @@ export const GET_SCREEN = 'onyx/Screen/GET_SCREEN';
 export const GET_SCREEN_SUCCESS = 'onyx/Screen/GET_SCREEN_SUCCESS';
 export const GET_SCREEN_ERROR = 'onyx/Screen/GET_SCREEN_ERROR';
 
+export const SET_SCREEN = 'onyx/Screen/SET_SCREEN';
+export const SET_SCREEN_SUCCESS = 'onyx/Screen/SET_SCREEN_SUCCESS';
+export const SET_SCREEN_ERROR = 'onyx/Screen/SET_SCREEN_ERROR';
+
 export const ADD_SCREEN = 'onyx/Screen/ADD_SCREEN';
 export const ADD_SCREEN_SUCCESS = 'onyx/Screen/ADD_SCREEN_SUCCESS';
 export const ADD_SCREEN_ERROR = 'onyx/Screen/ADD_SCREEN_ERROR';

@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
@@ -9,7 +11,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Modal } from 'react-materialize';
@@ -32,18 +34,23 @@ import Widget from '@onyx/components/Widget';
 import userSaga from '@onyx/containers/Route/saga';
 import { refreshToken } from '@onyx/containers/Route/actions';
 
+import { Responsive, WidthProvider } from 'react-grid-layout';
+
 import {
   getScreen,
   getScreenStore,
   addScreen,
   deleteScreen,
   onChangeScreen,
+  setScreen,
 } from './actions';
 import { makeSelectScreen } from './selectors';
 
 import saga from './saga';
 import reducer from './reducer';
 import messages from './messages';
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 function loadComponent(scope, module) {
   window[scope].override(
@@ -150,25 +157,38 @@ export function Screen({
   addScreenFunc,
   deleteScreenFunc,
   refreshTokenFunc,
+  setScreenFunc,
 }) {
   useInjectReducer({ key: 'screen', reducer });
   useInjectSaga({ key: 'screen', saga });
   useInjectSaga({ key: 'auth', saga: userSaga });
 
+  const [state, setState] = useState({
+    currentBreakpoint: 'lg',
+    compactType: 'horizontal',
+    mounted: false,
+  });
+
   useInterval(() => {
     refreshTokenFunc();
   }, 300000);
 
-  useInterval(() => {
-    refreshTokenFunc();
-    getScreenStoreFunc();
-    getScreenFunc();
-  }, 60000);
-
   useEffect(() => {
+    setState({ ...state, mounted: true });
     getScreenStoreFunc();
     getScreenFunc();
   }, [0]);
+
+  const onBreakpointChange = breakpoint => {
+    setState({
+      ...state,
+      currentBreakpoint: breakpoint,
+    });
+  };
+
+  const onLayoutChange = (layout, layouts) => {
+    setScreenFunc(JSON.stringify(layouts));
+  };
 
   return (
     <div>
@@ -240,7 +260,13 @@ export function Screen({
                         key={index.toString()}
                         value={item.name}
                         onClick={() =>
-                          onChangeScreenFunc(item.name, item.raw, item.type)
+                          onChangeScreenFunc(
+                            item.name,
+                            item.raw,
+                            item.type,
+                            item.beautifulName,
+                            JSON.stringify(item.defaultLayout),
+                          )
                         }
                       >
                         {item.beautifulName}
@@ -262,34 +288,69 @@ export function Screen({
           )}
 
           {screen.screen && screen.screen.length !== 0 ? (
-            <div
-              className="uk-grid-medium uk-flex-center uk-padding uk-text-center screen-container"
-              data-uk-grid
+            <ResponsiveGridLayout
+              className="layout screen-container"
+              breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+              rowHeight={30}
+              layouts={JSON.parse(screen.layouts)}
+              onLayoutChange={onLayoutChange}
+              cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+              onBreakpointChange={onBreakpointChange}
+              measureBeforeMount={false}
+              useCSSTransforms={state.mounted}
+              preventCollision={!state.compactType}
             >
-              {screen.screen.map(element => {
+              {screen.screen.map((element, key) => {
                 if (element.type === 'neuron') {
                   return (
-                    <GetScreen
-                      neuronSettings={{
-                        url: `/api/neurons/serve/${element.raw}/remoteEntry.js`,
-                        scope: element.raw,
-                        module: element.name,
-                      }}
-                      deleteWidget={() => deleteScreenFunc(element.id)}
-                      user={user}
-                    />
+                    <div
+                      key={`${element.name}_${key.toString()}`}
+                      data-grid={JSON.parse(element.defaultLayout)}
+                      className="uk-card uk-card-default"
+                    >
+                      <div className="uk-card-header">
+                        <div className="uk-card-title">
+                          {element.beautifulName}
+                          <i
+                            className="fas fa-times-circle"
+                            style={{
+                              cursor: 'pointer',
+                              position: 'absolute',
+                              right: '5%',
+                            }}
+                            onClick={() => deleteScreenFunc(element.id)}
+                          />
+                        </div>
+                      </div>
+                      <div className="uk-card-body">
+                        <GetScreen
+                          neuronSettings={{
+                            url: `/api/neurons/serve/${
+                              element.raw
+                            }/remoteEntry.js`,
+                            scope: element.raw,
+                            module: element.name,
+                          }}
+                          key={key.toString()}
+                          deleteWidget={() => deleteScreenFunc(element.id)}
+                          user={user}
+                        />
+                      </div>
+                    </div>
                   );
                 }
                 return (
                   <Widget
                     title={screen.name}
+                    key={key.toString()}
+                    data-grid={JSON.parse(screen.defaultLayout)}
                     delete={() => deleteScreenFunc(screen.id)}
                   >
                     <p>Content</p>
                   </Widget>
                 );
               })}
-            </div>
+            </ResponsiveGridLayout>
           ) : (
             <div className="screen-container">
               <Container
@@ -323,6 +384,7 @@ GetScreen.propTypes = {
 
 Screen.propTypes = {
   refreshTokenFunc: PropTypes.func,
+  setScreenFunc: PropTypes.func,
   user: PropTypes.object,
   screen: PropTypes.object,
   onChangeScreenFunc: PropTypes.func,
@@ -341,6 +403,9 @@ export function mapDispatchToProps(dispatch) {
     refreshTokenFunc: () => {
       dispatch(refreshToken());
     },
+    setScreenFunc: layouts => {
+      dispatch(setScreen(layouts));
+    },
     getScreenFunc: () => {
       dispatch(getScreen());
     },
@@ -353,8 +418,8 @@ export function mapDispatchToProps(dispatch) {
     deleteScreenFunc: id => {
       dispatch(deleteScreen(id));
     },
-    onChangeScreenFunc: (name, raw, type) => {
-      dispatch(onChangeScreen(name, raw, type));
+    onChangeScreenFunc: (name, raw, type, beautifulName, defaultLayout) => {
+      dispatch(onChangeScreen(name, raw, type, beautifulName, defaultLayout));
     },
   };
 }

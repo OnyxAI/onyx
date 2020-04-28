@@ -23,8 +23,11 @@ describe('screenReducer', () => {
       errorText: '',
       loadingScreen: false,
       screen: [],
+      layouts: '[]',
       loadingScreenStore: false,
       screenStore: [],
+      screenBeautifulName: '',
+      screenDefaultLayout: '',
       screenName: '',
       screenId: '',
       screenRaw: '',
@@ -42,6 +45,8 @@ describe('screenReducer', () => {
       draft.screenName = 'name';
       draft.screenRaw = 'raw';
       draft.screenType = 'neuron';
+      draft.screenBeautifulName = 'name';
+      draft.screenDefaultLayout = '[]';
     });
 
     const action = {
@@ -49,6 +54,8 @@ describe('screenReducer', () => {
       name: 'name',
       raw: 'raw',
       screenType: 'neuron',
+      screenBeautifulName: 'name',
+      screenDefaultLayout: '[]',
     };
 
     expect(screenReducer(state, action)).toEqual(expectedResult);
@@ -109,11 +116,13 @@ describe('screenReducer', () => {
   it('should handle the getScreenSuccess action correctly', () => {
     const expectedResult = produce(state, draft => {
       draft.loadingScreen = false;
+      draft.layouts = '[]';
       draft.screen = [{}];
     });
 
     const action = {
       type: GET_SCREEN_SUCCESS,
+      layouts: '[]',
       screen: [{}],
     };
 

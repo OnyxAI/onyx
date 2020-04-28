@@ -80,8 +80,15 @@ describe('<Screen />', () => {
   it('should render the Page Screen testing store with screen', () => {
     const screen = {
       screenStore: [
-        { name: 'name', raw: 'raw', type: 'neuron', beautifulName: 'Name' },
+        {
+          name: 'name',
+          raw: 'raw',
+          type: 'neuron',
+          beautifulName: 'Name',
+          defaultLayout: '{}',
+        },
       ],
+      layouts: '[]',
       loadingScreenStore: false,
     };
     const wrapper = mount(
@@ -110,87 +117,10 @@ describe('<Screen />', () => {
     expect(onChangeScreenFunc).toHaveBeenCalled();
   });
 
-  it('should render the Page Screen with screen', () => {
+  it('should render the Page Screen without screen', () => {
     const screen = {
       screenStore: [],
-      loadingScreenStore: false,
-      screen: [
-        {
-          name: 'name',
-          raw: 'raw',
-          type: 'neuron',
-          id: 1,
-        },
-      ],
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <LanguageProvider messages={translationMessages}>
-          <BrowserRouter>
-            <Screen
-              getScreenStoreFunc={getScreenStoreFunc}
-              getScreenFunc={getScreenFunc}
-              addScreenFunc={addScreenFunc}
-              deleteScreenFunc={deleteScreenFunc}
-              onChangeScreenFunc={onChangeScreenFunc}
-              screen={screen}
-              user={user}
-            />
-          </BrowserRouter>
-        </LanguageProvider>
-      </Provider>,
-    );
-    wrapper
-      .find('GetScreen')
-      .first()
-      .props()
-      .deleteWidget();
-
-    expect(deleteScreenFunc).toHaveBeenCalled();
-  });
-
-  it('should render the Page Screen with screen', () => {
-    const screen = {
-      screenStore: [],
-      loadingScreenStore: true,
-      screen: [
-        {
-          name: 'name',
-          raw: 'raw',
-          type: 'native',
-          id: 1,
-        },
-      ],
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <LanguageProvider messages={translationMessages}>
-          <BrowserRouter>
-            <Screen
-              getScreenStoreFunc={getScreenStoreFunc}
-              getScreenFunc={getScreenFunc}
-              addScreenFunc={addScreenFunc}
-              deleteScreenFunc={deleteScreenFunc}
-              onChangeScreenFunc={onChangeScreenFunc}
-              screen={screen}
-              user={user}
-            />
-          </BrowserRouter>
-        </LanguageProvider>
-      </Provider>,
-    );
-    wrapper
-      .find('Widget')
-      .first()
-      .props()
-      .delete();
-
-    expect(deleteScreenFunc).toHaveBeenCalled();
-  });
-
-  it('should render the Page Screen with screen', () => {
-    const screen = {
-      screenStore: [],
+      layouts: '[]',
       loadingScreenStore: true,
       screen: [],
     };

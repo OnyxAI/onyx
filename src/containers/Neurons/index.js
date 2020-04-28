@@ -73,7 +73,11 @@ export function Neurons({
               <div>
                 <div className="uk-card uk-card-default uk-card-small">
                   <div className="uk-card-media-top uk-cover-container">
-                    <img src={neuron.img} alt={neuron.name} />
+                    <img
+                      src={neuron.img}
+                      alt={neuron.name}
+                      style={{ height: '212px', width: '380px' }}
+                    />
                   </div>
                   <div className={`uk-card-body ${user.mode} uk-text-center`}>
                     <h4 className="uk-card-title">{neuron.name}</h4>

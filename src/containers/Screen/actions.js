@@ -5,6 +5,9 @@
  */
 import Toast from '@onyx/global/actions';
 import {
+  SET_SCREEN_SUCCESS,
+  SET_SCREEN_ERROR,
+  SET_SCREEN,
   GET_SCREEN_SUCCESS,
   GET_SCREEN_ERROR,
   GET_SCREEN,
@@ -22,12 +25,41 @@ import {
 
 import { getMessage } from '../../i18n';
 
-export function onChangeScreen(name, raw, type) {
+export function onChangeScreen(
+  name,
+  raw,
+  type,
+  screenBeautifulName,
+  screenDefaultLayout,
+) {
   return {
     type: CHANGE_SCREEN,
     name,
     raw,
     screenType: type,
+    screenBeautifulName,
+    screenDefaultLayout,
+  };
+}
+
+export function setScreen(layouts) {
+  return {
+    type: SET_SCREEN,
+    layouts,
+  };
+}
+
+export function setScreenSuccess() {
+  return dispatch => {
+    dispatch({
+      type: SET_SCREEN_SUCCESS,
+    });
+  };
+}
+
+export function setScreenError(error) {
+  return dispatch => {
+    dispatch({ type: SET_SCREEN_ERROR, error });
   };
 }
 
@@ -37,11 +69,12 @@ export function getScreen() {
   };
 }
 
-export function getScreenSuccess(screen) {
+export function getScreenSuccess(screen, layouts) {
   return dispatch => {
     dispatch({
       type: GET_SCREEN_SUCCESS,
       screen,
+      layouts,
     });
   };
 }
