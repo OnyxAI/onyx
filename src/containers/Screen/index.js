@@ -42,6 +42,7 @@ import {
   deleteScreen,
   onChangeScreen,
   setScreen,
+  manageScreen,
 } from './actions';
 import { makeSelectScreen } from './selectors';
 
@@ -157,6 +158,7 @@ export function Screen({
   deleteScreenFunc,
   refreshTokenFunc,
   setScreenFunc,
+  manageScreenFunc,
 }) {
   useInjectReducer({ key: 'screen', reducer });
   useInjectSaga({ key: 'screen', saga });
@@ -204,6 +206,25 @@ export function Screen({
           <Link to="/">
             <img alt="Logo" className="screen-logo" src={getLogo(user.color)} />
           </Link>
+
+          <div className="screen-manage">
+            <button
+              type="button"
+              className={`btn-floating btn-large ${
+                screen.manage ? 'red' : user.color
+              }`}
+              onClick={() => manageScreenFunc()}
+            >
+              <i
+                className="fa fa-wrench"
+                style={{
+                  fontSize: '15px',
+                  color: 'white',
+                  position: 'relative',
+                }}
+              />
+            </button>
+          </div>
 
           {!screen.loadingScreenStore && (
             <Modal
@@ -291,6 +312,8 @@ export function Screen({
               onLayoutChange={onLayoutChange}
               cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
               onBreakpointChange={onBreakpointChange}
+              isDraggable={screen.manage}
+              isResizable={screen.manage}
               measureBeforeMount={false}
               useCSSTransforms={state.mounted}
               preventCollision={!state.compactType}
@@ -298,40 +321,45 @@ export function Screen({
               {screen.screen.map((element, key) => {
                 if (element.type === 'neuron') {
                   return (
-                    <div
+                    <Div
                       key={`${element.name}_${key.toString()}`}
                       data-grid={JSON.parse(element.defaultLayout)}
-                      className="uk-card uk-card-default"
+                      className={screen.manage && 'manageScreen'}
+                      deleteScreenFunc={deleteScreenFunc}
+                      element={element}
+                      user={user}
                     >
-                      <div className="uk-card-header">
-                        <div className="uk-card-title">
-                          {element.beautifulName}
-                          <i
-                            className="fas fa-times-circle"
-                            style={{
-                              cursor: 'pointer',
-                              position: 'absolute',
-                              right: '5%',
-                            }}
-                            onClick={() => deleteScreenFunc(element.id)}
-                          />
-                        </div>
-                      </div>
-                      <div className="uk-card-body">
-                        <GetScreen
-                          neuronSettings={{
-                            url: `/api/neurons/serve/${
-                              element.raw
-                            }/remoteEntry.js`,
-                            scope: element.raw,
-                            module: element.name,
-                          }}
-                          key={key.toString()}
-                          deleteWidget={() => deleteScreenFunc(element.id)}
-                          user={user}
-                        />
-                      </div>
-                    </div>
+                      <button
+                        type="button"
+                        className={`btn btn-floating btn-small ${!screen.manage &&
+                          'hidden'}`}
+                        style={{
+                          zIndex: 1000,
+                          fontSize: '10px',
+                          cursor: 'pointer',
+                          position: 'absolute',
+                          backgroundColor: 'black',
+                          right: '0',
+                        }}
+                        onClick={() => deleteScreenFunc(element.id)}
+                      >
+                        <i className="fas fa-times" />
+                      </button>
+
+                      <i
+                        className={`fas fa-chevron-down fa-rotate-45 ${!screen.manage &&
+                          'hidden'}`}
+                        style={{
+                          zIndex: 1000,
+                          fontSize: '30px',
+                          cursor: 'pointer',
+                          position: 'absolute',
+                          color: 'black',
+                          right: '0',
+                          bottom: '0',
+                        }}
+                      />
+                    </Div>
                   );
                 }
                 return (
@@ -364,6 +392,32 @@ export function Screen({
   );
 }
 
+export function Div(props) {
+  return (
+    <div {...props}>
+      {props.children}
+
+      <GetScreen
+        neuronSettings={{
+          url: `/api/neurons/serve/${props.element.raw}/remoteEntry.js`,
+          scope: props.element.raw,
+          module: props.element.name,
+        }}
+        deleteWidget={() => props.deleteScreenFunc(props.element.id)}
+        user={props.user}
+        {...props}
+      />
+    </div>
+  );
+}
+
+Div.propTypes = {
+  children: PropTypes.object,
+  user: PropTypes.object,
+  element: PropTypes.object,
+  deleteScreenFunc: PropTypes.func,
+};
+
 GetScreen.propTypes = {
   neuronSettings: PropTypes.object,
   url: PropTypes.string,
@@ -374,6 +428,7 @@ GetScreen.propTypes = {
 Screen.propTypes = {
   refreshTokenFunc: PropTypes.func,
   setScreenFunc: PropTypes.func,
+  manageScreenFunc: PropTypes.func,
   user: PropTypes.object,
   screen: PropTypes.object,
   onChangeScreenFunc: PropTypes.func,
@@ -389,6 +444,9 @@ export const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
+    manageScreenFunc: () => {
+      dispatch(manageScreen());
+    },
     refreshTokenFunc: () => {
       dispatch(refreshToken());
     },

@@ -3,6 +3,10 @@
     height: 50vh;
 }
 
+.hidden{
+  display: none;
+}
+
 .uk-navbar-container {
     background-color: #1D86EF !important;
 }

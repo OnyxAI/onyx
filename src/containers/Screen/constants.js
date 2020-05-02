@@ -4,6 +4,7 @@
  *
  */
 export const CHANGE_SCREEN = 'onyx/Screen/CHANGE_SCREEN';
+export const MANAGE_SCREEN = 'onyx/Screen/MANAGE_SCREEN';
 
 export const GET_SCREEN_STORE = 'onyx/Screen/GET_SCREEN_STORE';
 export const GET_SCREEN_STORE_SUCCESS = 'onyx/Screen/GET_SCREEN_STORE_SUCCESS';

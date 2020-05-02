@@ -24,6 +24,7 @@ describe('screenReducer', () => {
       loadingScreen: false,
       screen: [],
       layouts: '[]',
+      manage: false,
       loadingScreenStore: false,
       screenStore: [],
       screenBeautifulName: '',

@@ -70,7 +70,7 @@ describe('<Screen />', () => {
 
     wrapper
       .find('button')
-      .at(1)
+      .at(2)
       .simulate('click');
 
     expect(onChangeScreenFunc).toHaveBeenCalled();

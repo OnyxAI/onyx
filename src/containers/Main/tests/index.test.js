@@ -114,6 +114,7 @@ describe('<Main />', () => {
           raw: 'raw',
           type: 'neuron',
           id: 1,
+          style: { width: '100', height: '100' },
         },
       ],
     };
@@ -151,6 +152,7 @@ describe('<Main />', () => {
           raw: 'raw',
           type: 'native',
           id: 1,
+          style: { width: '100', height: '100' },
         },
       ],
     };

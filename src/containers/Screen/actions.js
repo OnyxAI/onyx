@@ -21,9 +21,16 @@ import {
   DELETE_SCREEN_ERROR,
   DELETE_SCREEN_SUCCESS,
   CHANGE_SCREEN,
+  MANAGE_SCREEN,
 } from './constants';
 
 import { getMessage } from '../../i18n';
+
+export function manageScreen() {
+  return {
+    type: MANAGE_SCREEN,
+  };
+}
 
 export function onChangeScreen(
   name,

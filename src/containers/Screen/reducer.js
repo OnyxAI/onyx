@@ -19,6 +19,7 @@ import {
   DELETE_SCREEN_ERROR,
   DELETE_SCREEN_SUCCESS,
   CHANGE_SCREEN,
+  MANAGE_SCREEN,
 } from './constants';
 
 export const initialState = {
@@ -34,12 +35,16 @@ export const initialState = {
   screenId: '',
   screenRaw: '',
   screenType: '',
+  manage: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const screenReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case MANAGE_SCREEN:
+        draft.manage = !state.manage;
+        break;
       case CHANGE_SCREEN:
         draft.screenName = action.name;
         draft.screenRaw = action.raw;

@@ -248,12 +248,14 @@ export function Main({
                       }}
                       deleteWidget={() => deleteWidgetFunc(widget.id)}
                       user={user}
+                      style={widget.style}
                     />
                   );
                 }
                 return (
                   <Widget
                     title={widget.name}
+                    style={widget.style}
                     delete={() => deleteWidgetFunc(widget.id)}
                   >
                     <p>Content</p>
