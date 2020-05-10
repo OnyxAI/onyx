@@ -1,7 +1,7 @@
 const electron = require('electron');
 
 const address = 'localhost';
-const port = '3000';
+const port = '80';
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
