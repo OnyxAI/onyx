@@ -21,6 +21,10 @@ export default defineMessages({
     id: `${scope}.menu`,
     defaultMessage: 'Menu',
   },
+  screen: {
+    id: `${scope}.screen`,
+    defaultMessage: 'Screen',
+  },
   home: {
     id: `${scope}.home`,
     defaultMessage: 'Home',

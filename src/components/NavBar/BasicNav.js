@@ -44,6 +44,9 @@ export function BasicNav({ logoutUserFunc, user, history }) {
         <NavItem onClick={() => history.push('/')}>
           <FormattedMessage {...messages.home} />
         </NavItem>
+        <NavItem onClick={() => history.push('/screen')}>
+          <FormattedMessage {...messages.screen} />
+        </NavItem>
         <NavItem onClick={() => history.push('/neurons')}>
           <FormattedMessage {...messages.neurons} />
         </NavItem>

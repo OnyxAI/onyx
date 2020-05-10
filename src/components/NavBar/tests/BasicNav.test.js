@@ -72,7 +72,7 @@ describe('Nav BasicNav', () => {
   it('Should render BasicNav simulate Neurons Click', () => {
     wrapper
       .find('NavItem')
-      .at(1)
+      .at(2)
       .simulate('click');
 
     expect(history.push).toHaveBeenCalledWith('/neurons');
@@ -81,7 +81,7 @@ describe('Nav BasicNav', () => {
   it('Should render BasicNav simulate User Manage Click', () => {
     wrapper
       .find('NavItem')
-      .at(2)
+      .at(3)
       .simulate('click');
 
     expect(history.push).toHaveBeenCalledWith('/user/manage');
@@ -89,7 +89,7 @@ describe('Nav BasicNav', () => {
   it('Should render BasicNav simulate Settings Click', () => {
     wrapper
       .find('NavItem')
-      .at(3)
+      .at(4)
       .simulate('click');
 
     expect(history.push).toHaveBeenCalledWith('/settings');
