@@ -17,7 +17,7 @@
     "preanalyze": "yarn analyze:clean",
     "analyze": "node ./scripts/analyze.js",
     "extract-intl": "node ./scripts/extract-intl.js",
-    "electron": "DISPLAY=\"${DISPLAY:=:0}\" ./node_modules/.bin/electron scripts/electron.js",
+    "electron": "DISPLAY=\"${DISPLAY:=:0}\" electron scripts/electron.js",
     "prebuild": "yarn build:clean",
     "build": "cross-env NODE_ENV=production webpack --config scripts/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./dist",
