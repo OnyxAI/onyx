@@ -16,6 +16,9 @@ start_client:
 build_client:
 	yarn build
 
+electron:
+		yarn electron
+
 test:
 	. $(VIRTUALENV_ROOT)/bin/activate; py.test tests/ --color=yes; yarn test
 
