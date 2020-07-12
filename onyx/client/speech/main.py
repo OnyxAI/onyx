@@ -9,13 +9,11 @@ You may not use this software for commercial purposes.
 """
 from onyx.client.speech.assets import snowboydecoder
 import onyx, importlib, wave, pyaudio, sys, os, time
-from onyx.config import get_config
+from onyx.config import config
 from onyx.utils import play_wav, play_mp3
 from onyx.utils.log import getLogger
 from onyx.client.stt import STTFactory
 from onyx.client.tts import TTSFactory
-
-config = get_config('onyx')
 
 import threading
 from threading import Thread
@@ -26,7 +24,7 @@ from onyx.sockyx.message import Message
 
 stt = STTFactory.create()
 tts = TTSFactory.create()
-token = config.get('Base', 'api_token')
+token = config.API_TOKEN
 
 LOG = getLogger('SpeechClient')
 import speech_recognition as sr
@@ -50,7 +48,7 @@ event_thread.start()
 class Detector:
 
 	def __init__(self):
-		self.lang = config.get('Base', 'lang')
+		self.lang = config.LANG
 
 	def detected_callback(self):
 
