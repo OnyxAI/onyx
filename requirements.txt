@@ -25,7 +25,7 @@ flask_jwt_extended
 # Sockets
 
 pyee==1.0.1
-tornado==4.2.1
+tornado==6.3.3
 websocket-client==0.32.0
 flask_socketio
 inflection
